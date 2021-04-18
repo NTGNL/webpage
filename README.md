@@ -1,3 +1,3 @@
 # webpage
 my website
-![desktop IMG](https://github.com/NTGNL/webpage/blob/master/pic.png)
+![website picture](https://github.com/NTGNL/webpage/blob/main/pic.png)
