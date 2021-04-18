@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/.config/compton.conf.html</title>
+<meta name="syntax" content="conf">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.Comment { color: #8a8a8a; }
+.String { color: #afaf00; }
+-->
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+    <h3>Compton compositor config</h3>
+
+
+<pre id='vimCodeElement'>
+fading = true;
+fade-delta = 3;
+fade-in-step = 0.02;
+fade-out-step = 0.02;
+fade-exclude = [ ];
+backend = <span class="String">&quot;glx&quot;</span>;
+mark-wmwin-focused = true;
+mark-ovredir-focused = true;
+use-ewmh-active-win = false;
+detect-rounded-corners = true;
+detect-client-opacity = true;
+refresh-rate = 0;
+dbe = false;
+sw-opti = false;
+unredir-if-possible = false;
+focus-exclude = [ ];
+detect-transient = true;
+detect-client-leader = true;
+invert-color-include = [ ];
+glx-no-stencil = true;
+glx-copy-from-front = false;
+glx-use-copysubbuffermesa = false;
+glx-no-rebind-pixmap = false;
+glx-swap-method = <span class="String">&quot;undefined&quot;</span>;
+vsync = <span class="String">&quot;opengl-swc&quot;</span>
+
+
+<span class="Comment">#################################</span>
+<span class="Comment">#</span>
+<span class="Comment"># Shadow</span>
+<span class="Comment">#</span>
+<span class="Comment">#################################</span>
+
+shadow = true;
+no-dnd-shadow = true;
+no-dock-shadow = true;
+shadow-radius = 15;
+shadow-offset-x = -15;
+shadow-offset-y = -15;
+shadow-opacity = 0.7;
+shadow-red = 0.0;
+shadow-green = 0.0;
+shadow-blue = 0.0;
+shadow-exclude = [
+  <span class="String">&quot;class_g = 'Firefox' &amp;&amp; argb&quot;</span>,
+  <span class="String">&quot;bounding_shaped&quot;</span>,
+  <span class="String">&quot;_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'&quot;</span>
+];
+
+
+
+<span class="Comment">#################################</span>
+<span class="Comment">#</span>
+<span class="Comment"># Opacity</span>
+<span class="Comment">#</span>
+<span class="Comment">#################################</span>
+
+menu-opacity = 1;
+inactive-opacity = 1;
+active-opacity = 1;
+frame-opacity = 1;
+inactive-opacity-override = false;
+alpha-step = 0.06;
+
+blur-background = true;
+blur-background-frame = true;
+blur-background-fixed = true;
+
+blur-kern = <span class="String">&quot;3x3box&quot;</span>;
+blur-method = <span class="String">&quot;kawase&quot;</span>;
+blur-strength = 12;
+
+opacity-rule = [
+      <span class="String">&quot;80:class_g = 'urxvt'&quot;</span>,
+      <span class="String">&quot;80:class_g = 'URxvt'&quot;</span>,
+      <span class="String">&quot;80:class_g = 'rxvt'&quot;</span>,
+      <span class="String">&quot;80:class_g = 'Rxvt'&quot;</span>,
+      <span class="String">&quot;80:class_g = 'Termite'&quot;</span>,
+      <span class="String">&quot;80:class_g = 'Nautilus'&quot;</span>,
+      <span class="String">&quot;0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'&quot;</span>
+];
+</pre>
+
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

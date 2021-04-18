@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/.config/ncmpcpp/config.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="conf">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.Comment { color: #8a8a8a; }
+.String { color: #afaf00; }
+-->
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+    <title>Aleks's Website</title>
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+
+    <h2>ncmpcpp</h2>
+    <p>ncmpcpp music program config</p>
+<pre id='vimCodeElement'>
+
+mpd_music_dir = <span class="String">&quot;~/Music&quot;</span>
+<span class="Comment">#song_list_format = &quot; $5%l $1║{$7 %a $1│$2 %t$1 $R $3%b$1 }|{$6 %f $1}&quot;</span>
+<span class="Comment">#tag_editor_album_format = &quot;{$4(%y)$9 }$7%b$9&quot;</span>
+selected_item_prefix = <span class="String">&quot;$0&quot;</span>
+selected_item_suffix = <span class="String">&quot;$9&quot;</span>
+mpd_host = <span class="String">&quot;127.0.0.1&quot;</span>
+<span class="Comment">#mpd_port = &quot;6600&quot;</span>
+system_encoding = <span class="String">&quot;utf-8&quot;</span>
+
+
+user_interface = <span class="String">&quot;alternative&quot;</span>
+
+alternative_header_first_line_format = <span class="String">&quot;$(11)─┤ $b$(13)%a$(end)$/b ├─$(end)&quot;</span>
+alternative_header_second_line_format = <span class="String">&quot;$(4)%t (%y)$(end)&quot;</span>
+alternative_ui_separator_color = 11
+
+color1 = 13
+color2 = 15
+main_window_highlight_color = cyan
+main_window_color = 13
+
+now_playing_prefix = <span class="String">&quot;$b&quot;</span>
+now_playing_suffix = <span class="String">&quot;$/b&quot;</span>
+song_list_format = <span class="String">&quot;    $(15)%t$(end)$R $(11)%A$(end) ($(cyan)%l$(end))    &quot;</span>
+song_columns_list_format = <span class="String">&quot;(40)[15]{t|f} (25)[13]{a} (25)[11]{b} (5)[cyan]{l}&quot;</span>
+browser_playlist_prefix = <span class="String">&quot;$(11) playlist $(end) &quot;</span>
+active_column_color = 4
+
+progressbar_color = 1
+progressbar_elapsed_color = 11
+progressbar_look = <span class="String">&quot;──━&quot;</span>
+song_status_format = <span class="String">&quot; $(15)%a$(end) $4⟫$7⟫$0 $(13)%t$(end) $4⟫$7⟫$0  $(11)%b$(end)&quot;</span>
+
+mouse_support = <span class="String">&quot;yes&quot;</span>
+header_visibility = <span class="String">&quot;no&quot;</span>
+statusbar_visibility = <span class="String">&quot;yes&quot;</span>
+playlist_display_mode = <span class="String">&quot;classic&quot;</span> (classic/columns)
+browser_display_mode = <span class="String">&quot;columns&quot;</span>
+search_engine_display_mode = <span class="String">&quot;columns&quot;</span>
+playlist_editor_display_mode = <span class="String">&quot;columns&quot;</span>
+autocenter_mode = <span class="String">&quot;yes&quot;</span>
+titles_visibility = <span class="String">&quot;no&quot;</span>
+enable_window_title = <span class="String">&quot;no&quot;</span>
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->
+<pre id='vimCodeElement'>
+mpd_music_dir = <span class="String">&quot;~/Music&quot;</span>
+<span class="Comment">#song_list_format = &quot; $5%l $1║{$7 %a $1│$2 %t$1 $R $3%b$1 }|{$6 %f $1}&quot;</span>
+<span class="Comment">#tag_editor_album_format = &quot;{$4(%y)$9 }$7%b$9&quot;</span>
+selected_item_prefix = <span class="String">&quot;$0&quot;</span>
+selected_item_suffix = <span class="String">&quot;$9&quot;</span>
+mpd_host = <span class="String">&quot;127.0.0.1&quot;</span>
+<span class="Comment">#mpd_port = &quot;6600&quot;</span>
+system_encoding = <span class="String">&quot;utf-8&quot;</span>
+
+
+user_interface = <span class="String">&quot;alternative&quot;</span>
+
+alternative_header_first_line_format = <span class="String">&quot;$(11)─┤ $b$(13)%a$(end)$/b ├─$(end)&quot;</span>
+alternative_header_second_line_format = <span class="String">&quot;$(4)%t (%y)$(end)&quot;</span>
+alternative_ui_separator_color = 11
+
+color1 = 13
+color2 = 15
+main_window_highlight_color = cyan
+main_window_color = 13
+
+now_playing_prefix = <span class="String">&quot;$b&quot;</span>
+now_playing_suffix = <span class="String">&quot;$/b&quot;</span>
+song_list_format = <span class="String">&quot;    $(15)%t$(end)$R $(11)%A$(end) ($(cyan)%l$(end))    &quot;</span>
+song_columns_list_format = <span class="String">&quot;(40)[15]{t|f} (25)[13]{a} (25)[11]{b} (5)[cyan]{l}&quot;</span>
+browser_playlist_prefix = <span class="String">&quot;$(11) playlist $(end) &quot;</span>
+active_column_color = 4
+
+progressbar_color = 1
+progressbar_elapsed_color = 11
+progressbar_look = <span class="String">&quot;──━&quot;</span>
+song_status_format = <span class="String">&quot; $(15)%a$(end) $4⟫$7⟫$0 $(13)%t$(end) $4⟫$7⟫$0  $(11)%b$(end)&quot;</span>
+
+mouse_support = <span class="String">&quot;yes&quot;</span>
+header_visibility = <span class="String">&quot;no&quot;</span>
+statusbar_visibility = <span class="String">&quot;yes&quot;</span>
+playlist_display_mode = <span class="String">&quot;classic&quot;</span> (classic/columns)
+browser_display_mode = <span class="String">&quot;columns&quot;</span>
+search_engine_display_mode = <span class="String">&quot;columns&quot;</span>
+playlist_editor_display_mode = <span class="String">&quot;columns&quot;</span>
+autocenter_mode = <span class="String">&quot;yes&quot;</span>
+titles_visibility = <span class="String">&quot;no&quot;</span>
+enable_window_title = <span class="String">&quot;no&quot;</span>
+
+
+   <h2>Contact</h2>
+    Email: aleks@aleksander.xyz
+</pre>
+</body>
+</html>

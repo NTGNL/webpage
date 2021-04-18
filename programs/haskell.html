@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/Documents/Programming/Haskell/test.hs.html</title>
+<meta name="syntax" content="haskell">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.Normal { color: #ffd7af; background-color: #262626; padding-bottom: 1px; }
+.Comment { color: #8a8a8a; }
+.GruvboxPurple { color: #d787af; }
+-->
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+    <h2>Haskell variable cheat sheet</h2>
+    <p>Variables and mathematics calculation template in case I forget something.</p>
+
+
+<pre id='vimCodeElement'>
+<span class="Comment">-- Int -2^63 2^63</span>
+maxInt <span class="Normal">=</span> maxBound <span class="Normal">::</span> Int
+<span class="Comment">-- Intager Can be as big as your system can hold</span>
+<span class="Comment">-- Double</span>
+bigFloat <span class="Normal">=</span> <span class="GruvboxPurple">3.99999999999</span> <span class="Normal">+</span> <span class="GruvboxPurple">0.00000000005</span>
+<span class="Comment">-- Bool True/False</span>
+<span class="Comment">-- Char `</span>
+<span class="Comment">-- Tuple</span>
+
+<span class="Comment">-- pernmament value</span>
+always5 <span class="Normal">::</span> Int
+always5 <span class="Normal">=</span> <span class="GruvboxPurple">5</span>
+
+<span class="Comment">-- list of 1 to 1000</span>
+sumOfNums <span class="Normal">=</span> sum [<span class="GruvboxPurple">1</span><span class="Normal">..</span><span class="GruvboxPurple">1000</span>]
+
+addEx <span class="Normal">=</span> <span class="GruvboxPurple">5</span> <span class="Normal">+</span> <span class="GruvboxPurple">4</span>
+subEx <span class="Normal">=</span> <span class="GruvboxPurple">5</span> <span class="Normal">-</span> <span class="GruvboxPurple">4</span>
+multEx <span class="Normal">=</span> <span class="GruvboxPurple">5</span> <span class="Normal">*</span> <span class="GruvboxPurple">4</span>
+divEx <span class="Normal">=</span> <span class="GruvboxPurple">5</span> <span class="Normal">/</span> <span class="GruvboxPurple">4</span>
+modEx <span class="Normal">=</span> mod <span class="GruvboxPurple">5</span> <span class="GruvboxPurple">4</span>
+modEx2 <span class="Normal">=</span> <span class="GruvboxPurple">5</span> <span class="Normal">`mod`</span> <span class="GruvboxPurple">4</span>
+
+<span class="Comment">-- has to be in brackets because haskell </span>
+<span class="Comment">-- will be confised if this is a subtraction</span>
+negNum <span class="Normal">=</span> <span class="GruvboxPurple">5</span> <span class="Normal">+</span> (<span class="Normal">-</span><span class="GruvboxPurple">4</span>)
+
+num9 <span class="Normal">=</span> <span class="GruvboxPurple">9</span> <span class="Normal">::</span> Int
+sqrtOf9 <span class="Normal">=</span> sqrt (fromIntegral num9)
+
+<span class="Comment">-- Built in math functions</span>
+piVal <span class="Normal">=</span> pi
+ePow9 <span class="Normal">=</span> exp <span class="GruvboxPurple">9</span>
+logOf9 <span class="Normal">=</span> log <span class="GruvboxPurple">9</span>
+squared9 <span class="Normal">=</span> <span class="GruvboxPurple">9</span> <span class="Normal">**</span> <span class="GruvboxPurple">2</span>
+truncateVal <span class="Normal">=</span> truncate <span class="GruvboxPurple">9.999</span>
+roundVal <span class="Normal">=</span> round <span class="GruvboxPurple">9.999</span>
+ceilingVal <span class="Normal">=</span> ceiling <span class="GruvboxPurple">9.999</span>
+floorVal <span class="Normal">=</span> floor <span class="GruvboxPurple">9.999</span>
+
+trueAndFalse <span class="Normal">=</span> True <span class="Normal">&amp;&amp;</span> False
+trueOrFalse <span class="Normal">=</span> True <span class="Normal">||</span> False
+notTrue <span class="Normal">=</span> not (True)
+
+primeNumbers <span class="Normal">=</span> [<span class="GruvboxPurple">3</span>,<span class="GruvboxPurple">5</span>,<span class="GruvboxPurple">7</span>,<span class="GruvboxPurple">11</span>]
+morePrime <span class="Normal">=</span> primeNumbers <span class="Normal">++</span> [<span class="GruvboxPurple">13</span>,<span class="GruvboxPurple">17</span>,<span class="GruvboxPurple">19</span>,<span class="GruvboxPurple">23</span>,<span class="GruvboxPurple">29</span>]
+
+<span class="Comment">-- combine numbers to a list</span>
+favNums <span class="Normal">=</span> <span class="GruvboxPurple">2</span> <span class="Normal">:</span> <span class="GruvboxPurple">7</span> <span class="Normal">:</span> <span class="GruvboxPurple">21</span> <span class="Normal">:</span> <span class="GruvboxPurple">66</span> <span class="Normal">:</span>[]
+
+<span class="Comment">-- add 2 to the begginging of list</span>
+morePrime2 <span class="Normal">=</span> <span class="GruvboxPurple">2</span> <span class="Normal">:</span> morePrime
+lenPrime <span class="Normal">=</span> length morePrime2
+
+secondPrime <span class="Normal">=</span> morePrime2 <span class="Normal">!!</span> <span class="GruvboxPurple">1</span>
+
+firstPrime <span class="Normal">=</span> head morePrime2
+lastPrime <span class="Normal">=</span> last morePrime2
+primeInit <span class="Normal">=</span> init morePrime2
+
+first3Primes <span class="Normal">=</span> take <span class="GruvboxPurple">3</span> morePrime2
+removePrimes <span class="Normal">=</span> drop <span class="GruvboxPurple">3</span> morePrime2
+
+is7InList <span class="Normal">=</span> <span class="GruvboxPurple">7</span> <span class="Normal">`elem`</span> morePrime2
+maxPrime <span class="Normal">=</span> maximum morePrime2
+minPrime <span class="Normal">=</span> minimum morePrime2
+
+zeroToTen <span class="Normal">=</span> [<span class="GruvboxPurple">0</span><span class="Normal">..</span><span class="GruvboxPurple">10</span>]
+evenList <span class="Normal">=</span> [<span class="GruvboxPurple">2</span>,<span class="GruvboxPurple">4</span><span class="Normal">..</span><span class="GruvboxPurple">20</span>]
+
+<span class="Comment">-- every second letter</span>
+letterList <span class="Normal">=</span> [<span class="GruvboxPurple">'A'</span>,<span class="GruvboxPurple">'C'</span><span class="Normal">..</span><span class="GruvboxPurple">'Z'</span>]
+
+infinPow10 <span class="Normal">=</span> [<span class="GruvboxPurple">10</span>,<span class="GruvboxPurple">20</span><span class="Normal">..</span>]
+
+<span class="Comment">-- make a list of 2 in length of 10</span>
+many2s <span class="Normal">=</span> take <span class="GruvboxPurple">10</span> (repeat <span class="GruvboxPurple">2</span>)
+
+cycleList <span class="Normal">=</span> take <span class="GruvboxPurple">10</span> (cycle [<span class="GruvboxPurple">1</span>,<span class="GruvboxPurple">2</span>,<span class="GruvboxPurple">3</span>,<span class="GruvboxPurple">4</span>,<span class="GruvboxPurple">5</span>])
+
+listTimes2 <span class="Normal">=</span> [x <span class="Normal">*</span> <span class="GruvboxPurple">2</span> <span class="Normal">|</span> x <span class="Normal">&lt;-</span> [<span class="GruvboxPurple">1</span><span class="Normal">..</span><span class="GruvboxPurple">10</span>]]
+<span class="Comment">-- less than or equal to 50</span>
+listTimes3 <span class="Normal">=</span> [x <span class="Normal">*</span> <span class="GruvboxPurple">3</span> <span class="Normal">|</span> x <span class="Normal">&lt;-</span> [<span class="GruvboxPurple">1</span><span class="Normal">..</span><span class="GruvboxPurple">10</span>], x <span class="Normal">*</span> <span class="GruvboxPurple">3</span> <span class="Normal">&lt;=</span> <span class="GruvboxPurple">50</span>]
+
+divisBy9N13 <span class="Normal">=</span> [x <span class="Normal">|</span> x <span class="Normal">&lt;-</span> [<span class="GruvboxPurple">1</span><span class="Normal">..</span><span class="GruvboxPurple">500</span>], x <span class="Normal">`mod`</span> <span class="GruvboxPurple">13</span> <span class="Normal">==</span> <span class="GruvboxPurple">0</span>, x <span class="Normal">`mod`</span> <span class="GruvboxPurple">9</span> <span class="Normal">==</span> <span class="GruvboxPurple">0</span>]
+
+<span class="Comment">-- sort list</span>
+sortedList <span class="Normal">=</span> sort [<span class="GruvboxPurple">9</span>,<span class="GruvboxPurple">1</span>,<span class="GruvboxPurple">8</span>,<span class="GruvboxPurple">3</span>,<span class="GruvboxPurple">4</span>,<span class="GruvboxPurple">7</span>,<span class="GruvboxPurple">6</span>]
+
+sumOfLists <span class="Normal">=</span> zipWith (<span class="Normal">+</span>) [<span class="GruvboxPurple">1</span>,<span class="GruvboxPurple">2</span>,<span class="GruvboxPurple">3</span>,<span class="GruvboxPurple">4</span>,<span class="GruvboxPurple">5</span>] [<span class="GruvboxPurple">6</span>,<span class="GruvboxPurple">7</span>,<span class="GruvboxPurple">8</span>,<span class="GruvboxPurple">9</span>,<span class="GruvboxPurple">10</span>]
+
+evensUpTo20 <span class="Normal">=</span> takeWhile (<span class="Normal">&lt;=</span> <span class="GruvboxPurple">20</span>) [<span class="GruvboxPurple">2</span>,<span class="GruvboxPurple">4</span><span class="Normal">..</span>]
+
+
+</pre>
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

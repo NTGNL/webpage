@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<title>~/.config/ranger/rc.conf.html</title>
+<meta name="syntax" content="conf">
+<meta name="settings" content="number_lines,use_css,no_foldcolumn,expand_tabs,line_ids,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.LineNr { color: #767676; }
+.Comment { color: #8a8a8a; }
+.String { color: #afaf00; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+/* function to open any folds containing a jumped-to line before jumping to it */
+function JumpToLine()
+{
+  var lineNum;
+  lineNum = window.location.hash;
+  lineNum = lineNum.substr(1); /* strip off '#' */
+
+  if (lineNum.indexOf('L') == -1) {
+    lineNum = 'L'+lineNum;
+  }
+  lineElem = document.getElementById(lineNum);
+  /* Always jump to new location even if the line was hidden inside a fold, or
+   * we corrected the raw number to a line ID.
+   */
+  if (lineElem) {
+    lineElem.scrollIntoView(true);
+  }
+  return true;
+}
+if ('onhashchange' in window) {
+  window.onhashchange = JumpToLine;
+}
+
+-->
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+</head>
+
+<body onload='JumpToLine();'>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+<h3>Ranger file manager config</h3>
+
+<pre id='vimCodeElement'>
+
+<span class="Comment">###SETTINGS###</span>
+
+set column_ratios 1,3,4
+<span class="Comment">#set hidden_filter ^\.|\.(?:pyc|pyo|bak|swp)$|^lost\+found$|^__(py)?cache__$</span>
+set hidden_filter ^\.|\.(?:pyc|vrb|pyo|lof|bak|swp|aux|log|nav|out|snm|toc|bcf|run\.xml|synctex\.gz|blg|bbl)$|^lost\+found$|^__(py)?cache__$
+<span class="Comment">#set show_hidden true</span>
+set confirm_on_delete multiple
+<span class="Comment">#set preview_script ~/.config/ranger/scope.sh</span>
+<span class="Comment">#set use_preview_script true</span>
+set automatically_count_files true
+set open_all_images true
+set preview_images_method ueberzug
+set preview_images true
+set vcs_aware false
+set vcs_backend_git enabled
+set vcs_backend_hg disabled
+set vcs_backend_bzr disabled
+set unicode_ellipsis false
+set show_hidden_bookmarks false
+set colorscheme default
+set preview_files true
+set preview_directories true
+set collapse_preview true
+set save_console_history false
+set status_bar_on_top false
+set draw_progress_bar_in_status_bar true
+set draw_borders true
+set dirname_in_tabs true
+set mouse_enabled true
+set display_size_in_main_column true
+set display_size_in_status_bar true
+set display_tags_in_all_columns true
+set update_title false
+set update_tmux_title true
+set shorten_title 3
+set tilde_in_titlebar true
+set max_history_size 20
+set max_console_history_size 50
+set scroll_offset 8
+set flushinput true
+set padding_right true
+set autosave_bookmarks false
+set autoupdate_cumulative_size false
+set show_cursor false
+set sort natural
+set sort_reverse false
+set sort_case_insensitive true
+set sort_directories_first true
+set sort_unicode false
+set xterm_alt_key false
+set cd_bookmarks false
+set preview_max_size 0
+set show_selection_in_titlebar true
+set idle_delay 2000
+set metadata_deep_search false
+
+<span class="Comment">###ALIASES###</span>
+alias e    edit
+alias q    quit
+alias q!   quitall
+alias qa   quitall
+alias qall quitall
+alias setl setlocal
+
+alias filter     scout -prt
+alias find       scout -aeit
+alias mark       scout -mr
+alias unmark     scout -Mr
+alias search     scout -rs
+alias search_inc scout -rts
+alias travel     scout -aefiklst
+
+<span class="Comment">###BASIC KEYS###</span>
+
+<span class="Comment">#BASIC</span>
+map     Q quit!
+map     q quit
+copymap q ZZ ZQ
+
+<span class="Comment">#map R     reload_cwd</span>
+map &lt;C-r&gt; reset
+<span class="Comment">#map &lt;C-l&gt; redraw_window</span>
+map &lt;C-c&gt; abort
+map &lt;esc&gt; change_mode normal
+
+map i display_file
+map ? help
+<span class="Comment">#map W display_log</span>
+map w taskview_open
+map S shell $SHELL
+
+map :  console
+map ;  console
+map !  console shell%space
+map @  console -p6 shell  %s
+map <span class="Comment">#  console shell -p%space</span>
+<span class="Comment">#map s  console shell%space</span>
+map r  chain draw_possible_programs; console open_with%%space
+map f  console find%space
+map cd console cd%space
+
+<span class="Comment"># Change the line mode</span>
+<span class="Comment">#map Mf linemode filename</span>
+<span class="Comment">#map Mi linemode fileinfo</span>
+<span class="Comment">#map Mp linemode permissions</span>
+<span class="Comment">#map Mt linemode metatitle</span>
+
+<span class="Comment">#moc</span>
+<span class="Comment">#map Mc shell mocp -c</span>
+<span class="Comment">#map Ma shell mocp -a %s</span>
+<span class="Comment">#map Ms shell mocp -p</span>
+<span class="Comment">#map MS shell mocp -S</span>
+<span class="Comment">#map Mp shell mocp -G</span>
+<span class="Comment">#map Mn shell mocp -f</span>
+<span class="Comment">#map Mb shell mocp -r</span>
+<span class="Comment">#map MN shell mocp -s &amp;&amp; mocp -c &amp;&amp; mocp -a %s &amp;&amp; mocp -p</span>
+<span class="Comment">#map Mo shell mocp -j 0%%</span>
+<span class="Comment">#map MK shell killall mocp</span>
+
+<span class="Comment"># Tagging / Marking</span>
+map at      tag_toggle
+map ut      tag_remove
+map &quot;&lt;any&gt;  tag_toggle tag=%any
+map &lt;Space&gt; mark_files toggle=True
+map va       mark_files all=True toggle=True
+map uv      mark_files all=True val=False
+map vs       toggle_visual_mode
+map uV      toggle_visual_mode reverse=True
+
+<span class="Comment"># For the nostalgics: Midnight Commander bindings</span>
+map &lt;F1&gt; help
+map &lt;F3&gt; display_file
+map &lt;F4&gt; edit
+map &lt;F5&gt; copy
+map &lt;F5&gt; console shell echo <span class="String">&quot;require(rmarkdown); render_site()&quot;</span> | R --vanilla
+map &lt;F6&gt; cut
+map &lt;F7&gt; console mkdir%space
+map &lt;F8&gt; console delete
+map &lt;F10&gt; exit
+
+<span class="Comment"># In case you work on a keyboard with dvorak layout</span>
+map &lt;UP&gt;       move up=1
+map &lt;DOWN&gt;     move down=1
+map &lt;LEFT&gt;     move left=1
+map &lt;RIGHT&gt;    move right=1
+map &lt;HOME&gt;     move to=0
+map &lt;END&gt;      move to=-1
+map &lt;PAGEDOWN&gt; move down=1   pages=True
+map &lt;PAGEUP&gt;   move up=1     pages=True
+map &lt;CR&gt;       move right=1
+map &lt;DELETE&gt;   console delete
+map &lt;INSERT&gt;   console touch%space
+
+<span class="Comment"># VIM-like</span>
+copymap &lt;UP&gt;       k
+copymap &lt;DOWN&gt;     j
+copymap &lt;LEFT&gt;     h
+copymap &lt;RIGHT&gt;    l
+copymap &lt;HOME&gt;     gg
+copymap &lt;END&gt;      G
+copymap &lt;PAGEDOWN&gt; &lt;C-F&gt;
+copymap &lt;PAGEUP&gt;   &lt;C-B&gt;
+
+map J  move down=0.5  pages=True
+map K  move up=0.5    pages=True
+copymap J &lt;C-D&gt;
+copymap K &lt;C-U&gt;
+
+<span class="Comment"># Jumping around</span>
+map H     history_go -1
+map L     history_go 1
+map ]     move_parent 1
+map [     move_parent -1
+map }     traverse
+
+<span class="Comment">#DEFAULT MOVEMENT</span>
+map ge cd /etc
+map gu cd /usr
+<span class="Comment">#map gl cd -r .</span>
+map gL cd -r %f
+<span class="Comment">#map gv cd /var</span>
+map gM cd /mnt
+map gr cd /
+map gR eval fm.cd(ranger.RANGERDIR)
+map g? cd /usr/share/doc/ranger
+
+<span class="Comment"># Tabs</span>
+map &lt;C-n&gt;     tab_new ~
+map &lt;C-w&gt;     tab_close
+map &lt;TAB&gt;     tab_move 1
+map &lt;S-TAB&gt;   tab_move -1
+map &lt;A-Right&gt; tab_move 1
+map &lt;A-Left&gt;  tab_move -1
+<span class="Comment">#map gt        tab_move 1</span>
+<span class="Comment">#map gT        tab_move -1</span>
+map gn        tab_new ~
+<span class="Comment">#map gc        tab_close</span>
+map tt tab_close
+map uq        tab_restore
+map &lt;a-1&gt;     tab_open 1
+map &lt;a-2&gt;     tab_open 2
+map &lt;a-3&gt;     tab_open 3
+map &lt;a-4&gt;     tab_open 4
+map &lt;a-5&gt;     tab_open 5
+map &lt;a-6&gt;     tab_open 6
+map &lt;a-7&gt;     tab_open 7
+map &lt;a-8&gt;     tab_open 8
+map &lt;a-9&gt;     tab_open 9
+
+
+<span class="Comment"># External Programs</span>
+map E  edit
+map du shell -p du --max-depth=1 -h --apparent-size
+map dU shell -p du --max-depth=1 -h --apparent-size | sort -rh
+map yp shell -f echo -n %%d/%%f | xsel -i; xsel -o | xsel -i -b
+map yd shell -f echo -n %%d     | xsel -i; xsel -o | xsel -i -b
+map yn shell -f echo -n %%f     | xsel -i; xsel -o | xsel -i -b
+
+
+<span class="Comment"># Filesystem Operations</span>
+map =  chmod
+map cw console rename%space
+map aa  rename_append
+map A  eval fm.open_console(<span class="String">'rename '</span> + fm.thisfile.relative_path)
+map I  eval fm.open_console(<span class="String">'rename '</span> + fm.thisfile.relative_path, position=7)
+map pp paste
+map po paste overwrite=True
+map pP paste append=True
+map pO paste overwrite=True append=True
+map pl paste_symlink relative=False
+map pL paste_symlink relative=True
+map phl paste_hardlink
+map pht paste_hardlinked_subtree
+
+map dD console delete
+
+map dd cut
+map ud uncut
+map da cut mode=add
+map dr cut mode=remove
+
+map yy copy
+map uy uncut
+map ya copy mode=add
+map yr copy mode=remove
+
+
+<span class="Comment"># Temporary workarounds</span>
+map dgg eval fm.cut(dirarg=dict(to=0), narg=quantifier)
+map dG  eval fm.cut(dirarg=dict(to=-1), narg=quantifier)
+map dj  eval fm.cut(dirarg=dict(down=1), narg=quantifier)
+map dk  eval fm.cut(dirarg=dict(up=1), narg=quantifier)
+map ygg eval fm.copy(dirarg=dict(to=0), narg=quantifier)
+map yG  eval fm.copy(dirarg=dict(to=-1), narg=quantifier)
+map yj  eval fm.copy(dirarg=dict(down=1), narg=quantifier)
+map yk  eval fm.copy(dirarg=dict(up=1), narg=quantifier)
+
+
+<span class="Comment"># Searching</span>
+map /  console search%space
+map n  search_next
+map N  search_next forward=False
+map ct search_next order=tag
+map cs search_next order=size
+map ci search_next order=mimetype
+map cc search_next order=ctime
+map cm search_next order=mtime
+map ca search_next order=atime
+
+
+<span class="Comment"># Sorting</span>
+map or toggle_option sort_reverse
+map oz set sort=random
+map os chain set sort=size;      set sort_reverse=False
+map ob chain set sort=basename;  set sort_reverse=False
+map on chain set sort=natural;   set sort_reverse=False
+map om chain set sort=mtime;     set sort_reverse=False
+map oc chain set sort=ctime;     set sort_reverse=False
+map oa chain set sort=atime;     set sort_reverse=False
+map ot chain set sort=type;      set sort_reverse=False
+map oe chain set sort=extension; set sort_reverse=False
+
+map oS chain set sort=size;      set sort_reverse=True
+map oB chain set sort=basename;  set sort_reverse=True
+map oN chain set sort=natural;   set sort_reverse=True
+map oM chain set sort=mtime;     set sort_reverse=True
+map oC chain set sort=ctime;     set sort_reverse=True
+map oA chain set sort=atime;     set sort_reverse=True
+map oT chain set sort=type;      set sort_reverse=True
+map oE chain set sort=extension; set sort_reverse=True
+
+map dc get_cumulative_size
+
+
+<span class="Comment"># Settings</span>
+map zc    toggle_option collapse_preview
+map zd    toggle_option sort_directories_first
+map zh    toggle_option show_hidden
+map &lt;C-h&gt; toggle_option show_hidden
+map zi    toggle_option flushinput
+map zm    toggle_option mouse_enabled
+map zp    toggle_option preview_files
+map zP    toggle_option preview_directories
+map zs    toggle_option sort_case_insensitive
+map zu    toggle_option autoupdate_cumulative_size
+map zv    toggle_option use_preview_script
+map zf    console filter%space
+
+
+<span class="Comment"># Bookmarks</span>
+<span class="Comment">#map `&lt;any&gt;  enter_bookmark %any</span>
+<span class="Comment">#map '&lt;any&gt;  enter_bookmark %any</span>
+<span class="Comment">#map mm&lt;any&gt;  set_bookmark %any</span>
+<span class="Comment">#map um&lt;any&gt; unset_bookmark %any</span>
+
+<span class="Comment">#map m&lt;bg&gt;   draw_bookmarks</span>
+<span class="Comment">#copymap m&lt;bg&gt;  um&lt;bg&gt; `&lt;bg&gt; '&lt;bg&gt;</span>
+
+
+<span class="Comment"># Generate all the chmod bindings with some python help:</span>
+eval for arg in <span class="String">&quot;rwxXst&quot;</span>: cmd(<span class="String">&quot;map +u{0} shell -f chmod u+{0} %s&quot;</span>.format(arg))
+eval for arg in <span class="String">&quot;rwxXst&quot;</span>: cmd(<span class="String">&quot;map +g{0} shell -f chmod g+{0} %s&quot;</span>.format(arg))
+eval for arg in <span class="String">&quot;rwxXst&quot;</span>: cmd(<span class="String">&quot;map +o{0} shell -f chmod o+{0} %s&quot;</span>.format(arg))
+eval for arg in <span class="String">&quot;rwxXst&quot;</span>: cmd(<span class="String">&quot;map +a{0} shell -f chmod a+{0} %s&quot;</span>.format(arg))
+eval for arg in <span class="String">&quot;rwxXst&quot;</span>: cmd(<span class="String">&quot;map +{0}  shell -f chmod u+{0} %s&quot;</span>.format(arg))
+
+eval for arg in <span class="String">&quot;rwxXst&quot;</span>: cmd(<span class="String">&quot;map -u{0} shell -f chmod u-{0} %s&quot;</span>.format(arg))
+eval for arg in <span class="String">&quot;rwxXst&quot;</span>: cmd(<span class="String">&quot;map -g{0} shell -f chmod g-{0} %s&quot;</span>.format(arg))
+eval for arg in <span class="String">&quot;rwxXst&quot;</span>: cmd(<span class="String">&quot;map -o{0} shell -f chmod o-{0} %s&quot;</span>.format(arg))
+eval for arg in <span class="String">&quot;rwxXst&quot;</span>: cmd(<span class="String">&quot;map -a{0} shell -f chmod a-{0} %s&quot;</span>.format(arg))
+eval for arg in <span class="String">&quot;rwxXst&quot;</span>: cmd(<span class="String">&quot;map -{0}  shell -f chmod u-{0} %s&quot;</span>.format(arg))
+
+
+<span class="Comment">###CONSOLE KEYS###</span>
+<span class="Comment"># Basic</span>
+cmap &lt;tab&gt;   eval fm.ui.console.tab()
+cmap &lt;s-tab&gt; eval fm.ui.console.tab(-1)
+cmap &lt;ESC&gt;   eval fm.ui.console.close()
+cmap &lt;CR&gt;    eval fm.ui.console.execute()
+<span class="Comment">#cmap &lt;C-l&gt;   redraw_window</span>
+
+copycmap &lt;ESC&gt; &lt;C-c&gt;
+copycmap &lt;CR&gt;  &lt;C-j&gt;
+
+
+<span class="Comment"># Move around</span>
+cmap &lt;up&gt;    eval fm.ui.console.history_move(-1)
+cmap &lt;down&gt;  eval fm.ui.console.history_move(1)
+cmap &lt;left&gt;  eval fm.ui.console.move(left=1)
+cmap &lt;right&gt; eval fm.ui.console.move(right=1)
+cmap &lt;home&gt;  eval fm.ui.console.move(right=0, absolute=True)
+cmap &lt;end&gt;   eval fm.ui.console.move(right=-1, absolute=True)
+
+
+<span class="Comment"># Line Editing</span>
+cmap &lt;backspace&gt;  eval fm.ui.console.delete(-1)
+cmap &lt;delete&gt;     eval fm.ui.console.delete(0)
+cmap &lt;C-w&gt;        eval fm.ui.console.delete_word()
+cmap &lt;A-d&gt;        eval fm.ui.console.delete_word(backward=False)
+cmap &lt;C-k&gt;        eval fm.ui.console.delete_rest(1)
+cmap &lt;C-u&gt;        eval fm.ui.console.delete_rest(-1)
+cmap &lt;C-y&gt;        eval fm.ui.console.paste()
+
+<span class="Comment"># And of course the emacs way</span>
+<span class="Comment">#copycmap &lt;up&gt;        &lt;C-p&gt;</span>
+<span class="Comment">#copycmap &lt;down&gt;      &lt;C-n&gt;</span>
+<span class="Comment">#copycmap &lt;left&gt;      &lt;C-b&gt;</span>
+<span class="Comment">#copycmap &lt;right&gt;     &lt;C-f&gt;</span>
+<span class="Comment">#copycmap &lt;home&gt;      &lt;C-a&gt;</span>
+<span class="Comment">#copycmap &lt;end&gt;       &lt;C-e&gt;</span>
+<span class="Comment">#copycmap &lt;delete&gt;    &lt;C-d&gt;</span>
+<span class="Comment">#copycmap &lt;backspace&gt; &lt;C-h&gt;</span>
+
+
+<span class="Comment"># Note: There are multiple ways to express backspaces.  &lt;backspace&gt; (code 263)</span>
+<span class="Comment"># and &lt;backspace2&gt; (code 127).  To be sure, use both.</span>
+copycmap &lt;backspace&gt; &lt;backspace2&gt;
+
+<span class="Comment"># This special expression allows typing in numerals:</span>
+cmap &lt;allow_quantifiers&gt; false
+
+
+
+<span class="Comment">###PAGER KEYS###</span>
+<span class="Comment"># Movement</span>
+pmap  &lt;down&gt;      pager_move  down=1
+pmap  &lt;up&gt;        pager_move  up=1
+pmap  &lt;left&gt;      pager_move  left=4
+pmap  &lt;right&gt;     pager_move  right=4
+pmap  &lt;home&gt;      pager_move  to=0
+pmap  &lt;end&gt;       pager_move  to=-1
+pmap  &lt;pagedown&gt;  pager_move  down=1.0  pages=True
+pmap  &lt;pageup&gt;    pager_move  up=1.0    pages=True
+pmap  &lt;C-d&gt;       pager_move  down=0.5  pages=True
+pmap  &lt;C-u&gt;       pager_move  up=0.5    pages=True
+
+copypmap &lt;UP&gt;       k  &lt;C-p&gt;
+copypmap &lt;DOWN&gt;     j  &lt;C-n&gt; &lt;CR&gt;
+copypmap &lt;LEFT&gt;     h
+copypmap &lt;RIGHT&gt;    l
+copypmap &lt;HOME&gt;     g
+copypmap &lt;END&gt;      G
+copypmap &lt;C-d&gt;      d
+copypmap &lt;C-u&gt;      u
+copypmap &lt;PAGEDOWN&gt; n  f  &lt;C-F&gt;  &lt;Space&gt;
+copypmap &lt;PAGEUP&gt;   p  b  &lt;C-B&gt;
+
+
+<span class="Comment"># Basic</span>
+<span class="Comment">#pmap     &lt;C-l&gt; redraw_window</span>
+pmap     &lt;ESC&gt; pager_close
+copypmap &lt;ESC&gt; q Q i &lt;F3&gt;
+pmap E      edit_file
+
+<span class="Comment"># ===================================================================</span>
+<span class="Comment"># == Taskview Keybindings</span>
+<span class="Comment"># ===================================================================</span>
+
+<span class="Comment"># Movement</span>
+tmap &lt;up&gt;        taskview_move up=1
+tmap &lt;down&gt;      taskview_move down=1
+tmap &lt;home&gt;      taskview_move to=0
+tmap &lt;end&gt;       taskview_move to=-1
+tmap &lt;pagedown&gt;  taskview_move down=1.0  pages=True
+tmap &lt;pageup&gt;    taskview_move up=1.0    pages=True
+tmap &lt;C-d&gt;       taskview_move down=0.5  pages=True
+tmap &lt;C-u&gt;       taskview_move up=0.5    pages=True
+
+copytmap &lt;UP&gt;       k  &lt;C-p&gt;
+copytmap &lt;DOWN&gt;     j  &lt;C-n&gt; &lt;CR&gt;
+copytmap &lt;HOME&gt;     g
+copytmap &lt;END&gt;      G
+copytmap &lt;C-u&gt;      u
+copytmap &lt;PAGEDOWN&gt; n  f  &lt;C-F&gt;  &lt;Space&gt;
+copytmap &lt;PAGEUP&gt;   p  b  &lt;C-B&gt;
+
+<span class="Comment"># Changing priority and deleting tasks</span>
+tmap J          eval -q fm.ui.taskview.task_move(-1)
+tmap K          eval -q fm.ui.taskview.task_move(0)
+tmap dd         eval -q fm.ui.taskview.task_remove()
+tmap &lt;pagedown&gt; eval -q fm.ui.taskview.task_move(-1)
+tmap &lt;pageup&gt;   eval -q fm.ui.taskview.task_move(0)
+tmap &lt;delete&gt;   eval -q fm.ui.taskview.task_remove()
+
+<span class="Comment"># Basic</span>
+<span class="Comment">#tmap &lt;C-l&gt; redraw_window</span>
+tmap &lt;ESC&gt; taskview_close
+copytmap &lt;ESC&gt; q Q w &lt;C-c&gt;
+
+
+map sp console shell bash speedvid.sh %f%space
+map x shell chmod -x %s
+
+<span class="Comment">#General</span>
+map V console shell vim%space
+map cW bulkrename %s
+map mkd console mkdir%space
+map sc console shell ln -sT%space
+map D console delete
+map X shell extract %f
+map Z shell tar -cvzf %f.tar.gz %s
+map &lt;C-f&gt; fzf_select
+map &lt;C-l&gt; fzf_locate
+
+<span class="Comment">#Document Manipulation</span>
+map p1s shell lpr -o sides=one-sided %f
+map p2s shell lpr -o sides=two-sided-long-edge %f
+map MP shell pandoc %f -o %f.pdf
+map MX shell xelatex %f
+map ML shell latex %f
+map TC shell texclear
+<span class="Comment">#map Txa console shell cp ~/Documents/LaTeX/article.tex%space</span>
+<span class="Comment">#map Txs console shell cp ~/Documents/LaTeX/beamer.tex%space</span>
+<span class="Comment">#map Txh console shell cp ~/Documents/LaTeX/handout.tex%space</span>
+
+<span class="Comment">#Image commands</span>
+map bg shell setbg %f
+map bw shell wal -i %f &amp;&amp; cp %f ~/.config/wall.png
+map C shell killall w3mimgdisplay &amp;&amp; convert -rotate 90 %s %s
+map F shell killall w3mimgdisplay &amp;&amp; convert -flop %s %s
+map bl shell killall w3mimgdisplay &amp;&amp; convert %s -resize 1440x1080\&gt; bl_%s
+map TR shell convert %s -transparent white %s
+
+<span class="Comment">#Music (mpd) shortcuts</span>
+map MS shell mpd
+map MK shell killall mpd
+map Ma shell mpc add <span class="String">&quot;%s&quot;</span>
+map Ms shell mpc play
+map Mp shell mpc toggle
+map Mn shell mpc next
+map Mb shell mpc prev
+map MN shell mpc stop &amp;&amp; mpc clear &amp;&amp; mpc add <span class="String">&quot;%s&quot;</span>
+map Mo shell mpc seek 0%
+
+<span class="Comment">#Audio tagging (Requires eyeD3)</span>
+map Ta eval fm.open_console(<span class="String">'shell eyeD3 -a  '</span> + fm.thisfile.relative_path, position=15)
+<span class="Comment">#Artist</span>
+map TA eval fm.open_console(<span class="String">'shell eyeD3 -A  '</span> + fm.thisfile.relative_path, position=15)
+<span class="Comment">#Album</span>
+map Tb eval fm.open_console(<span class="String">'shell eyeD3 -b  '</span> + fm.thisfile.relative_path, position=15)
+<span class="Comment">#Album artist</span>
+map Tt eval fm.open_console(<span class="String">'shell eyeD3 -t &quot;&quot; '</span> + fm.thisfile.relative_path, position=16)
+map Tn eval fm.open_console(<span class="String">'shell eyeD3 -n &quot;&quot; '</span> + fm.thisfile.relative_path, position=16)
+
+<span class="Comment">#Downloading</span>
+map ytv console shell youtube-dl -ic%space
+map yta console shell youtube-dl -xic%space
+</pre>
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<title>~/.config/xmobar/xmobarrc0.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="haskell">
+<meta name="settings" content="number_lines,use_css,no_foldcolumn,expand_tabs,line_ids,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.GruvboxPurple { color: #d787af; }
+.LineNr { color: #767676; }
+.Normal { color: #ffd7af; background-color: #262626; padding-bottom: 1px; }
+.Comment { color: #8a8a8a; }
+.String { color: #afaf00; }
+-->
+</style>
+<script type='text/javascript'>
+<!--
+
+/* function to open any folds containing a jumped-to line before jumping to it */
+function JumpToLine()
+{
+  var lineNum;
+  lineNum = window.location.hash;
+  lineNum = lineNum.substr(1); /* strip off '#' */
+
+  if (lineNum.indexOf('L') == -1) {
+    lineNum = 'L'+lineNum;
+  }
+  lineElem = document.getElementById(lineNum);
+  /* Always jump to new location even if the line was hidden inside a fold, or
+   * we corrected the raw number to a line ID.
+   */
+  if (lineElem) {
+    lineElem.scrollIntoView(true);
+  }
+  return true;
+}
+if ('onhashchange' in window) {
+  window.onhashchange = JumpToLine;
+}
+
+-->
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+</head>
+
+<body onload='JumpToLine();'>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+
+    <h2>Xmobar</h2>
+    <p>Status bar for xmonad window manager</p>
+
+<pre id='vimCodeElement'>
+<span class="Comment">-- <a href="http://projects.haskell.org/xmobar/">http://projects.haskell.org/xmobar/</a></span>
+<span class="Comment">-- install xmobar with these flags: --flags=&quot;with_alsa&quot; --flags=&quot;with_mpd&quot; --flags=&quot;with_xft&quot;  OR --flags=&quot;all_extensions&quot;</span>
+<span class="Comment">-- you can find weather location codes here: <a href="http://weather.noaa.gov/index.html">http://weather.noaa.gov/index.html</a></span>
+
+Config { font    <span class="Normal">=</span> <span class="String">&quot;xft:TerminessTTF Nerd Font:weight=bold:pixelsize=14:antialias=true:hinting=true&quot;</span>
+       , additionalFonts <span class="Normal">=</span> [ <span class="String">&quot;xft:TerminessTTF Nerd Font:pixelsize=14:antialias=true:hinting=true&quot;</span>
+                           , <span class="String">&quot;xft:TerminessTTF Nerd Font:pixelsize=18:antialias=true:hinting=true&quot;</span>
+                           , <span class="String">&quot;xft:FontAwesome:pixelsize=19&quot;</span>
+                           ]
+       , bgColor <span class="Normal">=</span> <span class="String">&quot;#1f1f1f&quot;</span>
+       , fgColor <span class="Normal">=</span> <span class="String">&quot;#f8f8f8&quot;</span>
+       , position <span class="Normal">=</span> Static { xpos <span class="Normal">=</span> <span class="GruvboxPurple">0</span> , ypos <span class="Normal">=</span> <span class="GruvboxPurple">0</span>, width <span class="Normal">=</span> <span class="GruvboxPurple">1920</span>, height <span class="Normal">=</span> <span class="GruvboxPurple">25</span> }
+       , lowerOnStart <span class="Normal">=</span> True
+       , hideOnStart <span class="Normal">=</span> False
+       , allDesktops <span class="Normal">=</span> True
+       , persistent <span class="Normal">=</span> True
+       , iconRoot <span class="Normal">=</span> <span class="String">&quot;~/.xmonad/xpm/&quot;</span>  <span class="Comment">-- default: &quot;.&quot;</span>
+       , commands <span class="Normal">=</span> [
+                      <span class="Comment">-- Time and date</span>
+                      Run Date <span class="String">&quot;%b %d %Y %H:%M&quot;</span> <span class="String">&quot;date&quot;</span> <span class="GruvboxPurple">100</span>
+                      <span class="Comment">-- Cpu usage in percent</span>
+                    , Run Cpu [<span class="String">&quot;-t&quot;</span>, <span class="String">&quot; &lt;total&gt;%&quot;</span>,<span class="String">&quot;-H&quot;</span>,<span class="String">&quot;50&quot;</span>,<span class="String">&quot;--high&quot;</span>,<span class="String">&quot;red&quot;</span>] <span class="GruvboxPurple">100</span>
+                      <span class="Comment">-- Ram used number and percent</span>
+                    , Run Memory [<span class="String">&quot;-t&quot;</span>, <span class="String">&quot; &lt;used&gt;M &lt;usedratio&gt;%&quot;</span>] <span class="GruvboxPurple">100</span>
+                      <span class="Comment">-- Disk space free</span>
+                    , Run DiskU [(<span class="String">&quot;/&quot;</span>, <span class="String">&quot;&lt;free&gt; free&quot;</span>)] [] <span class="GruvboxPurple">100</span>
+<span class="Comment">-- Battery</span>
+, Run Battery [
+<span class="String">&quot;-t&quot;</span>, <span class="String">&quot;&lt;acstatus&gt; &lt;left&gt;% - &lt;timeleft&gt;&quot;</span>,
+<span class="String">&quot;--&quot;</span>,
+<span class="Comment">--&quot;-c&quot;, &quot;charge_full&quot;,</span>
+<span class="String">&quot;-O&quot;</span>, <span class="String">&quot;AC&quot;</span>,
+<span class="String">&quot;-o&quot;</span>, <span class="String">&quot;BAT&quot;</span>,
+<span class="String">&quot;-h&quot;</span>, <span class="String">&quot;green&quot;</span>,
+<span class="String">&quot;-l&quot;</span>, <span class="String">&quot;red&quot;</span>
+] <span class="GruvboxPurple">100</span>
+<span class="Comment">-- Volume Incicator</span>
+, Run Com <span class="String">&quot;/bin/bash&quot;</span> [<span class="String">&quot;-c&quot;</span>, <span class="String">&quot;~/sc/get-volume.sh&quot;</span>]  <span class="String">&quot;myvolume&quot;</span> <span class="GruvboxPurple">50</span>
+<span class="Comment">-- CPU Temperature</span>
+ , Run Com <span class="String">&quot;/bin/bash&quot;</span> [<span class="String">&quot;-c&quot;</span>, <span class="String">&quot;~/sc/get-temp.sh&quot;</span>]  <span class="String">&quot;mytemp&quot;</span> <span class="GruvboxPurple">100</span>
+
+                      <span class="Comment">-- Prints out the left side items such as workspaces, layout, etc.</span>
+                      <span class="Comment">-- The workspaces are 'clickable' in my configs.</span>
+                    , Run UnsafeStdinReader
+                    ]
+       , sepChar <span class="Normal">=</span> <span class="String">&quot;%&quot;</span>
+       , alignSep <span class="Normal">=</span> <span class="String">&quot;}{&quot;</span>
+       , template <span class="Normal">=</span>  <span class="String">&quot;&lt;icon=haskell_20.xpm/&gt; &lt;fc=#666666&gt;|&lt;/fc&gt; %UnsafeStdinReader% }{ &lt;fc=#F2E5BC&gt; &lt;fn=1&gt;墳 &lt;/fn&gt; %myvolume% &lt;/fc&gt;&lt;fc=#666666&gt; &lt;fn=2&gt;|&lt;/fn&gt; &lt;/fc&gt;&lt;fc=#EA6962&gt; &lt;fn=1&gt; &lt;/fn&gt; %mytemp% &lt;/fc&gt;&lt;fc=#666666&gt; &lt;fn=2&gt;|&lt;/fn&gt;&lt;/fc&gt; &lt;fc=#A9B665&gt; &lt;fn=1&gt;ﱨ &lt;/fn&gt; %cpu% &lt;/fc&gt;&lt;fc=#666666&gt; &lt;fn=2&gt;|&lt;/fn&gt;&lt;/fc&gt; &lt;fc=#945E80&gt; &lt;fn=1&gt; &lt;/fn&gt;%memory% &lt;/fc&gt;&lt;fc=#666666&gt; &lt;fn=2&gt;|&lt;/fn&gt;&lt;/fc&gt; &lt;fc=#D8A657&gt; &lt;fn=1&gt; &lt;/fn&gt; %disku% &lt;/fc&gt;&lt;fc=#666666&gt; &lt;fn=2&gt;|&lt;/fn&gt;&lt;/fc&gt; &lt;fc=#a6e22e&gt; &lt;fn=1&gt;  &lt;/fn&gt; %battery% &lt;/fc&gt;&lt;fc=#666666&gt; &lt;fn=2&gt;|&lt;/fn&gt;&lt;/fc&gt; &lt;fc=#f8f8f2&gt; &lt;fn=1&gt; &lt;/fn&gt; %date%  &lt;/fc&gt;&quot;</span>
+       }
+</pre>
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

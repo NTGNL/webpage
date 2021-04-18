@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/sc/coordinator/coordClick.sh.html</title>
+<meta name="syntax" content="bash">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.Normal { color: #ffd7af; background-color: #262626; padding-bottom: 1px; }
+.GruvboxBlue { color: #87afaf; }
+.GruvboxPurple { color: #d787af; }
+.GruvboxAqua { color: #87af87; }
+.GruvboxOrange { color: #ff8700; }
+.GruvboxRed { color: #d75f5f; }
+.GruvboxGreenBold { color: #afaf00; font-weight: bold; }
+.Comment { color: #8a8a8a; }
+.String { color: #afaf00; }
+-->
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+
+    <h3>Other scripts</h3>
+    <h4>A list of my other random scripts</h4>
+    <p>Some of these are for word processing and getting system resources like fan
+    speed, temperature, and system volume for xmobar. One is for screen recording etc..
+    I will add more random scripts here since I don't really have any other place to put them
+    or maybe I will organise it later.</p>
+
+
+<pre id='vimCodeElement'>
+
+
+<span class="Comment">#!/bin/bash</span>
+<span class="GruvboxBlue">fan</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxRed">grep</span><span class="GruvboxOrange"> </span><span class="Normal">&quot;</span><span class="String">speed</span><span class="Normal">&quot;</span><span class="GruvboxOrange"> /proc/acpi/ibm/fan </span><span class="Normal">|</span><span class="GruvboxOrange"> </span><span class="GruvboxRed">sed</span><span class="GruvboxOrange"> </span><span class="GruvboxOrange">-n</span><span class="GruvboxOrange"> </span><span class="Normal">'</span><span class="String">1p</span><span class="Normal">'</span><span class="GruvboxOrange"> </span><span class="Normal">|</span><span class="GruvboxOrange"> awk </span><span class="Normal">'</span><span class="String">{print int($2/55)}</span><span class="Normal">'</span><span class="GruvboxAqua">)</span>
+
+<span class="GruvboxRed">echo</span><span class="String"> </span><span class="GruvboxAqua">$fan</span><span class="String">%</span>
+
+<span class="GruvboxRed">exit</span> <span class="GruvboxPurple">0</span>
+<span class="Comment">#!/bin/bash</span>
+<span class="GruvboxBlue">temp</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">sensors </span><span class="Normal">|</span><span class="GruvboxOrange"> </span><span class="GruvboxRed">grep</span><span class="GruvboxOrange"> CPU </span><span class="Normal">|</span><span class="GruvboxOrange"> awk </span><span class="Normal">'</span><span class="String">{print $2}</span><span class="Normal">'</span><span class="GruvboxAqua">)</span>
+
+<span class="GruvboxRed">echo</span><span class="String"> </span><span class="GruvboxAqua">$temp</span>
+
+<span class="GruvboxRed">exit</span> <span class="GruvboxPurple">0</span>
+<span class="Comment">#!/bin/bash</span>
+<span class="GruvboxBlue">vol</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">amixer get Master </span><span class="Normal">|</span><span class="GruvboxOrange"> awk </span><span class="GruvboxOrange">-F</span><span class="Normal">'</span><span class="String">[]%[]</span><span class="Normal">'</span><span class="GruvboxOrange"> </span><span class="Normal">'</span><span class="String">/%/ {if ($7 == &quot;off&quot;) { print &quot;MM&quot; } else { print $2 }}</span><span class="Normal">'</span><span class="GruvboxOrange"> </span><span class="Normal">|</span><span class="GruvboxOrange"> head </span><span class="GruvboxOrange">-n</span><span class="GruvboxOrange"> </span><span class="GruvboxPurple">1</span><span class="GruvboxAqua">)</span>
+
+<span class="GruvboxRed">echo</span><span class="String"> </span><span class="GruvboxAqua">$vol</span><span class="String">%</span>
+
+<span class="GruvboxRed">exit</span> <span class="GruvboxPurple">0</span>
+<span class="Comment">#!/bin/bash</span>
+
+glava <span class="GruvboxOrange">--desktop</span> <span class="GruvboxOrange">--force-mod=circle</span>
+<span class="Comment">#glava --desktop</span>
+
+<span class="Comment">#!/bin/sh</span>
+<span class="GruvboxRed">sleep</span> <span class="GruvboxPurple">3</span>
+scrot
+<span class="Comment">#!/bin/bash</span>
+byzanz-record <span class="GruvboxOrange">--delay=1</span> <span class="GruvboxOrange">-d</span> <span class="GruvboxPurple">10</span> <span class="GruvboxOrange">-x</span> <span class="GruvboxPurple">0</span> <span class="GruvboxOrange">-y</span> <span class="GruvboxPurple">0</span> <span class="GruvboxOrange">-w</span> <span class="GruvboxPurple">1920</span> <span class="GruvboxOrange">-h</span> <span class="GruvboxPurple">1080</span> ~/Pictures/screen.gif
+
+<span class="Comment">#!/bin/bash</span>
+<span class="GruvboxBlue">buffer</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxRed">grep</span><span class="GruvboxOrange"> </span><span class="GruvboxOrange">-oE</span><span class="GruvboxOrange"> </span><span class="Normal">'</span><span class="String">((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])</span><span class="Normal">'</span><span class="GruvboxOrange"> access.log </span><span class="Normal">|</span><span class="GruvboxOrange"> </span><span class="GruvboxRed">sort</span><span class="GruvboxOrange"> </span><span class="GruvboxOrange">-u</span><span class="GruvboxAqua">)</span>
+<span class="GruvboxRed">for</span> val <span class="GruvboxRed">in</span> <span class="GruvboxAqua">$buffer</span>; <span class="GruvboxRed">do</span>
+  <span class="GruvboxRed">echo</span><span class="String"> -n </span><span class="GruvboxAqua">$val</span><span class="String"> </span><span class="Normal">&quot;</span><span class="String">  </span><span class="Normal">&quot;</span>
+  geoiplookup <span class="GruvboxAqua">$val</span>
+<span class="GruvboxRed">done</span>
+
+<span class="Comment">#!/bin/bash</span>
+
+<span class="Comment">#echo &quot; Enter word for generating all cases  &quot;</span>
+<span class="Comment">#read a</span>
+<span class="Comment">#echo ${a:2:1}</span>
+<span class="Comment">#echo {a,A}{b,B}{c,C}{d,D}{e,E}</span>
+<span class="Comment">#for (( i = 0; i &lt; i&lt;${#a} i++ )); do</span>
+<span class="Comment">#    echo {a,A}{b,B}{c,C}{d,D}{e,E}</span>
+<span class="Comment">#    echo {${a:$i:1},${a:$i:1} | tr [a-z] [A-Z]}</span>
+<span class="Comment">#done</span>
+<span class="GruvboxGreenBold">lc(){</span>
+    <span class="GruvboxRed">case</span> <span class="Normal">&quot;</span><span class="GruvboxAqua">$1</span><span class="Normal">&quot;</span> <span class="GruvboxRed">in</span>
+        <span class="GruvboxOrange">[</span>A-Z<span class="GruvboxOrange">]</span><span class="GruvboxRed">)</span>
+        <span class="GruvboxBlue">n</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxRed">printf</span><span class="GruvboxOrange"> </span><span class="Normal">&quot;</span><span class="String">%d</span><span class="Normal">&quot;</span><span class="GruvboxOrange"> </span><span class="Normal">&quot;</span><span class="String">'</span><span class="GruvboxAqua">$1</span><span class="Normal">&quot;</span><span class="GruvboxAqua">)</span>
+        <span class="GruvboxBlue">n</span>=<span class="GruvboxAqua">$((</span><span class="GruvboxOrange">n+</span><span class="GruvboxPurple">32</span><span class="GruvboxAqua">))</span>
+        <span class="GruvboxRed">printf</span> <span class="GruvboxOrange">\\</span><span class="GruvboxAqua">$(</span><span class="GruvboxRed">printf</span><span class="GruvboxOrange"> </span><span class="Normal">&quot;</span><span class="String">%o</span><span class="Normal">&quot;</span><span class="GruvboxOrange"> </span><span class="Normal">&quot;</span><span class="GruvboxAqua">$n</span><span class="Normal">&quot;</span><span class="GruvboxAqua">)</span>
+        <span class="GruvboxRed">;;</span>
+        *<span class="GruvboxRed">)</span>
+        <span class="GruvboxRed">printf</span> <span class="Normal">&quot;</span><span class="String">%s</span><span class="Normal">&quot;</span> <span class="Normal">&quot;</span><span class="GruvboxAqua">$1</span><span class="Normal">&quot;</span>
+        <span class="GruvboxRed">;;</span>
+    <span class="GruvboxRed">esac</span>
+<span class="GruvboxGreenBold">}</span>
+<span class="GruvboxRed">read</span> word
+<span class="GruvboxRed">for((</span><span class="GruvboxRed">i</span><span class="GruvboxRed">=</span><span class="String">0</span><span class="GruvboxRed">;i</span><span class="GruvboxRed">&lt;</span><span class="GruvboxRed">${#word};i++</span><span class="GruvboxRed">))</span>
+<span class="GruvboxRed">do</span>
+    <span class="GruvboxBlue">ch</span>=<span class="Normal">&quot;</span><span class="GruvboxAqua">${</span><span class="GruvboxAqua">word</span><span class="Normal">:</span><span class="GruvboxAqua">$i</span><span class="Normal">:1</span><span class="GruvboxAqua">}</span><span class="Normal">&quot;</span>
+    lc <span class="Normal">&quot;</span><span class="GruvboxAqua">$ch</span><span class="Normal">&quot;</span>
+<span class="GruvboxRed">done</span>
+
+</pre>
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

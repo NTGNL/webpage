@@ -1,0 +1,116 @@
+:root{
+--dark0_hard:#1d2021;
+--dark0:#262626;
+--dark0_soft:#32302f;
+--dark1:#3c3836;
+--dark2:#504945;
+--dark3:#665c54;
+--dark4:#7c6f64;
+--gray0:#928374;
+--light0_hard:#f9f5d7;
+--light0:#fbf1c7;
+--light0_soft:#f2e5bc;
+--light1:#ebdbb2;
+--light2:#d5c4a1;
+--light3:#bdae93;
+--light4:#a89984;
+--bright_red:#fb4934;
+--bright_green:#b8bb26;
+--bright_yellow:#fabd2f;
+--bright_blue:#83a598;
+--bright_purple:#d3869b;
+--bright_aqua:#8ec07c;
+--bright_orange:#fe8019;
+--neutral_red:#cc241d;
+--neutral_green:#98971a;
+--neutral_yellow:#d79921;
+--neutral_blue:#458588;
+--neutral_purple:#b16286;
+--neutral_aqua:#689d6a;
+--neutral_orange:#d65d0e;
+--faded_red:#9d0006;
+--faded_green:#79740e;
+--faded_yellow:#b57614;
+--faded_blue:#076678;
+--faded_purple:#8f3f71;
+--faded_aqua:#427b58;
+--faded_orange:#af3a03;
+}
+
+@font-face {
+  font-family: 'TerminessTTF-Mono', monospace;
+  src: url(TerminessTTF-Mono.ttf) format('truetype');
+}
+
+body {
+    background-color: var(--dark0);
+    font-family: 'TerminessTTF-Mono', monospace;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    color: var(--neutral_blue);
+    text-shadow: 6px 6px var(--dark0_hard);
+}
+
+h2 {
+    color: var(--neutral_yellow);
+    text-shadow: 6px 6px var(--dark0_hard);
+
+}
+
+h3 {
+    color: var(--faded_yellow);
+    text-shadow: 6px 6px var(--dark0_hard);
+}
+
+h4 {
+    color: var(--neutral_orange);
+    text-shadow: 6px 6px var(--dark0_hard);
+}
+
+p {
+    color: var(--light2);
+    margin-right: 20px;
+}
+
+blockquote {
+    color: var(--light4);
+}
+
+li {
+    color: var(--neutral_purple);
+}
+
+hr {
+    border-color: var(--neutral_red);
+    width:80%;
+    text-align:left;
+    margin-left:0;
+}
+
+a {
+    color: var(--bright_blue);
+    text-shadow: 2px 2px var(--dark0_hard); */
+}
+
+ul.head {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li.head {
+    float: left;
+}
+
+a.head {
+    display: block;
+    padding: 10px;
+    color: var(--light1);
+    text-decoration: none;
+    border: 10px;
+}

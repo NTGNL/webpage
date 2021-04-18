@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/.bashrc.html</title>
+<meta name="syntax" content="bash">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.GruvboxOrange { color: #ff8700; }
+.GruvboxGreenBold { color: #afaf00; font-weight: bold; }
+.GruvboxRed { color: #d75f5f; }
+.Normal { color: #ffd7af; background-color: #262626; padding-bottom: 1px; }
+.GruvboxBlue { color: #87afaf; }
+.GruvboxPurple { color: #d787af; }
+.GruvboxAqua { color: #87af87; }
+.Comment { color: #8a8a8a; }
+.String { color: #afaf00; }
+-->
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+
+    <h2>Bash</h2>
+    <p>bash .bashrc config file</p>
+
+<pre id='vimCodeElement'>
+<span class="Comment">#!/bin/bash</span>
+
+<span class="Comment"># If not running interactively, don't do anything</span>
+<span class="GruvboxOrange">[[</span> <span class="GruvboxAqua">$-</span> <span class="GruvboxRed">!=</span> <span class="String">*i*</span> <span class="GruvboxOrange">]]</span> &amp;&amp; <span class="GruvboxRed">return</span>
+
+<span class="Comment">#   Settings</span>
+
+<span class="Comment">#if [[ ! $TERM =~ screen ]]; then</span>
+<span class="Comment">#        exec tmux</span>
+<span class="Comment">#fi</span>
+
+<span class="GruvboxRed">bind</span> <span class="Normal">'</span><span class="String">set show-all-if-ambiguous on</span><span class="Normal">'</span>
+<span class="GruvboxRed">bind</span> <span class="Normal">'</span><span class="String">TAB:menu-complete</span><span class="Normal">'</span>
+
+<span class="Comment"># TERMCAP Setup</span>
+<span class="Comment"># enter blinking mode - red</span>
+<span class="GruvboxRed">export</span><span class="GruvboxBlue"> LESS_TERMCAP_mb=</span><span class="GruvboxAqua">$(</span><span class="GruvboxRed">printf</span><span class="GruvboxOrange"> </span><span class="Normal">'</span><span class="String">\e[01;31m</span><span class="Normal">'</span><span class="GruvboxAqua">)</span>
+<span class="Comment"># enter double-bright mode - bold, magenta</span>
+<span class="GruvboxRed">export</span><span class="GruvboxBlue"> LESS_TERMCAP_md=</span><span class="GruvboxAqua">$(</span><span class="GruvboxRed">printf</span><span class="GruvboxOrange"> </span><span class="Normal">'</span><span class="String">\e[01;35m</span><span class="Normal">'</span><span class="GruvboxAqua">)</span>
+<span class="Comment"># turn off all appearance modes (mb, md, so, us)</span>
+<span class="GruvboxRed">export</span><span class="GruvboxBlue"> LESS_TERMCAP_me=</span><span class="GruvboxAqua">$(</span><span class="GruvboxRed">printf</span><span class="GruvboxOrange"> </span><span class="Normal">'</span><span class="String">\e[0m</span><span class="Normal">'</span><span class="GruvboxAqua">)</span>
+<span class="Comment"># leave standout mode</span>
+<span class="GruvboxRed">export</span><span class="GruvboxBlue"> LESS_TERMCAP_se=</span><span class="GruvboxAqua">$(</span><span class="GruvboxRed">printf</span><span class="GruvboxOrange"> </span><span class="Normal">'</span><span class="String">\e[0m</span><span class="Normal">'</span><span class="GruvboxAqua">)</span>
+<span class="Comment"># enter standout mode - green</span>
+<span class="GruvboxRed">export</span><span class="GruvboxBlue"> LESS_TERMCAP_so=</span><span class="GruvboxAqua">$(</span><span class="GruvboxRed">printf</span><span class="GruvboxOrange"> </span><span class="Normal">'</span><span class="String">\e[01;32m</span><span class="Normal">'</span><span class="GruvboxAqua">)</span>
+<span class="Comment"># leave underline mode</span>
+<span class="GruvboxRed">export</span><span class="GruvboxBlue"> LESS_TERMCAP_ue=</span><span class="GruvboxAqua">$(</span><span class="GruvboxRed">printf</span><span class="GruvboxOrange"> </span><span class="Normal">'</span><span class="String">\e[0m</span><span class="Normal">'</span><span class="GruvboxAqua">)</span>
+<span class="Comment"># enter underline mode - blue</span>
+<span class="GruvboxRed">export</span><span class="GruvboxBlue"> LESS_TERMCAP_us=</span><span class="GruvboxAqua">$(</span><span class="GruvboxRed">printf</span><span class="GruvboxOrange"> </span><span class="Normal">'</span><span class="String">\e[04;34m</span><span class="Normal">'</span><span class="GruvboxAqua">)</span>
+
+<span class="Comment"># Add custom enviroment</span>
+<span class="GruvboxBlue">PATH</span>=<span class="GruvboxAqua">$PATH</span>:~/Scripts
+
+<span class="Comment"># PS1 Setup</span>
+<span class="GruvboxBlue">PROMPT_COMMAND</span>=__prompt_command
+
+<span class="GruvboxGreenBold">__prompt_command() {</span>
+    <span class="GruvboxRed">local</span><span class="GruvboxBlue"> EXITCODE=</span><span class="Normal">&quot;</span><span class="GruvboxAqua">$?</span><span class="Normal">&quot;</span>
+
+    <span class="GruvboxRed">local</span><span class="GruvboxBlue"> HOSTCOLOR=</span><span class="Normal">&quot;</span><span class="String">5</span><span class="Normal">&quot;</span>
+    <span class="GruvboxRed">local</span><span class="GruvboxBlue"> USERCOLOR=</span><span class="Normal">&quot;</span><span class="String">3</span><span class="Normal">&quot;</span>
+    <span class="GruvboxRed">local</span><span class="GruvboxBlue"> PATHCOLOR=</span><span class="Normal">&quot;</span><span class="String">4</span><span class="Normal">&quot;</span>
+
+    <span class="GruvboxAqua">PS1</span><span class="Normal">=</span><span class="Normal">&quot;</span><span class="GruvboxOrange">\e</span><span class="String">[3</span><span class="GruvboxAqua">${</span><span class="GruvboxAqua">PATHCOLOR</span><span class="GruvboxAqua">}</span><span class="String">m </span><span class="GruvboxOrange">\w</span><span class="String"> </span><span class="Normal">&quot;</span><span class="Normal">;</span>
+
+    <span class="GruvboxRed">if </span><span class="Normal">[</span> <span class="GruvboxAqua">$EXITCODE</span> <span class="GruvboxRed">==</span> <span class="GruvboxPurple">0</span> <span class="Normal">]</span><span class="Normal">;</span> <span class="GruvboxRed">then</span>
+        <span class="GruvboxAqua">PS1</span><span class="Normal">+=</span><span class="Normal">&quot;</span><span class="GruvboxOrange">\e</span><span class="String">[32m</span><span class="GruvboxOrange">\$</span><span class="String"> </span><span class="GruvboxOrange">\e</span><span class="String">[0m</span><span class="Normal">&quot;</span><span class="Normal">;</span>
+    <span class="GruvboxRed">else</span>
+        <span class="GruvboxAqua">PS1</span><span class="Normal">+=</span><span class="Normal">&quot;</span><span class="GruvboxOrange">\e</span><span class="String">[31m</span><span class="GruvboxOrange">\$</span><span class="String"> </span><span class="GruvboxOrange">\e</span><span class="String">[0m</span><span class="Normal">&quot;</span><span class="Normal">;</span>
+    <span class="GruvboxRed">fi</span>
+<span class="GruvboxGreenBold">}</span>
+
+
+
+<span class="Comment">#Binds</span>
+<span class="GruvboxRed">alias </span><span class="GruvboxBlue">ll</span><span class="GruvboxRed">=</span><span class="Normal">'</span><span class="String">ls -alF</span><span class="Normal">'</span>
+<span class="GruvboxRed">alias </span><span class="GruvboxBlue">la</span><span class="GruvboxRed">=</span><span class="Normal">'</span><span class="String">ls -A</span><span class="Normal">'</span>
+<span class="GruvboxRed">alias</span> <span class="GruvboxBlue">l</span>=<span class="Normal">'</span><span class="String">ls -CF</span><span class="Normal">'</span>
+<span class="GruvboxRed">alias </span><span class="GruvboxBlue">clr</span><span class="GruvboxRed">=</span><span class="Normal">'</span><span class="String">clear</span><span class="Normal">'</span>
+<span class="GruvboxRed">alias </span><span class="GruvboxBlue">ls</span><span class="GruvboxRed">=</span><span class="Normal">'</span><span class="String">ls -hN --color=auto --group-directories-first</span><span class="Normal">'</span>
+<span class="GruvboxRed">alias </span><span class="GruvboxBlue">diff</span><span class="GruvboxRed">=</span><span class="Normal">&quot;</span><span class="String">diff --color=auto</span><span class="Normal">&quot;</span>
+<span class="GruvboxRed">alias</span> <span class="GruvboxRed">r</span><span class="Normal">=</span><span class="Normal">&quot;</span><span class="String">ranger</span><span class="Normal">&quot;</span>
+<span class="GruvboxRed">alias</span> <span class="GruvboxBlue">n</span>=<span class="Normal">&quot;</span><span class="String">nnn</span><span class="Normal">&quot;</span>
+<span class="GruvboxRed">alias </span><span class="GruvboxBlue">svim</span><span class="GruvboxRed">=</span><span class="Normal">&quot;</span><span class="String">sudo vim</span><span class="Normal">&quot;</span>
+<span class="GruvboxRed">alias </span><span class="GruvboxBlue">df</span><span class="GruvboxRed">=</span><span class="Normal">'</span><span class="String">df -kTh</span><span class="Normal">'</span>
+<span class="GruvboxRed">alias </span><span class="GruvboxBlue">grep</span><span class="GruvboxRed">=</span><span class="Normal">'</span><span class="String">grep --color=auto</span><span class="Normal">'</span>
+<span class="GruvboxRed">alias </span><span class="GruvboxBlue">free</span><span class="GruvboxRed">=</span><span class="Normal">'</span><span class="String">free -h</span><span class="Normal">'</span>
+<span class="GruvboxRed">alias </span><span class="GruvboxBlue">myip</span><span class="GruvboxRed">=</span><span class="Normal">&quot;</span><span class="String">curl <a href="http://ipecho.net/plain">http://ipecho.net/plain</a>; echo</span><span class="Normal">&quot;</span>
+<span class="GruvboxRed">alias </span><span class="GruvboxBlue">lynx</span><span class="GruvboxRed">=</span><span class="Normal">&quot;</span><span class="String">lynx -vikeys</span><span class="Normal">&quot;</span>
+<span class="GruvboxRed">alias</span> <span class="GruvboxBlue">e</span>=<span class="Normal">&quot;</span><span class="String">exit</span><span class="Normal">&quot;</span>
+
+stty <span class="GruvboxOrange">-ixon</span> <span class="Comment"># Disable ctrl-s and ctrl-q.</span>
+<span class="GruvboxRed">shopt</span> <span class="GruvboxOrange">-s</span> autocd <span class="Comment">#Allows you to cd into directory merely by typing the directory name.</span>
+<span class="GruvboxBlue">HISTSIZE</span>= <span class="GruvboxBlue">HISTFILESIZE</span>= <span class="Comment"># Infinite history.</span>
+<span class="GruvboxRed">set</span><span class="GruvboxBlue"> </span><span class="GruvboxOrange">-o</span><span class="GruvboxBlue"> vi</span>
+
+
+
+
+
+<span class="Normal">[</span> <span class="GruvboxRed">-f</span> ~/.fzf.bash <span class="Normal">]</span> &amp;&amp; <span class="GruvboxRed">source</span> ~/.fzf.bash
+
+<span class="GruvboxRed">export</span><span class="GruvboxBlue"> PATH=</span><span class="Normal">&quot;</span><span class="String">/home/aleks/.fzf/bin:/home/aleks/Programs/fzf/bin:/home/aleks/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/aleks/Scripts:/home/aleks/.vimpkg/bin</span><span class="Normal">&quot;</span>
+</pre>
+
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

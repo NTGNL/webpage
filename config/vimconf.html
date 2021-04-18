@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<title>~/.vimrc.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="vim">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.vimCommentTitle { color: #949494; font-weight: bold; }
+.GruvboxFg3 { color: #a8a8a8; }
+.Normal { color: #ffd7af; background-color: #262626; padding-bottom: 1px; }
+.GruvboxAqua { color: #87af87; }
+.GruvboxYellow { color: #ffaf00; }
+.GruvboxBlue { color: #87afaf; }
+.GruvboxPurple { color: #d787af; }
+.GruvboxOrange { color: #ff8700; }
+.GruvboxRed { color: #d75f5f; }
+.GruvboxGreenBold { color: #afaf00; font-weight: bold; }
+.Comment { color: #8a8a8a; }
+.String { color: #afaf00; }
+-->
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+    <title>Aleks's Website</title>
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+
+    <h2>VIM</h2>
+
+    <p>Vim is a very powerful text editor. It can be configured in many ways. It can be a word processor, IDE, and a compiler in one. My Vim is configured to work with any programming language. It has syntax check and auto completion. A nice feature of my config is css color highlighting, where the hex color codes are highlighted with their corresponding color, which was very useful while creating this website. With VIM you can type in multiple lines at once, it can be a file manager, a spellchecker and much more.</p>
+
+    <p>Just copy the source code below and paste it into your .vimrc Some plugins will require neobundle. At the bootom of the page you can find the installer script.</p>
+
+<pre id='vimCodeElement'>
+
+<span class="GruvboxOrange">   *-------------------------------------------------------*</span>
+<span class="GruvboxOrange">   | Learn a text manipulation language.                   |</span>
+<span class="GruvboxOrange">   |                                                       |</span>
+<span class="GruvboxOrange">   | You spend a large part of each day working with text. |</span>
+<span class="GruvboxOrange">   | Why not have the computer do some of it for you?      |</span>
+<span class="GruvboxOrange">   *-------------------------------------------------------*</span>
+<span class="GruvboxOrange">          o</span>
+<span class="GruvboxOrange">           o   ^__^</span>
+<span class="GruvboxOrange">            o  (oo)\_______</span>
+<span class="GruvboxOrange">               (__)\       )\/\</span>
+<span class="GruvboxOrange">                   ||----w |</span>
+<span class="GruvboxOrange">                   ||     ||</span>
+
+
+<span class="Comment">&quot;&quot;&quot; Automatically create needed files and folders on first run (*nix only) {{{</span>
+    <span class="GruvboxRed">call</span> <span class="GruvboxGreenBold">system</span><span class="GruvboxOrange">(</span><span class="String">'mkdir -p $HOME/.vim/{autoload,bundle,swap,undo}'</span><span class="GruvboxOrange">)</span>
+    <span class="GruvboxRed">if</span> !<span class="GruvboxGreenBold">filereadable</span><span class="GruvboxOrange">(</span><span class="GruvboxAqua">$HOME</span><span class="Normal">.</span><span class="String">'/.vimrc.plugins'</span><span class="GruvboxOrange">)</span> | <span class="GruvboxRed">call</span> <span class="GruvboxGreenBold">system</span><span class="GruvboxOrange">(</span><span class="String">'touch $HOME/.vimrc.plugins'</span><span class="GruvboxOrange">)</span> | <span class="GruvboxRed">endif</span>
+    <span class="GruvboxRed">if</span> !<span class="GruvboxGreenBold">filereadable</span><span class="GruvboxOrange">(</span><span class="GruvboxAqua">$HOME</span><span class="Normal">.</span><span class="String">'/.vimrc.first'</span><span class="GruvboxOrange">)</span> | <span class="GruvboxRed">call</span> <span class="GruvboxGreenBold">system</span><span class="GruvboxOrange">(</span><span class="String">'touch $HOME/.vimrc.first'</span><span class="GruvboxOrange">)</span> | <span class="GruvboxRed">endif</span>
+    <span class="GruvboxRed">if</span> !<span class="GruvboxGreenBold">filereadable</span><span class="GruvboxOrange">(</span><span class="GruvboxAqua">$HOME</span><span class="Normal">.</span><span class="String">'/.vimrc.last'</span><span class="GruvboxOrange">)</span> | <span class="GruvboxRed">call</span> <span class="GruvboxGreenBold">system</span><span class="GruvboxOrange">(</span><span class="String">'touch $HOME/.vimrc.last'</span><span class="GruvboxOrange">)</span> | <span class="GruvboxRed">endif</span>
+<span class="Comment">&quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; vim-plug plugin manager {{{</span>
+<span class="Comment">    &quot; Automatic installation</span>
+<span class="Comment">    &quot; <a href="https://github.com/junegunn/vim-plug/wiki/faq#automatic-installation">https://github.com/junegunn/vim-plug/wiki/faq#automatic-installation</a></span>
+    <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">empty</span><span class="GruvboxOrange">(</span><span class="GruvboxGreenBold">glob</span><span class="GruvboxOrange">(</span><span class="String">'~/.vim/autoload/plug.vim'</span><span class="GruvboxOrange">))</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:clone_details</span> <span class="Normal">=</span> <span class="String">'<a href="https://github.com/junegunn/vim-plug.git">https://github.com/junegunn/vim-plug.git</a> $HOME/.vim/bundle/vim-plug'</span>
+        <span class="GruvboxRed">silent</span> <span class="GruvboxRed">call</span> <span class="GruvboxGreenBold">system</span><span class="GruvboxOrange">(</span><span class="String">'git clone --depth 1 '</span><span class="Normal">.</span> g:clone_details<span class="GruvboxOrange">)</span>
+        <span class="GruvboxRed">if</span> <span class="GruvboxBlue">v:shell_error</span> | <span class="GruvboxRed">silent</span> <span class="GruvboxRed">call</span> <span class="GruvboxGreenBold">system</span><span class="GruvboxOrange">(</span><span class="String">'git clone '</span> <span class="Normal">.</span> g:clone_details<span class="GruvboxOrange">)</span> | <span class="GruvboxRed">endif</span>
+        <span class="GruvboxRed">silent</span> !<span class="GruvboxRed">ln</span> -s $HOME/.vim/bundle/vim-plug/plug.vim $HOME/.vim/autoload/plug.vim
+        <span class="GruvboxRed">augroup</span> FirstPlugInstall
+            <span class="GruvboxRed">autocmd</span>! <span class="GruvboxYellow">VimEnter</span> * PlugInstall <span class="Normal">--</span><span class="GruvboxRed">sync</span> | <span class="GruvboxRed">source</span> $MYVIMRC
+        <span class="GruvboxRed">augroup</span> END
+    <span class="GruvboxRed">endif</span>
+
+<span class="Comment">    &quot;&quot;&quot; Plugins to be disabled {{{</span>
+<span class="Comment">    &quot;&quot;&quot; <a href="https://github.com/timss/vimconf/issues/13">https://github.com/timss/vimconf/issues/13</a></span>
+<span class="Comment">        &quot; Create empty list with names of disabled plugins if not defined</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:plugs_disabled</span> <span class="Normal">=</span> <span class="GruvboxGreenBold">get</span><span class="GruvboxOrange">(</span>g:, <span class="String">'plug_disabled'</span>, []<span class="GruvboxOrange">)</span>
+
+<span class="Comment">        &quot; Trim and extract repo name</span>
+<span class="Comment">        &quot; Same substitute/fnamemodify args as vim-plug itself</span>
+<span class="Comment">        &quot; <a href="https://github.com/junegunn/vim-plug/issues/469#issuecomment-226965736">https://github.com/junegunn/vim-plug/issues/469#issuecomment-226965736</a></span>
+        <span class="GruvboxRed">function</span>! <span class="GruvboxFg3">s:</span>plugs_disable<span class="GruvboxOrange">(</span>repo<span class="GruvboxOrange">)</span>
+            <span class="GruvboxRed">let</span> <span class="GruvboxBlue">l:repo</span> <span class="Normal">=</span> <span class="GruvboxGreenBold">substitute</span><span class="GruvboxOrange">(</span><span class="GruvboxBlue">a:repo</span>, <span class="String">'[\/]\+$'</span>, <span class="String">''</span>, <span class="String">''</span><span class="GruvboxOrange">)</span>
+            <span class="GruvboxRed">let</span> <span class="GruvboxBlue">l:name</span> <span class="Normal">=</span> <span class="GruvboxGreenBold">fnamemodify</span><span class="GruvboxOrange">(</span>l:repo, <span class="String">':t:s?\.git$??'</span><span class="GruvboxOrange">)</span>
+            <span class="GruvboxRed">call</span> <span class="GruvboxGreenBold">add</span><span class="GruvboxOrange">(</span>g:plugs_disabled, l:name<span class="GruvboxOrange">)</span>
+        <span class="GruvboxRed">endfunction</span>
+
+<span class="Comment">        &quot; Append to list of repo names to be disabled just like they're added</span>
+<span class="Comment">        &quot; UnPlug 'junegunn/vim-plug'</span>
+        <span class="GruvboxRed">command</span>! <span class="Normal">-</span><span class="GruvboxAqua">nargs</span><span class="Normal">=</span><span class="GruvboxYellow">1</span> <span class="Normal">-</span><span class="GruvboxAqua">bar</span> UnPlug <span class="GruvboxGreenBold">call</span> <span class="Normal">s:plugs_disable</span>(<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">args</span><span class="GruvboxOrange">&gt;</span>)
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+
+<span class="Comment">&quot;</span> <span class="vimCommentTitle">Note:</span><span class="Comment"> Skip initialization for vim-tiny or vim-small.</span>
+<span class="GruvboxRed">if</span> <span class="GruvboxPurple">0</span> | <span class="GruvboxRed">endif</span>
+
+<span class="GruvboxRed">if</span> &amp;compatible
+  <span class="GruvboxRed">set</span> <span class="GruvboxAqua">nocompatible</span>
+<span class="GruvboxRed">endif</span>
+
+<span class="Comment">&quot;</span> <span class="vimCommentTitle">Required:</span>
+<span class="GruvboxRed">set</span> <span class="GruvboxAqua">runtimepath</span>+=~/.vim/bundle/neobundle.vim/
+
+<span class="Comment">&quot;</span> <span class="vimCommentTitle">Required:</span>
+<span class="GruvboxRed">call</span> neobundle#<span class="Normal">begin</span><span class="GruvboxOrange">(</span><span class="GruvboxGreenBold">expand</span><span class="GruvboxOrange">(</span><span class="String">'~/.vim/bundle/'</span><span class="GruvboxOrange">))</span>
+
+<span class="Comment">&quot; Let NeoBundle manage NeoBundle</span>
+<span class="Comment">&quot;</span> <span class="vimCommentTitle">Required:</span>
+    NeoBundleFetch <span class="String">'Shougo/neobundle.vim'</span>
+    NeoBundle <span class="String">'tiagofumo/vim-nerdtree-syntax-highlight'</span>
+    NeoBundle <span class="String">'itchyny/lightline.vim'</span>
+
+<span class="Comment">&quot; My Bundles here:</span>
+<span class="Comment">&quot; Refer to |:NeoBundle-examples|.</span>
+<span class="Comment">&quot;</span> <span class="vimCommentTitle">Note:</span><span class="Comment"> You don't set neobundle setting in .gvimrc!</span>
+
+<span class="GruvboxRed">call</span> neobundle#<span class="Normal">end</span><span class="GruvboxOrange">()</span>
+
+<span class="Comment">&quot;</span> <span class="vimCommentTitle">Required:</span>
+<span class="GruvboxRed">filetype</span> <span class="GruvboxYellow">plugin</span> <span class="GruvboxYellow">indent</span> <span class="GruvboxYellow">on</span>
+
+<span class="Comment">&quot; If there are uninstalled bundles found on startup,</span>
+<span class="Comment">&quot; this will conveniently prompt you to install them.</span>
+NeoBundleCheck
+
+<span class="Comment">    &quot; Default to same plugin directory as vundle etc</span>
+    <span class="GruvboxRed">call</span> plug#<span class="Normal">begin</span><span class="GruvboxOrange">(</span><span class="String">'~/.vim/bundle'</span><span class="GruvboxOrange">)</span>
+
+<span class="Comment">    &quot;autocomplete syntax</span>
+<span class="Comment">    &quot;Plug 'valloric/youcompleteme'</span>
+
+    Plug <span class="String">'vifm/vifm.vim'</span>
+    Plug <span class="String">'mkitt/tabline'</span>
+
+<span class="Comment">    &quot;color for files in nerdtree</span>
+    Plug <span class="String">'tiagofumo/vim-nerdtree-syntax-highlight'</span>
+
+    Plug <span class="String">'morhetz/gruvbox'</span>
+
+<span class="Comment">    &quot;CSV File compatibility</span>
+    Plug <span class="String">'chrisbra/csv.vim'</span>
+
+<span class="Comment">    &quot;css colors</span>
+    Plug <span class="String">'KabbAmine/vCoolor.vim'</span>
+    Plug <span class="String">'ap/vim-css-color'</span>
+
+<span class="Comment">    &quot; Unite vim</span>
+    Plug <span class="String">'Shougo/unite.vim'</span>
+
+<span class="Comment">    &quot; &lt;Tab&gt; everything!</span>
+    Plug <span class="String">'ervandew/supertab'</span>
+
+<span class="Comment">    &quot; Fuzzy finder (files, mru, etc)</span>
+    Plug <span class="String">'ctrlpvim/ctrlp.vim'</span>
+
+<span class="Comment">    &quot;Statusline</span>
+    Plug <span class="String">'vim-airline/vim-airline'</span>
+    Plug <span class="String">'vim-airline/vim-airline-themes'</span>
+
+<span class="Comment">    &quot; A pretty statusline, bufferline integration</span>
+
+    Plug <span class="String">'bling/vim-bufferline'</span>
+
+<span class="Comment">    &quot; Undo history visualizer</span>
+    Plug <span class="String">'mbbill/undotree'</span>
+
+<span class="Comment">    &quot; Glorious colorscheme</span>
+<span class="Comment">    &quot; To avoid errors during automatic installation</span>
+<span class="Comment">    &quot; <a href="https://github.com/junegunn/vim-plug/issues/225">https://github.com/junegunn/vim-plug/issues/225</a></span>
+    Plug <span class="String">'nanotech/jellybeans.vim'</span>
+
+<span class="Comment">    &quot; Universal commenting with toggle, motions, embedded syntax and more</span>
+    Plug <span class="String">'tomtom/tcomment_vim'</span>
+
+<span class="Comment">    &quot; Autoclose (, &quot; etc</span>
+    Plug <span class="String">'somini/vim-autoclose'</span>
+
+<span class="Comment">    &quot; UNIX shell command helpers, e.g. sudo, chmod, remove etc.</span>
+    Plug <span class="String">'tpope/vim-eunuch'</span>
+
+<span class="Comment">    &quot;NERDtree</span>
+    Plug <span class="String">'preservim/nerdtree'</span>
+
+<span class="Comment">    &quot; Git wrapper inside Vim</span>
+    Plug <span class="String">'tpope/vim-fugitive'</span>
+
+<span class="Comment">    &quot; Handle surround chars like ''</span>
+    Plug <span class="String">'tpope/vim-surround'</span>
+
+<span class="Comment">    &quot; Align your = etc.</span>
+    Plug <span class="String">'junegunn/vim-easy-align'</span>
+
+<span class="Comment">    &quot; Fzf for dir and file search</span>
+    Plug <span class="String">'junegunn/fzf'</span>, <span class="GruvboxFg3">{</span> <span class="String">'dir'</span>: <span class="String">'~/.fzf'</span>, <span class="String">'do'</span>: <span class="String">'./install --all'</span> <span class="GruvboxFg3">}</span>
+    Plug <span class="String">'junegunn/fzf.vim'</span>
+
+<span class="Comment">    &quot; Snippets like textmate</span>
+    <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">has</span><span class="GruvboxOrange">(</span><span class="String">'python'</span><span class="GruvboxOrange">)</span> <span class="Normal">||</span> <span class="GruvboxGreenBold">has</span><span class="GruvboxOrange">(</span><span class="String">'python3'</span><span class="GruvboxOrange">)</span>
+        Plug <span class="String">'honza/vim-snippets'</span>
+        Plug <span class="String">'sirver/ultisnips'</span>
+    <span class="GruvboxRed">endif</span>
+
+<span class="Comment">    &quot; A fancy start screen, shows MRU etc.</span>
+    Plug <span class="String">'mhinz/vim-startify'</span>
+
+<span class="Comment">    &quot; Vim signs (:h signs) for modified lines based off VCS (e.g. Git)</span>
+    Plug <span class="String">'mhinz/vim-signify'</span>
+
+<span class="Comment">    &quot; Awesome syntax checker.</span>
+<span class="Comment">    &quot;</span> <span class="vimCommentTitle">REQUIREMENTS:</span><span class="Comment"> See :h syntastic-intro</span>
+    Plug <span class="String">'vim-syntastic/syntastic'</span>
+
+<span class="Comment">    &quot;cursors</span>
+    Plug <span class="String">'terryma/vim-multiple-cursors'</span>
+
+<span class="Comment">    &quot; Functions, class data etc.</span>
+<span class="Comment">    &quot; depends on either exuberant-ctags or universal-ctags</span>
+    <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">executable</span><span class="GruvboxOrange">(</span><span class="String">'ctags-exuberant'</span><span class="GruvboxOrange">)</span> <span class="Normal">||</span> <span class="GruvboxGreenBold">executable</span><span class="GruvboxOrange">(</span><span class="String">'ctags'</span><span class="GruvboxOrange">)</span>
+        Plug <span class="String">'majutsushi/tagbar'</span>
+    <span class="GruvboxRed">endif</span>
+
+<span class="Comment">    &quot; Local plugins</span>
+    <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">filereadable</span><span class="GruvboxOrange">(</span><span class="GruvboxAqua">$HOME</span><span class="Normal">.</span><span class="String">'/.vimrc.plugins'</span><span class="GruvboxOrange">)</span>
+        <span class="GruvboxRed">source</span> <span class="GruvboxAqua">$HOME</span>/<span class="Normal">.</span>vimrc<span class="Normal">.</span>plugins
+    <span class="GruvboxRed">endif</span>
+
+<span class="Comment">    &quot; Remove disabled plugins from installation/initialization</span>
+<span class="Comment">    &quot; <a href="https://vi.stackexchange.com/q/13471/5070">https://vi.stackexchange.com/q/13471/5070</a></span>
+    <span class="GruvboxRed">call</span> <span class="GruvboxGreenBold">filter</span><span class="GruvboxOrange">(</span>g:plugs, <span class="String">'index(g:plugs_disabled, v:key) == -1'</span><span class="GruvboxOrange">)</span>
+
+<span class="Comment">    &quot; Initalize plugin system</span>
+    <span class="GruvboxRed">call</span> plug#<span class="Normal">end</span><span class="GruvboxOrange">()</span>
+<span class="Comment">&quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; Local leading config, only for prerequisites and will be overwritten {{{</span>
+    <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">filereadable</span><span class="GruvboxOrange">(</span><span class="GruvboxAqua">$HOME</span><span class="Normal">.</span><span class="String">'/.vimrc.first'</span><span class="GruvboxOrange">)</span>
+        <span class="GruvboxRed">source</span> <span class="GruvboxAqua">$HOME</span>/<span class="Normal">.</span>vimrc<span class="Normal">.</span><span class="GruvboxRed">first</span>
+    <span class="GruvboxRed">endif</span>
+<span class="Comment">&quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; General settings {{{</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">completeopt</span>=menu<span class="GruvboxFg3">,</span>preview<span class="GruvboxFg3">,</span>longest            <span class="Comment">&quot; insert mode completion</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">hidden</span>                                      <span class="Comment">&quot; buffer change, more undo</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">history</span>=1000                                <span class="Comment">&quot; default 20</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">laststatus</span>=2                                <span class="Comment">&quot; always show statusline</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">linebreak</span>                                   <span class="Comment">&quot; don't cut words on wrap</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">listchars</span>=tab<span class="GruvboxFg3">:</span>&gt;\                            <span class="Comment">&quot; &gt; to highlight &lt;Tab&gt;</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">list</span>                                        <span class="Comment">&quot; displaying listchars</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">noshowmode</span>                                  <span class="Comment">&quot; hide mode cmd line</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">noexrc</span>                                      <span class="Comment">&quot; don't use other .*rc(s)</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">nostartofline</span>                               <span class="Comment">&quot; keep cursor column pos</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">nowrap</span>                                      <span class="Comment">&quot; don't wrap lines</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">numberwidth</span>=5                               <span class="Comment">&quot; 99999 lines</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">shortmess</span>+=I                                <span class="Comment">&quot; disable startup message</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">splitbelow</span>                                  <span class="Comment">&quot; splits go below w/focus</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">splitright</span>                                  <span class="Comment">&quot; vsplits go right w/focus</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">ttyfast</span>                                     <span class="Comment">&quot; for faster redraws etc</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">ttymouse</span>=xterm2                             <span class="Comment">&quot; experimental</span>
+<span class="Comment">    &quot;&quot;&quot; Folding {{{</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">foldcolumn</span>=0                            <span class="Comment">&quot; hide folding column</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">foldmethod</span>=indent                       <span class="Comment">&quot; folds using indent</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">foldnestmax</span>=10                          <span class="Comment">&quot; max 10 nested folds</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">foldlevelstart</span>=99                       <span class="Comment">&quot; folds open by default</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; Search and replace {{{</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">gdefault</span>                                <span class="Comment">&quot; default s//g (global)</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">incsearch</span>                               <span class="Comment">&quot; </span><span class="String">&quot;live&quot;</span><span class="Comment">-search</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; Matching {{{</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">matchtime</span>=2                             <span class="Comment">&quot; time to blink match {}</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">matchpairs</span>+=&lt;<span class="GruvboxFg3">:</span>&gt;                         <span class="Comment">&quot; for ci&lt; or ci&gt;</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">showmatch</span>                               <span class="Comment">&quot; tmpjump to match-bracket</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; Wildmode/wildmenu command-line completion {{{</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">wildignore</span>+=*.bak<span class="GruvboxFg3">,</span>*.swp<span class="GruvboxFg3">,</span>*.swo
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">wildignore</span>+=*.a<span class="GruvboxFg3">,</span>*.o<span class="GruvboxFg3">,</span>*.so<span class="GruvboxFg3">,</span>*.pyc<span class="GruvboxFg3">,</span>*.class
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">wildignore</span>+=*.jpg<span class="GruvboxFg3">,</span>*.jpeg<span class="GruvboxFg3">,</span>*.gif<span class="GruvboxFg3">,</span>*.png<span class="GruvboxFg3">,</span>*.pdf
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">wildignore</span>+=*/.git*<span class="GruvboxFg3">,</span>*.tar<span class="GruvboxFg3">,</span>*.zip
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">wildmenu</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">wildmode</span>=longest<span class="GruvboxFg3">:</span>full<span class="GruvboxFg3">,</span><span class="GruvboxRed">list</span><span class="GruvboxFg3">:</span>full
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; Return to last edit position when opening files {{{</span>
+        <span class="GruvboxRed">augroup</span> LastPosition
+            <span class="GruvboxRed">autocmd</span>! <span class="GruvboxYellow">BufReadPost</span> *
+<span class="GruvboxFg3">                \</span> <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">line</span><span class="GruvboxOrange">(</span><span class="String">&quot;'\&quot;&quot;</span><span class="GruvboxOrange">)</span> <span class="Normal">&gt;</span> <span class="GruvboxPurple">0</span> <span class="Normal">&amp;&amp;</span> <span class="GruvboxGreenBold">line</span><span class="GruvboxOrange">(</span><span class="String">&quot;'\&quot;&quot;</span><span class="GruvboxOrange">)</span> <span class="Normal">&lt;=</span> <span class="GruvboxGreenBold">line</span><span class="GruvboxOrange">(</span><span class="String">&quot;$&quot;</span><span class="GruvboxOrange">)</span> |
+<span class="GruvboxFg3">                \</span>     <span class="GruvboxRed">exe</span> <span class="String">&quot;normal! g`\&quot;&quot;</span> <span class="GruvboxRed">|</span>
+<span class="GruvboxFg3">                \</span> <span class="GruvboxRed">endif</span>
+        <span class="GruvboxRed">augroup</span> END
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; Files {{{</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">autoread</span>                                    <span class="Comment">&quot; refresh if changed</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">confirm</span>                                     <span class="Comment">&quot; confirm changed files</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">noautowrite</span>                                 <span class="Comment">&quot; never autowrite</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">nobackup</span>                                    <span class="Comment">&quot; disable backups</span>
+<span class="Comment">    &quot;&quot;&quot; Persistent undo. Requires Vim 7.3 {{{</span>
+        <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">has</span><span class="GruvboxOrange">(</span><span class="String">'persistent_undo'</span><span class="GruvboxOrange">)</span> <span class="Normal">&amp;&amp;</span> <span class="GruvboxGreenBold">exists</span><span class="GruvboxOrange">(</span><span class="String">'&amp;undodir'</span><span class="GruvboxOrange">)</span>
+            <span class="GruvboxRed">set</span> <span class="GruvboxAqua">undodir</span>=<span class="GruvboxAqua">$HOME</span>/.vim/undo/            <span class="Comment">&quot; where to store undofiles</span>
+            <span class="GruvboxRed">set</span> <span class="GruvboxAqua">undofile</span>                            <span class="Comment">&quot; enable undofile</span>
+            <span class="GruvboxRed">set</span> <span class="GruvboxAqua">undolevels</span>=500                      <span class="Comment">&quot; max undos stored</span>
+            <span class="GruvboxRed">set</span> <span class="GruvboxAqua">undoreload</span>=10000                    <span class="Comment">&quot; buffer stored undos</span>
+        <span class="GruvboxRed">endif</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; Swap files, unless vim is invoked using sudo {{{</span>
+<span class="Comment">    &quot;&quot;&quot; <a href="https://github.com/tejr/dotfiles/blob/master/vim/vimrc">https://github.com/tejr/dotfiles/blob/master/vim/vimrc</a></span>
+        <span class="GruvboxRed">if</span> !<span class="GruvboxGreenBold">strlen</span><span class="GruvboxOrange">(</span><span class="GruvboxAqua">$SUDO_USER</span><span class="GruvboxOrange">)</span>
+            <span class="GruvboxRed">set</span> <span class="GruvboxAqua">directory</span>^=<span class="GruvboxAqua">$HOME</span>/.vim/swap//        <span class="Comment">&quot; default cwd, // full path</span>
+            <span class="GruvboxRed">set</span> <span class="GruvboxAqua">swapfile</span>                            <span class="Comment">&quot; enable swap files</span>
+            <span class="GruvboxRed">set</span> <span class="GruvboxAqua">updatecount</span>=50                      <span class="Comment">&quot; update swp after 50chars</span>
+<span class="Comment">            &quot;&quot;&quot; Don't swap tmp, mount or network dirs {{{</span>
+                <span class="GruvboxRed">augroup</span> SwapIgnore
+                    <span class="GruvboxRed">autocmd</span>! <span class="GruvboxYellow">BufNewFile</span>,<span class="GruvboxYellow">BufReadPre</span> /tmp/*,/mnt/*,/media/*
+<span class="GruvboxFg3">                        \</span> <span class="GruvboxRed">setlocal</span> <span class="GruvboxAqua">noswapfile</span>
+                <span class="GruvboxRed">augroup</span> END
+<span class="Comment">            &quot;&quot;&quot; }}}</span>
+        <span class="GruvboxRed">else</span>
+            <span class="GruvboxRed">set</span> <span class="GruvboxAqua">noswapfile</span>                          <span class="Comment">&quot; dont swap sudo'ed files</span>
+        <span class="GruvboxRed">endif</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; Text formatting {{{</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">autoindent</span>                                  <span class="Comment">&quot; preserve indentation</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">backspace</span>=indent<span class="GruvboxFg3">,</span>eol<span class="GruvboxFg3">,</span><span class="GruvboxRed">start</span>                  <span class="Comment">&quot; smart backspace</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">cinkeys</span>-=0#                                 <span class="Comment">&quot; don't force # indentation</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">expandtab</span>                                   <span class="Comment">&quot; indents &lt;Tab&gt; as spaces</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">ignorecase</span>                                  <span class="Comment">&quot; by default ignore case</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">nrformats</span>+=alpha                            <span class="Comment">&quot; incr/decr letters C-a/-x</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">shiftround</span>                                  <span class="Comment">&quot; round indent of 'sw'</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">shiftwidth</span>=0                                <span class="Comment">&quot; =0 uses 'ts' value</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">smartcase</span>                                   <span class="Comment">&quot; sensitive with uppercase</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">smarttab</span>                                    <span class="Comment">&quot; tab to 0,4,8 etc.</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">softtabstop</span>=-1                              <span class="Comment">&quot; =-1 uses 'sw' value</span>
+    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">tabstop</span>=4                                   <span class="Comment">&quot; &lt;Tab&gt; as 4 spaces indent</span>
+<span class="Comment">    &quot;&quot;&quot; Only auto-comment newline for block comments {{{</span>
+        <span class="GruvboxRed">augroup</span> AutoBlockComment
+            <span class="GruvboxRed">autocmd</span>! <span class="GruvboxYellow">FileType</span> c,cpp <span class="GruvboxRed">setlocal</span> <span class="GruvboxAqua">comments</span> -=<span class="GruvboxFg3">:</span>// <span class="GruvboxAqua">comments</span> +=f<span class="GruvboxFg3">:</span>//
+        <span class="GruvboxRed">augroup</span> END
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; Take comment leaders into account when joining lines, :h fo-table {{{</span>
+<span class="Comment">    &quot;&quot;&quot; <a href="http://ftp.vim.org/pub/vim/patches/7.3/7.3.541">http://ftp.vim.org/pub/vim/patches/7.3/7.3.541</a></span>
+        <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">has</span><span class="GruvboxOrange">(</span><span class="String">'patch-7.3.541'</span><span class="GruvboxOrange">)</span>
+            <span class="GruvboxRed">set</span> <span class="GruvboxAqua">formatoptions</span>+=j
+        <span class="GruvboxRed">endif</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; Keybindings {{{</span>
+<span class="Comment">    &quot;&quot;&quot; General {{{</span>
+<span class="Comment">        &quot; Remap &lt;Leader&gt;</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:mapleader</span><span class="Normal">=</span><span class="String">','</span>
+
+<span class="Comment">        &quot; Quickly edit/source .vimrc</span>
+        <span class="GruvboxRed">noremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>ve :edit $HOME/.vimrc<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+        <span class="GruvboxRed">noremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>vs :source $HOME/.vimrc<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+
+<span class="Comment">        &quot; Yank(copy) to system clipboard</span>
+        <span class="GruvboxRed">noremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>y &quot;+y
+
+<span class="Comment">        &quot; Toggle pastemode, doesn't indent</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">pastetoggle</span>=<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">F3</span><span class="GruvboxOrange">&gt;</span>
+
+<span class="Comment">        &quot; Toggle folding</span>
+<span class="Comment">        &quot; <a href="http://vim.wikia.com/wiki/Folding#Mappings_to_toggle_folds">http://vim.wikia.com/wiki/Folding#Mappings_to_toggle_folds</a></span>
+        <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">silent</span><span class="GruvboxOrange">&gt;</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Space</span><span class="GruvboxOrange">&gt;</span> @=(foldlevel('.')?'za':&quot;<span class="GruvboxOrange">\&lt;</span><span class="GruvboxOrange">Space</span><span class="GruvboxOrange">&gt;</span>&quot;)<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+
+<span class="Comment">        &quot; Toggle relativenumber</span>
+        <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">silent</span><span class="GruvboxOrange">&gt;</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>r :set relativenumber!<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">silent</span><span class="GruvboxOrange">&gt;</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>ln :set invnumber<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+
+<span class="Comment">    &quot; Treat wrapped lines as normal lines</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">expr</span><span class="GruvboxOrange">&gt;</span> k v:count == 0 ? 'gk' : 'k'
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">expr</span><span class="GruvboxOrange">&gt;</span> j v:count == 0 ? 'gj' : 'j'
+
+<span class="Comment">    &quot; Quickly switch buffers</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>n :bnext<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>p :bprevious<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>f :b#<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>1 :1b<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>2 :2b<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>3 :3b<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>4 :4b<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>5 :5b<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>6 :6b<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>7 :7b<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>8 :8b<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>9 :9b<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+    <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>0 :10b<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+
+<span class="Comment">    &quot; Highlight last inserted text</span>
+    <span class="GruvboxRed">nnoremap</span> gV '[V']
+<span class="Comment">&quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; Functions and/or fancy keybinds {{{</span>
+<span class="Comment">    &quot;&quot;&quot; Toggle syntax highlighting {{{</span>
+        <span class="GruvboxRed">function</span>! ToggleSyntaxHighlighthing<span class="GruvboxOrange">()</span>
+            <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">exists</span><span class="GruvboxOrange">(</span><span class="String">'g:syntax_on'</span><span class="GruvboxOrange">)</span>
+                <span class="GruvboxRed">syntax</span> <span class="GruvboxYellow">off</span>
+            <span class="GruvboxRed">else</span>
+                <span class="GruvboxRed">syntax</span> <span class="GruvboxYellow">enable</span>
+            <span class="GruvboxRed">endif</span>
+        <span class="GruvboxRed">endfunction</span>
+
+        <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>s :call ToggleSyntaxHighlighthing()<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; Highlight characters past 79, toggle with &lt;Leader&gt;h {{{</span>
+<span class="Comment">    &quot;&quot;&quot; You might want to override this function and its variables with</span>
+<span class="Comment">    &quot;&quot;&quot; your own in .vimrc.last which might set for example colorcolumn or</span>
+<span class="Comment">    &quot;&quot;&quot; even the textwidth. See <a href="https://github.com/timss/vimconf/pull/4">https://github.com/timss/vimconf/pull/4</a></span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:overlength_enabled</span> <span class="Normal">=</span> <span class="GruvboxPurple">0</span>
+        <span class="GruvboxRed">highlight</span> <span class="GruvboxYellow">OverLength</span> <span class="GruvboxYellow">ctermbg</span>=<span class="GruvboxPurple">238</span> <span class="GruvboxYellow">guibg</span>=<span class="GruvboxPurple">#444444</span>
+
+        <span class="GruvboxRed">function</span>! ToggleOverLength<span class="GruvboxOrange">()</span>
+            <span class="GruvboxRed">if</span> <span class="GruvboxBlue">g:overlength_enabled</span> <span class="Normal">==</span> <span class="GruvboxPurple">0</span>
+                <span class="GruvboxYellow">match</span> <span class="GruvboxYellow">OverLength</span> <span class="String">/\%79v.*/</span>
+                <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:overlength_enabled</span> <span class="Normal">=</span> <span class="GruvboxPurple">1</span>
+                <span class="GruvboxRed">echo</span> <span class="String">'OverLength highlighting turned on'</span>
+            <span class="GruvboxRed">else</span>
+                <span class="GruvboxYellow">match</span>
+                <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:overlength_enabled</span> <span class="Normal">=</span> <span class="GruvboxPurple">0</span>
+                <span class="GruvboxRed">echo</span> <span class="String">'OverLength highlighting turned off'</span>
+            <span class="GruvboxRed">endif</span>
+        <span class="GruvboxRed">endfunction</span>
+
+        <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>h :call ToggleOverLength()<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; Toggle text wrapping, wrap on whole words {{{</span>
+<span class="Comment">    &quot;&quot;&quot; For more info see: <a href="http://stackoverflow.com/a/2470885/1076493">http://stackoverflow.com/a/2470885/1076493</a></span>
+        <span class="GruvboxRed">function</span>! WrapToggle<span class="GruvboxOrange">()</span>
+            <span class="GruvboxRed">if</span> &amp;wrap
+                <span class="GruvboxRed">set</span> <span class="GruvboxAqua">list</span>
+                <span class="GruvboxRed">set</span> <span class="GruvboxAqua">nowrap</span>
+            <span class="GruvboxRed">else</span>
+                <span class="GruvboxRed">set</span> <span class="GruvboxAqua">nolist</span>
+                <span class="GruvboxRed">set</span> <span class="GruvboxAqua">wrap</span>
+            <span class="GruvboxRed">endif</span>
+        <span class="GruvboxRed">endfunction</span>
+
+        <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>w :call WrapToggle()<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; Remove multiple empty lines {{{</span>
+        <span class="GruvboxRed">function</span>! DeleteMultipleEmptyLines<span class="GruvboxOrange">()</span>
+            <span class="GruvboxRed">g/</span>^\_$\n\_^$<span class="GruvboxRed">/</span><span class="GruvboxRed">d</span>
+        <span class="GruvboxRed">endfunction</span>
+
+        <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>ld :call DeleteMultipleEmptyLines()<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+<span class="Comment">        &quot;&quot;&quot; }}}</span>
+<span class="Comment">        &quot;&quot;&quot; Split to relative header/source {{{</span>
+            <span class="GruvboxRed">function</span>! SplitRelSrc<span class="GruvboxOrange">()</span>
+                <span class="GruvboxRed">let</span> <span class="GruvboxBlue">l:fname</span> <span class="Normal">=</span> <span class="GruvboxGreenBold">expand</span><span class="GruvboxOrange">(</span><span class="String">'%:t:r'</span><span class="GruvboxOrange">)</span>
+
+                <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">expand</span><span class="GruvboxOrange">(</span><span class="String">'%:e'</span><span class="GruvboxOrange">)</span> <span class="Normal">==?</span> <span class="String">'h'</span>
+                    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">nosplitright</span>
+                    <span class="GruvboxRed">exe</span> <span class="String">'vsplit'</span> <span class="GruvboxBlue">fnameescape</span><span class="GruvboxOrange">(</span>l:fname <span class="Normal">.</span> <span class="String">'.cpp'</span><span class="GruvboxOrange">)</span>
+                    <span class="GruvboxRed">set</span> <span class="GruvboxAqua">splitright</span>
+                <span class="GruvboxRed">elseif</span> <span class="GruvboxGreenBold">expand</span><span class="GruvboxOrange">(</span><span class="String">'%:e'</span><span class="GruvboxOrange">)</span> <span class="Normal">==?</span> <span class="String">'cpp'</span>
+                    <span class="GruvboxRed">exe</span> <span class="String">'vsplit'</span> <span class="GruvboxBlue">fnameescape</span><span class="GruvboxOrange">(</span>l:fname <span class="Normal">.</span> <span class="String">'.h'</span><span class="GruvboxOrange">)</span>
+                <span class="GruvboxRed">endif</span>
+            <span class="GruvboxRed">endfunction</span>
+
+            <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>le :call SplitRelSrc()<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+<span class="Comment">        &quot;&quot;&quot; }}}</span>
+<span class="Comment">        &quot;&quot;&quot; Strip trailing whitespace, return to cursor at save {{{</span>
+            <span class="GruvboxRed">function</span>! StripTrailingWhitespace<span class="GruvboxOrange">()</span>
+                <span class="GruvboxRed">let</span> <span class="GruvboxBlue">l:save</span> <span class="Normal">=</span> <span class="GruvboxGreenBold">winsaveview</span><span class="GruvboxOrange">()</span>
+                <span class="GruvboxPurple">%</span><span class="GruvboxRed">s</span><span class="GruvboxOrange">/</span>\s\+$<span class="GruvboxOrange">//</span><span class="GruvboxOrange">e</span>
+                <span class="GruvboxRed">call</span> <span class="GruvboxGreenBold">winrestview</span><span class="GruvboxOrange">(</span>l:save<span class="GruvboxOrange">)</span>
+            <span class="GruvboxRed">endfunction</span>
+
+            <span class="GruvboxRed">augroup</span> StripTrailingWhitespace
+                <span class="GruvboxRed">autocmd</span>!
+                <span class="GruvboxRed">autocmd</span> <span class="GruvboxYellow">FileType</span> c,cpp,cfg,conf,css,html,perl,python,sh,tex,yaml
+<span class="GruvboxFg3">                    \</span> <span class="GruvboxRed">autocmd</span> <span class="GruvboxYellow">BufWritePre</span> &lt;buffer&gt; <span class="GruvboxFg3">:</span><span class="GruvboxRed">call</span>
+<span class="GruvboxFg3">                    \</span> StripTrailingWhitespace<span class="GruvboxOrange">()</span>
+            <span class="GruvboxRed">augroup</span> END
+<span class="Comment">        &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; Plugins {{{</span>
+<span class="Comment">        &quot; Toggle tagbar (definitions, functions etc.)</span>
+        <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">exists</span><span class="GruvboxOrange">(</span><span class="String">'g:plugs[&quot;tagbar&quot;]'</span><span class="GruvboxOrange">)</span>
+            <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">F2</span><span class="GruvboxOrange">&gt;</span> :TagbarToggle<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+        <span class="GruvboxRed">endif</span>
+
+<span class="Comment">        &quot; Toggle undo history tree</span>
+        <span class="GruvboxRed">nnoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">F5</span><span class="GruvboxOrange">&gt;</span> :UndotreeToggle<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+        <span class="GruvboxRed">map</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">F6</span><span class="GruvboxOrange">&gt;</span> :setlocal spell! spelllang=en_us<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+<span class="Comment">        &quot; Syntastic - toggle error list. Probably should be toggleable.</span>
+        <span class="GruvboxRed">noremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">silent</span><span class="GruvboxOrange">&gt;&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>lo :Errors<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+        <span class="GruvboxRed">noremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">silent</span><span class="GruvboxOrange">&gt;&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>lc :lclose<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+
+<span class="Comment">        &quot; EasyAlign - interactive mode (e.g. vipga/gaip)</span>
+        <span class="GruvboxRed">xmap</span> ga <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Plug</span><span class="GruvboxOrange">&gt;</span>(EasyAlign)
+        <span class="GruvboxRed">nmap</span> ga <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Plug</span><span class="GruvboxOrange">&gt;</span>(EasyAlign)
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; Plugin settings {{{</span>
+<span class="Comment">    &quot;&quot;&quot; Startify {{{</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:startify_bookmarks</span> <span class="Normal">=</span> [
+<span class="GruvboxFg3">            \</span> <span class="GruvboxAqua">$HOME</span> <span class="Normal">.</span> <span class="String">'/.vimrc'</span>, <span class="GruvboxAqua">$HOME</span> <span class="Normal">.</span> <span class="String">'/.vimrc.first'</span>,
+<span class="GruvboxFg3">            \</span> <span class="GruvboxAqua">$HOME</span> <span class="Normal">.</span> <span class="String">'/.vimrc.last'</span>, <span class="GruvboxAqua">$HOME</span> <span class="Normal">.</span> <span class="String">'/.vimrc.plugins'</span>,
+<span class="GruvboxFg3">            \</span>  <span class="GruvboxAqua">$HOME</span> <span class="Normal">.</span> <span class="String">'/.config/i3/config'</span>,  <span class="GruvboxAqua">$HOME</span> <span class="Normal">.</span> <span class="String">'/.bashrc'</span>
+<span class="GruvboxFg3">            \</span> ]
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:startify_custom_header</span> <span class="Normal">=</span> [
+<span class="GruvboxFg3">            \</span> <span class="String">'   <a href="http://github.com/xelvicon">http://github.com/xelvicon</a>'</span>,
+<span class="GruvboxFg3">            \</span> <span class="String">''</span>
+<span class="GruvboxFg3">            \</span> ]
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:startify_files_number</span> <span class="Normal">=</span> <span class="GruvboxPurple">5</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+
+<span class="Comment">    &quot;&quot;&quot; CtrlP {{{</span>
+<span class="Comment">        &quot; Don't recalculate files on start (slow)</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:ctrlp_clear_cache_on_exit</span> <span class="Normal">=</span> <span class="GruvboxPurple">0</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:ctrlp_working_path_mode</span> <span class="Normal">=</span> <span class="String">'ra'</span>
+
+<span class="Comment">        &quot; Don't split in Startify</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:ctrlp_reuse_window</span> <span class="Normal">=</span> <span class="String">'startify'</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; TagBar {{{</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">tags</span>=tags;/
+
+<span class="Comment">        &quot; Proportions</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:tagbar_left</span> <span class="Normal">=</span> <span class="GruvboxPurple">0</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:tagbar_width</span> <span class="Normal">=</span> <span class="GruvboxPurple">30</span>
+
+<span class="Comment">        &quot; Used in lightline.vim</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:tagbar_status_func</span> <span class="Normal">=</span> <span class="String">'TagbarStatusFunc'</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+
+<span class="Comment">    &quot;&quot;&quot; Syntastic {{{</span>
+<span class="Comment">        &quot; Automatic checking for active, only when :SyntasticCheck for passive</span>
+<span class="Comment">        &quot;</span> <span class="vimCommentTitle">NOTE:</span><span class="Comment"> override these in $HOME/.vimrc.first as needed!</span>
+<span class="Comment">        &quot; <a href="https://github.com/timss/vimconf/issues/9">https://github.com/timss/vimconf/issues/9</a></span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:syntastic_mode_map</span> <span class="Normal">=</span> <span class="GruvboxGreenBold">get</span><span class="GruvboxOrange">(</span>g:, <span class="String">'syntastic_mode_map'</span>, <span class="GruvboxFg3">{</span>
+<span class="GruvboxFg3">            \</span> <span class="String">'mode'</span>: <span class="String">'passive'</span>,
+<span class="GruvboxFg3">            \</span> <span class="String">'active_filetypes'</span>:
+<span class="GruvboxFg3">                \</span> [<span class="String">'c'</span>, <span class="String">'cpp'</span>, <span class="String">'perl'</span>, <span class="String">'python'</span>] <span class="GruvboxFg3">}</span><span class="GruvboxOrange">)</span>
+
+<span class="Comment">        &quot; Skip check on :wq, :x, :ZZ etc</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:syntastic_check_on_wq</span> <span class="Normal">=</span> <span class="GruvboxPurple">1</span>
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">statusline</span>+=%#warningmsg#
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">statusline</span>+=%{SyntasticStatuslineFlag()}
+        <span class="GruvboxRed">set</span> <span class="GruvboxAqua">statusline</span>+=%*
+
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:syntastic_always_populate_loc_list</span> <span class="Normal">=</span> <span class="GruvboxPurple">1</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:syntastic_auto_loc_list</span> <span class="Normal">=</span> <span class="GruvboxPurple">1</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:syntastic_check_on_open</span> <span class="Normal">=</span> <span class="GruvboxPurple">1</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:syntastic_check_on_wq</span> <span class="Normal">=</span> <span class="GruvboxPurple">0</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+
+<span class="Comment">    &quot;&quot;&quot; Netrw {{{</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:netrw_banner</span> <span class="Normal">=</span> <span class="GruvboxPurple">0</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:netrw_list_hide</span> <span class="Normal">=</span> <span class="String">'^\.$'</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:netrw_liststyle</span> <span class="Normal">=</span> <span class="GruvboxPurple">3</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; Supertab {{{</span>
+<span class="Comment">        &quot; Complete based on context (compl-omni, compl-filename, ..)</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:SuperTabDefaultCompletionType</span> <span class="Normal">=</span> <span class="String">'context'</span>
+
+<span class="Comment">        &quot; Longest common match, e.g. 'b&lt;Tab&gt;' =&gt; 'bar' for 'barbar', 'barfoo'</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:SuperTabLongestEnhanced</span> <span class="Normal">=</span> <span class="GruvboxPurple">1</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:SuperTabLongestHighlight</span> <span class="Normal">=</span> <span class="GruvboxPurple">1</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; UltiSnips {{{</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:UltiSnipsExpandTrigger</span><span class="Normal">=</span><span class="String">'&lt;Tab&gt;'</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:UltiSnipsJumpForwardTrigger</span><span class="Normal">=</span><span class="String">'&lt;Tab&gt;'</span>
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:UltiSnipsJumpBackwardTrigger</span><span class="Normal">=</span><span class="String">'&lt;S-Tab&gt;'</span>
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">    &quot;&quot;&quot; Automatically remove preview window after autocomplete {{{</span>
+<span class="Comment">    &quot;&quot;&quot; (mainly for clang_complete)</span>
+         <span class="GruvboxRed">augroup</span> RemovePreview
+            <span class="GruvboxRed">autocmd</span>!
+            <span class="GruvboxRed">autocmd</span> <span class="GruvboxYellow">CursorMovedI</span> * <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">pumvisible</span><span class="GruvboxOrange">()</span> == <span class="GruvboxPurple">0</span> | <span class="GruvboxRed">pclose</span> | <span class="GruvboxRed">endif</span>
+            <span class="GruvboxRed">autocmd</span> <span class="GruvboxYellow">InsertLeave</span> * <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">pumvisible</span><span class="GruvboxOrange">()</span> == <span class="GruvboxPurple">0</span> | <span class="GruvboxRed">pclose</span> | <span class="GruvboxRed">endif</span>
+        <span class="GruvboxRed">augroup</span> END
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+
+        <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:ctrlp_status_func</span> <span class="Normal">=</span> <span class="GruvboxFg3">{</span>
+<span class="GruvboxFg3">            \</span> <span class="String">'main'</span>: <span class="String">'CtrlPStatusFunc_1'</span>,
+<span class="GruvboxFg3">            \</span> <span class="String">'prog'</span>: <span class="String">'CtrlPStatusFunc_2'</span>,
+<span class="GruvboxFg3">            \</span> <span class="GruvboxFg3">}</span>
+
+        <span class="GruvboxRed">function</span>! TagbarStatusFunc<span class="GruvboxOrange">(</span>current, sort, fname, <span class="Normal">...</span><span class="GruvboxOrange">)</span> abort
+            <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:lightline</span><span class="Normal">.</span>fname <span class="Normal">=</span> <span class="GruvboxBlue">a:fname</span>
+            <span class="GruvboxRed">return</span> lightline#<span class="Normal">statusline</span><span class="GruvboxOrange">(</span><span class="GruvboxPurple">0</span><span class="GruvboxOrange">)</span>
+        <span class="GruvboxRed">endfunction</span>
+
+        <span class="GruvboxRed">function</span>! <span class="GruvboxFg3">s:</span>syntastic<span class="GruvboxOrange">()</span>
+            SyntasticCheck
+            <span class="GruvboxRed">call</span> lightline#<span class="Normal">update</span><span class="GruvboxOrange">()</span>
+        <span class="GruvboxRed">endfunction</span>
+
+        <span class="GruvboxRed">augroup</span> AutoSyntastic
+            <span class="GruvboxRed">autocmd</span>!
+            <span class="GruvboxGreenBold">execute</span> <span class="String">'autocmd FileType '</span> <span class="Normal">.</span>
+<span class="GruvboxFg3">                \</span><span class="GruvboxGreenBold">join</span><span class="GruvboxOrange">(</span>g:syntastic_mode_map[<span class="String">'active_filetypes'</span>], <span class="String">','</span><span class="GruvboxOrange">)</span> <span class="Normal">.</span>
+<span class="GruvboxFg3">                \</span><span class="String">' autocmd BufWritePost &lt;buffer&gt; :call s:syntastic()'</span>
+        <span class="GruvboxRed">augroup</span> END
+<span class="Comment">    &quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; }}}</span>
+<span class="Comment">&quot;&quot;&quot; Local ending config, will overwrite anything above. Generally use this. {{{</span>
+    <span class="GruvboxRed">if</span> <span class="GruvboxGreenBold">filereadable</span><span class="GruvboxOrange">(</span><span class="GruvboxAqua">$HOME</span><span class="Normal">.</span><span class="String">'/.vimrc.last'</span><span class="GruvboxOrange">)</span>
+        <span class="GruvboxRed">source</span> <span class="GruvboxAqua">$HOME</span>/<span class="Normal">.</span>vimrc<span class="Normal">.</span><span class="GruvboxRed">last</span>
+    <span class="GruvboxRed">endif</span>
+<span class="Comment">&quot;&quot;&quot; }}}</span>
+
+<span class="Comment">&quot;&quot;&quot; autocmd inoremap</span>
+<span class="Comment">&quot;&quot;&quot; C programming</span>
+<span class="Comment">&quot;if statement</span>
+<span class="GruvboxRed">autocmd</span> <span class="GruvboxYellow">FileType</span> c <span class="GruvboxRed">inoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>if if()<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>{<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>}
+<span class="Comment">&quot;if else statement</span>
+<span class="GruvboxRed">autocmd</span> <span class="GruvboxYellow">FileType</span> c <span class="GruvboxRed">inoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>ife if()<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>{<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>}<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>else<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>{<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>}<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>
+<span class="Comment">&quot;for loop</span>
+<span class="GruvboxRed">autocmd</span> <span class="GruvboxYellow">FileType</span> c <span class="GruvboxRed">inoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Leader</span><span class="GruvboxOrange">&gt;</span>for for(init;<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Space</span><span class="GruvboxOrange">&gt;</span>condition;<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Space</span><span class="GruvboxOrange">&gt;</span>increment)<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>{<span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;&lt;</span><span class="GruvboxOrange">CR</span><span class="GruvboxOrange">&gt;</span>}
+
+<span class="Comment">&quot;start nerdtree</span>
+<span class="GruvboxRed">autocmd</span> <span class="GruvboxYellow">VimEnter</span> * <span class="GruvboxRed">exe</span> <span class="String">'NERDTree'</span> <span class="GruvboxRed">|</span> <span class="GruvboxRed">wincmd</span> <span class="GruvboxRed">l</span>
+<span class="GruvboxRed">autocmd</span> <span class="GruvboxYellow">bufenter</span> * <span class="GruvboxRed">if</span> <span class="GruvboxOrange">(</span><span class="GruvboxGreenBold">winnr</span><span class="GruvboxOrange">(</span><span class="String">&quot;$&quot;</span><span class="GruvboxOrange">)</span> <span class="Normal">==</span> <span class="GruvboxPurple">1</span> <span class="Normal">&amp;&amp;</span> <span class="GruvboxGreenBold">exists</span><span class="GruvboxOrange">(</span><span class="String">&quot;b:NERDTree&quot;</span><span class="GruvboxOrange">)</span> <span class="Normal">&amp;&amp;</span> <span class="Normal">b:NERDTree.isTabTree</span><span class="GruvboxOrange">())</span> | <span class="GruvboxRed">q</span> | <span class="GruvboxRed">endif</span>
+
+<span class="Comment">&quot; Remove &lt;Tab&gt; from the list of keys mapped by YCM.</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:ycm_key_list_select_completion</span> <span class="Normal">=</span> [<span class="String">'&lt;Down&gt;'</span>]
+<span class="GruvboxRed">inoremap</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">expr</span><span class="GruvboxOrange">&gt;</span> <span class="GruvboxOrange">&lt;</span><span class="GruvboxOrange">Tab</span><span class="GruvboxOrange">&gt;</span> pumvisible() ? &quot;<span class="GruvboxOrange">\&lt;</span><span class="GruvboxOrange">C-n</span><span class="GruvboxOrange">&gt;</span>&quot; : &quot;ᐅ&quot;
+
+<span class="Comment">&quot;execute pathogen#infect()</span>
+<span class="Comment">&quot;all pathogen#helptags()</span>
+
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:Powerline_symbols</span> <span class="Normal">=</span> <span class="String">&quot;fancy&quot;</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:Powerline_dividers_override</span> <span class="Normal">=</span> [<span class="String">&quot;\Ue0b0&quot;</span>,<span class="String">&quot;\Ue0b1&quot;</span>,<span class="String">&quot;\Ue0b2&quot;</span>,<span class="String">&quot;\Ue0b3&quot;</span>]
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:Powerline_symbols_override</span> <span class="Normal">=</span> <span class="GruvboxFg3">{</span><span class="String">'BRANCH'</span>: <span class="String">&quot;\Ue0a0&quot;</span>, <span class="String">'LINE'</span>: <span class="String">&quot;\Ue0a1&quot;</span>, <span class="String">'RO'</span>: <span class="String">&quot;\Ue0a2&quot;</span><span class="GruvboxFg3">}</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_powerline_fonts</span> <span class="Normal">=</span> <span class="GruvboxPurple">1</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_right_alt_sep</span> <span class="Normal">=</span> <span class="String">''</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_right_sep</span> <span class="Normal">=</span> <span class="String">''</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_left_alt_sep</span><span class="Normal">=</span> <span class="String">''</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_left_sep</span> <span class="Normal">=</span> <span class="String">''</span>
+
+<span class="Comment">&quot; air-line</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_powerline_fonts</span> <span class="Normal">=</span> <span class="GruvboxPurple">1</span>
+
+<span class="GruvboxRed">if</span> !<span class="GruvboxGreenBold">exists</span><span class="GruvboxOrange">(</span><span class="String">'g:airline_symbols'</span><span class="GruvboxOrange">)</span>
+    <span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_symbols</span> <span class="Normal">=</span> <span class="GruvboxFg3">{}</span>
+<span class="GruvboxRed">endif</span>
+
+<span class="Comment">&quot; unicode symbols</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_left_sep</span> <span class="Normal">=</span> <span class="String">'»'</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_left_sep</span> <span class="Normal">=</span> <span class="String">'▶'</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_right_sep</span> <span class="Normal">=</span> <span class="String">'«'</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_right_sep</span> <span class="Normal">=</span> <span class="String">'◀'</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_symbols</span><span class="Normal">.</span>linenr <span class="Normal">=</span> <span class="String">'␊'</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_symbols</span><span class="Normal">.</span>linenr <span class="Normal">=</span> <span class="String">'␤'</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_symbols</span><span class="Normal">.</span>linenr <span class="Normal">=</span> <span class="String">'¶'</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_symbols</span><span class="Normal">.</span>branch <span class="Normal">=</span> <span class="String">'⎇'</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_symbols</span><span class="Normal">.</span>paste <span class="Normal">=</span> <span class="String">'ρ'</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_symbols</span><span class="Normal">.</span>paste <span class="Normal">=</span> <span class="String">'Þ'</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_symbols</span><span class="Normal">.</span>paste <span class="Normal">=</span> <span class="String">'∥'</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_symbols</span><span class="Normal">.</span>whitespace <span class="Normal">=</span> <span class="String">'Ξ'</span>
+
+<span class="Comment">&quot; airline symbols</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_left_sep</span> <span class="Normal">=</span> <span class="String">''</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_left_alt_sep</span> <span class="Normal">=</span> <span class="String">''</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_right_sep</span> <span class="Normal">=</span> <span class="String">''</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_right_alt_sep</span> <span class="Normal">=</span> <span class="String">''</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_symbols</span><span class="Normal">.</span>branch <span class="Normal">=</span> <span class="String">''</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_symbols</span><span class="Normal">.</span>readonly <span class="Normal">=</span> <span class="String">''</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_symbols</span><span class="Normal">.</span>linenr <span class="Normal">=</span> <span class="String">''</span>
+
+
+
+<span class="Comment">&quot;Airline Themes</span>
+<span class="Comment">&quot;let g:airline_theme='gruvbox'</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline_theme</span><span class="Normal">=</span><span class="String">'badwolf'</span>
+<span class="Comment">&quot;let g:airline_theme='ravenpower'</span>
+<span class="Comment">&quot;let g:airline_theme='simple'</span>
+<span class="Comment">&quot;let g:airline_theme='term'</span>
+<span class="Comment">&quot;let g:airline_theme='ubaryd'</span>
+<span class="Comment">&quot;let g:airline_theme='laederon'</span>
+<span class="Comment">&quot;let g:airline_theme='kolor'</span>
+<span class="Comment">&quot;let g:airline_theme='molokai'</span>
+<span class="Comment">&quot;let g:airline_theme='powerlineish'</span>
+<span class="Comment">&quot;</span>
+<span class="Comment">&quot;colorscheme wombat256</span>
+<span class="Comment">&quot;colorscheme tango</span>
+<span class="Comment">&quot;colorscheme railscasts</span>
+<span class="Comment">&quot;colorscheme vividchalk</span>
+<span class="Comment">&quot;colorscheme distinguished</span>
+<span class="Comment">&quot;colorscheme monokai</span>
+<span class="Comment">&quot;colorscheme molokai</span>
+<span class="Comment">&quot;colorscheme neodark</span>
+<span class="Comment">&quot;colorscheme kolor</span>
+<span class="Comment">&quot;colorscheme gotham</span>
+<span class="Comment">&quot;colorscheme jellybeans</span>
+<span class="Comment">&quot;volorscheme desertEx</span>
+<span class="Comment">&quot;colorscheme elflord</span>
+
+<span class="Comment">&quot;colorscheme </span>
+<span class="Comment">&quot;let g:gruvbox_contrast_dark ='Hard'</span>
+<span class="GruvboxRed">set</span> <span class="GruvboxAqua">background</span>=dark
+<span class="GruvboxRed">colorscheme</span> gruvbox
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:startify_custom_header</span> <span class="Normal">=</span> <span class="String">'startify#pad(startify#fortune#cowsay())'</span>
+<span class="GruvboxRed">set</span> <span class="GruvboxAqua">cursorline</span>
+<span class="GruvboxRed">set</span> <span class="GruvboxAqua">number</span>
+<span class="GruvboxRed">hi</span> <span class="GruvboxYellow">CursorLine</span> <span class="GruvboxYellow">term</span>=<span class="GruvboxAqua">bold</span> <span class="GruvboxYellow">cterm</span>=<span class="GruvboxAqua">bold</span> <span class="GruvboxYellow">guibg</span>=<span class="GruvboxYellow">Grey40</span>
+
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline#extensions#tabline#enabled</span> <span class="Normal">=</span> <span class="GruvboxPurple">0</span>
+<span class="GruvboxRed">let</span> <span class="GruvboxBlue">g:airline#extensions#whitespace#enabled</span> <span class="Normal">=</span> <span class="GruvboxPurple">0</span>
+</pre>
+
+
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/Programs/Bluzgacz/autoworder.py.html</title>
+<meta name="syntax" content="python">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.GruvboxOrange { color: #ff8700; }
+.GruvboxRed { color: #d75f5f; }
+.GruvboxAqua { color: #87af87; }
+.GruvboxBlue { color: #87afaf; }
+.Comment { color: #8a8a8a; }
+.String { color: #afaf00; }
+.GruvboxPurple { color: #d787af; }
+-->
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+    <title>Aleks's Website</title>
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+    <h2>Autoworder</h2>
+    <p>Random word generator + paster. two wordlists required and pip dependency</p>
+
+<pre id='vimCodeElement'>
+<span class="GruvboxBlue">import</span> time
+<span class="GruvboxBlue">import</span> random
+<span class="GruvboxBlue">from</span> pynput.keyboard <span class="GruvboxBlue">import</span> Key, Controller
+<span class="GruvboxBlue">import</span> tkinter <span class="GruvboxRed">as</span> tk
+<span class="GruvboxBlue">from</span> tkinter <span class="GruvboxBlue">import</span> ttk
+
+
+keyboard = Controller()  <span class="Comment"># controller</span>
+
+<span class="Comment"># read file save to WORD</span>
+<span class="GruvboxRed">with</span> <span class="GruvboxOrange">open</span>(<span class="String">&quot;</span><span class="String">wordlist1.txt</span><span class="String">&quot;</span>, encoding=<span class="String">&quot;</span><span class="String">utf8</span><span class="String">&quot;</span>) <span class="GruvboxRed">as</span> <span class="GruvboxOrange">file</span>:
+    allText = <span class="GruvboxOrange">file</span>.read()
+    words = <span class="GruvboxOrange">list</span>(<span class="GruvboxOrange">map</span>(<span class="GruvboxOrange">str</span>, allText.split()))
+
+<span class="GruvboxRed">with</span> <span class="GruvboxOrange">open</span>(<span class="String">&quot;</span><span class="String">wordlist2.txt</span><span class="String">&quot;</span>, encoding=<span class="String">&quot;</span><span class="String">utf8</span><span class="String">&quot;</span>) <span class="GruvboxRed">as</span> <span class="GruvboxOrange">file</span>:
+    allText2 = <span class="GruvboxOrange">file</span>.read()
+    words2 = <span class="GruvboxOrange">list</span>(<span class="GruvboxOrange">map</span>(<span class="GruvboxOrange">str</span>, allText2.split()))
+
+<span class="Comment">##GUI</span>
+win = tk.Tk()<span class="Comment"># top name</span>
+win.title(<span class="String">&quot;</span><span class="String">autoworder</span><span class="String">&quot;</span>)<span class="Comment"># label</span>
+lbl = ttk.Label(win, text = <span class="String">&quot;</span><span class="String">how many words?</span><span class="String">&quot;</span>).grid(column = <span class="GruvboxPurple">0</span>, row = <span class="GruvboxPurple">0</span>)<span class="Comment"># Click event 1</span>
+lbl = ttk.Label(win, text = <span class="String">&quot;</span><span class="String">how many seconds to wait? (in sec)</span><span class="String">&quot;</span>).grid(column = <span class="GruvboxPurple">0</span>, row = <span class="GruvboxPurple">3</span>)<span class="Comment"># Click event 2</span>
+lbl = ttk.Label(win, text = <span class="String">&quot;</span><span class="String">how many words in a sentance?</span><span class="String">&quot;</span>).grid(column = <span class="GruvboxPurple">0</span>, row = <span class="GruvboxPurple">5</span>)<span class="Comment"># Click event 3</span>
+lbl = ttk.Label(win, text = <span class="String">&quot;</span><span class="String">initial word</span><span class="String">&quot;</span>).grid(column = <span class="GruvboxPurple">0</span>, row = <span class="GruvboxPurple">7</span>)<span class="Comment"># Click event 4</span>
+lbl = ttk.Label(win, text = <span class="String">&quot;</span><span class="String">last word</span><span class="String">&quot;</span>).grid(column = <span class="GruvboxPurple">0</span>, row = <span class="GruvboxPurple">9</span>)<span class="Comment"># Click event 5</span>
+
+<span class="GruvboxRed">def</span> <span class="GruvboxAqua">click</span>(): <span class="Comment"># init click event define</span>
+    wordLen = numOfWords.get()<span class="Comment">#GET NUMBER OF WORDS</span>
+    secLen = numOfSeconds.get()<span class="Comment">#GET SECONDS</span>
+    typeLen = numOfType.get()<span class="Comment">#GET TYPE</span>
+    firstLen = numOfFirst.get()<span class="Comment">#GET FIRST WORD</span>
+    lastLen = numOfLast.get()<span class="Comment">#GET LAST WORD</span>
+
+    time.sleep(<span class="GruvboxOrange">int</span>(secLen))
+
+    <span class="GruvboxRed">def</span> <span class="GruvboxAqua">type_string_with_delay</span>(string):
+        <span class="GruvboxRed">for</span> character <span class="GruvboxRed">in</span> string:  <span class="Comment"># Loop over each character in the string</span>
+            keyboard.type(character)  <span class="Comment"># Type the character</span>
+            time.sleep(<span class="GruvboxPurple">0</span>) <span class="Comment">#time between each char typed</span>
+
+    <span class="GruvboxRed">for</span> i <span class="GruvboxRed">in</span> <span class="GruvboxOrange">range</span>(<span class="GruvboxOrange">int</span>(wordLen)):
+        randomlist = []
+        randomWord2 = []
+        randomlist.append(firstLen + <span class="String">&quot;</span><span class="String"> </span><span class="String">&quot;</span>)
+
+        <span class="GruvboxRed">for</span> i <span class="GruvboxRed">in</span> <span class="GruvboxOrange">range</span>(<span class="GruvboxPurple">0</span>,<span class="GruvboxOrange">int</span>(typeLen)):
+            oneWord = (random.choice(words)) <span class="Comment">#generate random word from WORD</span>
+            randomlist.append(oneWord + <span class="String">&quot;</span><span class="String"> </span><span class="String">&quot;</span>) <span class="Comment">#Append random word ( oneWord ) to RANDOMLIST</span>
+
+        randomlist.append(lastLen)
+        type_string_with_delay(randomlist)
+        keyboard.press(Key.enter)
+        keyboard.release(Key.enter)
+        time.sleep(<span class="GruvboxPurple">0.3</span>)
+
+
+<span class="GruvboxRed">def</span> <span class="GruvboxAqua">click2</span>(): <span class="Comment"># init click event define</span>
+    wordLen = numOfWords.get()<span class="Comment">#GET NUMBER OF WORDS</span>
+    secLen = numOfSeconds.get()<span class="Comment">#GET SECONDS</span>
+    typeLen = numOfType.get()<span class="Comment">#GET TYPE</span>
+    firstLen = numOfFirst.get()<span class="Comment">#GET FIRST WORD</span>
+    lastLen = numOfLast.get()<span class="Comment">#GET SECOND WORD</span>
+
+    time.sleep(<span class="GruvboxOrange">int</span>(secLen))
+
+    <span class="GruvboxRed">def</span> <span class="GruvboxAqua">type_string_with_delay</span>(string):
+        <span class="GruvboxRed">for</span> character <span class="GruvboxRed">in</span> string:  <span class="Comment"># Loop over each character in the string</span>
+            keyboard.type(character)  <span class="Comment"># Type the character</span>
+            time.sleep(<span class="GruvboxPurple">0</span>) <span class="Comment">#time between each char typed</span>
+
+    <span class="GruvboxRed">for</span> i <span class="GruvboxRed">in</span> <span class="GruvboxOrange">range</span>(<span class="GruvboxOrange">int</span>(wordLen)):
+        randomlist = []
+        randomWord2 = []
+        randomlist.append(firstLen + <span class="String">&quot;</span><span class="String"> </span><span class="String">&quot;</span>)
+
+        <span class="GruvboxRed">for</span> i <span class="GruvboxRed">in</span> <span class="GruvboxOrange">range</span>(<span class="GruvboxPurple">0</span>,<span class="GruvboxOrange">int</span>(typeLen)):
+            oneWord = (random.choice(words)) <span class="Comment">#generate random word from WORD</span>
+            secondWord = (random.choice(words2))
+            randomlist.append(secondWord + <span class="String">&quot;</span><span class="String"> </span><span class="String">&quot;</span> + oneWord + <span class="String">&quot;</span><span class="String"> </span><span class="String">&quot;</span>) <span class="Comment">#Append random word ( oneWord ) to RANDOMLIST</span>
+
+        randomlist.append(lastLen)
+        type_string_with_delay(randomlist)
+        keyboard.press(Key.enter)
+        keyboard.release(Key.enter)
+        time.sleep(<span class="GruvboxPurple">0.3</span>)
+
+
+<span class="GruvboxRed">def</span> <span class="GruvboxAqua">click3</span>(): <span class="Comment"># init click event define</span>
+    wordLen = numOfWords.get()<span class="Comment">#GET NUMBER OF WORDS</span>
+    secLen = numOfSeconds.get()<span class="Comment">#GET SECONDS</span>
+    typeLen = numOfType.get()<span class="Comment">#GET TYPE</span>
+    firstLen = numOfFirst.get()<span class="Comment">#GET FIRST WORD</span>
+    lastLen = numOfLast.get()<span class="Comment">#GET SECOND WORD</span>
+
+    time.sleep(<span class="GruvboxOrange">int</span>(secLen))
+
+    <span class="GruvboxRed">def</span> <span class="GruvboxAqua">type_string_with_delay</span>(string):
+        <span class="GruvboxRed">for</span> character <span class="GruvboxRed">in</span> string:  <span class="Comment"># Loop over each character in the string</span>
+            keyboard.type(character)  <span class="Comment"># Type the character</span>
+            time.sleep(<span class="GruvboxPurple">0</span>) <span class="Comment">#time between each char typed</span>
+
+    <span class="GruvboxRed">for</span> i <span class="GruvboxRed">in</span> <span class="GruvboxOrange">range</span>(<span class="GruvboxOrange">int</span>(wordLen)):
+        randomlist = []
+        randomWord2 = []
+        randomlist.append(firstLen + <span class="String">&quot;</span><span class="String"> </span><span class="String">&quot;</span>)
+
+        <span class="GruvboxRed">for</span> i <span class="GruvboxRed">in</span> <span class="GruvboxOrange">range</span>(<span class="GruvboxPurple">0</span>,<span class="GruvboxOrange">int</span>(typeLen)):
+            oneWord = (random.choice(words)) <span class="Comment">#generate random word from WORD</span>
+            secondWord = (random.choice(words2))
+            randomlist.append(secondWord + <span class="String">&quot;</span><span class="String"> </span><span class="String">&quot;</span> + oneWord + <span class="String">&quot;</span><span class="String"> </span><span class="String">&quot;</span>) <span class="Comment">#Append random word ( oneWord ) to RANDOMLIST</span>
+
+        randomlist.append(lastLen)
+        type_string_with_delay(randomlist)
+        keyboard.press(Key.enter)
+        keyboard.release(Key.enter)
+
+
+numOfWords = tk.StringVar()
+numOfSeconds = tk.StringVar()
+numOfType = tk.StringVar()
+numOfFirst = tk.StringVar()
+numOfLast = tk.StringVar()
+
+numberEntered = ttk.Entry(win, width = <span class="GruvboxPurple">12</span>, textvariable = numOfWords).grid(column = <span class="GruvboxPurple">0</span>, row = <span class="GruvboxPurple">1</span>)<span class="Comment"># Button widget</span>
+number2Entered = ttk.Entry(win, width = <span class="GruvboxPurple">12</span>, textvariable = numOfSeconds).grid(column = <span class="GruvboxPurple">0</span>, row = <span class="GruvboxPurple">4</span>)<span class="Comment"># Button widget</span>
+number3Entered = ttk.Entry(win, width = <span class="GruvboxPurple">12</span>, textvariable = numOfType).grid(column = <span class="GruvboxPurple">0</span>, row = <span class="GruvboxPurple">6</span>)<span class="Comment"># Button widget</span>
+number4Entered = ttk.Entry(win, width = <span class="GruvboxPurple">12</span>, textvariable = numOfFirst).grid(column = <span class="GruvboxPurple">0</span>, row = <span class="GruvboxPurple">8</span>)<span class="Comment"># Button widget</span>
+number5Entered = ttk.Entry(win, width = <span class="GruvboxPurple">12</span>, textvariable = numOfLast).grid(column = <span class="GruvboxPurple">0</span>, row = <span class="GruvboxPurple">10</span>)<span class="Comment"># Button widget</span>
+
+button = ttk.Button(win, text = <span class="String">&quot;</span><span class="String">Run only wordlist1</span><span class="String">&quot;</span>, command = click).grid(column = <span class="GruvboxPurple">2</span>, row = <span class="GruvboxPurple">1</span>)
+button = ttk.Button(win, text = <span class="String">&quot;</span><span class="String">Run wordlist1 + wordlist2</span><span class="String">&quot;</span>, command = click2).grid(column = <span class="GruvboxPurple">2</span>, row = <span class="GruvboxPurple">4</span>)
+button = ttk.Button(win, text = <span class="String">&quot;</span><span class="String">Run all fast</span><span class="String">&quot;</span>, command = click3).grid(column = <span class="GruvboxPurple">2</span>, row = <span class="GruvboxPurple">6</span>)
+win.mainloop()
+
+</pre>
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

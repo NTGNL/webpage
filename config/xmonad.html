@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta name="syntax" content="haskell">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.Normal { color: #ffd7af; background-color: #262626; padding-bottom: 1px; }
+.GruvboxPurple { color: #d787af; }
+.GruvboxRed { color: #d75f5f; }
+.Comment { color: #8a8a8a; }
+.String { color: #afaf00; }
+.GruvboxAqua { color: #87af87; }
+-->
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+    <title>Aleks's Website</title>
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+    <h2>Xmonad</h2>
+    <p>xmonad.hs a haskell window manager for linux.</p>
+
+
+<pre id='vimCodeElement'>
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- IMPORTS</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+    <span class="Comment">-- Base</span>
+<span class="GruvboxAqua">import</span> XMonad
+<span class="GruvboxAqua">import</span> System.IO (hPutStrLn)
+<span class="GruvboxAqua">import</span> System.Exit (exitSuccess)
+<span class="GruvboxAqua">import</span> <span class="GruvboxAqua">qualified</span> XMonad.StackSet <span class="GruvboxAqua">as</span> W
+
+    <span class="Comment">-- Actions</span>
+<span class="GruvboxAqua">import</span> XMonad.Actions.CopyWindow (kill1, killAllOtherCopies)
+<span class="GruvboxAqua">import</span> XMonad.Actions.CycleWS (moveTo, shiftTo, WSType(..), nextScreen, prevScreen)
+<span class="GruvboxAqua">import</span> XMonad.Actions.GridSelect
+<span class="GruvboxAqua">import</span> XMonad.Actions.MouseResize
+<span class="GruvboxAqua">import</span> XMonad.Actions.Promote
+<span class="GruvboxAqua">import</span> XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
+<span class="GruvboxAqua">import</span> <span class="GruvboxAqua">qualified</span> XMonad.Actions.TreeSelect <span class="GruvboxAqua">as</span> TS
+<span class="GruvboxAqua">import</span> XMonad.Actions.WindowGo (runOrRaise)
+<span class="GruvboxAqua">import</span> XMonad.Actions.WithAll (sinkAll, killAll)
+<span class="GruvboxAqua">import</span> <span class="GruvboxAqua">qualified</span> XMonad.Actions.Search <span class="GruvboxAqua">as</span> S
+
+    <span class="Comment">-- Data</span>
+<span class="GruvboxAqua">import</span> Data.Char (isSpace)
+<span class="GruvboxAqua">import</span> Data.Monoid
+<span class="GruvboxAqua">import</span> Data.Maybe (isJust)
+<span class="GruvboxAqua">import</span> Data.Tree
+<span class="GruvboxAqua">import</span> <span class="GruvboxAqua">qualified</span> Data.Tuple.Extra <span class="GruvboxAqua">as</span> TE
+<span class="GruvboxAqua">import</span> <span class="GruvboxAqua">qualified</span> Data.Map <span class="GruvboxAqua">as</span> M
+
+    <span class="Comment">-- Hooks</span>
+<span class="GruvboxAqua">import</span> XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+<span class="GruvboxAqua">import</span> XMonad.Hooks.EwmhDesktops  <span class="Comment">-- for some fullscreen events, also for xcomposite in obs.</span>
+<span class="GruvboxAqua">import</span> XMonad.Hooks.FadeInactive
+<span class="GruvboxAqua">import</span> XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..))
+<span class="GruvboxAqua">import</span> XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat)
+<span class="GruvboxAqua">import</span> XMonad.Hooks.ServerMode
+<span class="GruvboxAqua">import</span> XMonad.Hooks.SetWMName
+<span class="GruvboxAqua">import</span> XMonad.Hooks.WorkspaceHistory
+
+    <span class="Comment">-- Layouts</span>
+<span class="GruvboxAqua">import</span> XMonad.Layout.GridVariants (Grid(Grid))
+<span class="GruvboxAqua">import</span> XMonad.Layout.SimplestFloat
+<span class="GruvboxAqua">import</span> XMonad.Layout.Spiral
+<span class="GruvboxAqua">import</span> XMonad.Layout.ResizableTile
+<span class="GruvboxAqua">import</span> XMonad.Layout.Tabbed
+<span class="GruvboxAqua">import</span> XMonad.Layout.ThreeColumns
+
+    <span class="Comment">-- Layouts modifiers</span>
+<span class="GruvboxAqua">import</span> XMonad.Layout.LayoutModifier
+<span class="GruvboxAqua">import</span> XMonad.Layout.LimitWindows (limitWindows, increaseLimit, decreaseLimit)
+<span class="GruvboxAqua">import</span> XMonad.Layout.Magnifier
+<span class="GruvboxAqua">import</span> XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
+<span class="GruvboxAqua">import</span> XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
+<span class="GruvboxAqua">import</span> XMonad.Layout.NoBorders
+<span class="GruvboxAqua">import</span> XMonad.Layout.Renamed (renamed, Rename(Replace))
+<span class="GruvboxAqua">import</span> XMonad.Layout.ShowWName
+<span class="GruvboxAqua">import</span> XMonad.Layout.Spacing
+<span class="GruvboxAqua">import</span> XMonad.Layout.WindowArranger (windowArrange, WindowArrangerMsg(..))
+<span class="GruvboxAqua">import</span> <span class="GruvboxAqua">qualified</span> XMonad.Layout.ToggleLayouts <span class="GruvboxAqua">as</span> T (toggleLayouts, ToggleLayout(Toggle))
+<span class="GruvboxAqua">import</span> <span class="GruvboxAqua">qualified</span> XMonad.Layout.MultiToggle <span class="GruvboxAqua">as</span> MT (Toggle(..))
+
+    <span class="Comment">-- Prompt</span>
+<span class="GruvboxAqua">import</span> XMonad.Prompt
+<span class="GruvboxAqua">import</span> XMonad.Prompt.Input
+<span class="Comment">--import XMonad.Prompt.FuzzyMatch</span>
+<span class="GruvboxAqua">import</span> XMonad.Prompt.Man
+<span class="GruvboxAqua">import</span> XMonad.Prompt.Pass
+<span class="GruvboxAqua">import</span> XMonad.Prompt.Shell (shellPrompt)
+<span class="GruvboxAqua">import</span> XMonad.Prompt.Ssh
+<span class="GruvboxAqua">import</span> XMonad.Prompt.XMonad
+<span class="GruvboxAqua">import</span> Control.Arrow (first)
+
+    <span class="Comment">-- Utilities</span>
+<span class="GruvboxAqua">import</span> XMonad.Util.EZConfig (additionalKeysP)
+<span class="GruvboxAqua">import</span> XMonad.Util.NamedScratchpad
+<span class="GruvboxAqua">import</span> XMonad.Util.Run (runProcessWithInput, safeSpawn, spawnPipe)
+<span class="GruvboxAqua">import</span> XMonad.Util.SpawnOnce
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- VARIABLES</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+myFont <span class="Normal">::</span> String
+myFont <span class="Normal">=</span> <span class="String">&quot;xft:TerminessTTF Nerd Font:bold:size=11:antialias=true:hinting=true&quot;</span>
+
+myModMask <span class="Normal">::</span> KeyMask
+myModMask <span class="Normal">=</span> mod4Mask       <span class="Comment">-- Sets modkey to super/windows key</span>
+
+myTerminal <span class="Normal">::</span> String
+myTerminal <span class="Normal">=</span> <span class="String">&quot;urxvt&quot;</span>   <span class="Comment">-- Sets default terminal</span>
+
+myBrowser <span class="Normal">::</span> String
+myBrowser <span class="Normal">=</span> <span class="String">&quot;firefox &quot;</span>               <span class="Comment">-- Sets qutebrowser as browser for tree select</span>
+
+myEditor <span class="Normal">::</span> String
+myEditor <span class="Normal">=</span> myTerminal <span class="Normal">++</span> <span class="String">&quot; -e vim &quot;</span>    <span class="Comment">-- Sets vim as editor for tree select</span>
+
+myBorderWidth <span class="Normal">::</span> Dimension
+myBorderWidth <span class="Normal">=</span> <span class="GruvboxPurple">1</span>          <span class="Comment">-- Sets border width for windows</span>
+
+myNormColor <span class="Normal">::</span> String
+myNormColor   <span class="Normal">=</span> <span class="String">&quot;#292d3e&quot;</span>  <span class="Comment">-- Border color of normal windows</span>
+
+myFocusColor <span class="Normal">::</span> String
+myFocusColor  <span class="Normal">=</span> <span class="String">&quot;#75715e&quot;</span>  <span class="Comment">-- Border color of focused windows</span>
+
+altMask <span class="Normal">::</span> KeyMask
+altMask <span class="Normal">=</span> mod1Mask         <span class="Comment">-- Setting this for use in xprompts</span>
+
+windowCount <span class="Normal">::</span> X (Maybe String)
+windowCount <span class="Normal">=</span> gets <span class="Normal">$</span> Just <span class="Normal">.</span> show <span class="Normal">.</span> length <span class="Normal">.</span> W.integrate' <span class="Normal">.</span> W.stack <span class="Normal">.</span> W.workspace <span class="Normal">.</span> W.current <span class="Normal">.</span> windowset
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- AUTOSTART</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+myStartupHook <span class="Normal">::</span> X ()
+myStartupHook <span class="Normal">=</span> <span class="GruvboxRed">do</span>
+          spawn <span class="String">&quot;compton&quot;</span>
+          spawn <span class="String">&quot;nitrogen --restore&quot;</span>
+          spawn <span class="String">&quot;clipit&quot;</span>
+          spawn <span class="String">&quot;urxvtd&quot;</span>
+
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- GRID SELECT</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+myColorizer <span class="Normal">::</span> Window <span class="Normal">-&gt;</span> Bool <span class="Normal">-&gt;</span> X (String, String)
+myColorizer <span class="Normal">=</span> colorRangeFromClassName
+                  (<span class="GruvboxPurple">0x29</span>,<span class="GruvboxPurple">0x2d</span>,<span class="GruvboxPurple">0x3e</span>) <span class="Comment">-- lowest inactive bg</span>
+                  (<span class="GruvboxPurple">0x29</span>,<span class="GruvboxPurple">0x2d</span>,<span class="GruvboxPurple">0x3e</span>) <span class="Comment">-- highest inactive bg</span>
+                  (<span class="GruvboxPurple">0xc7</span>,<span class="GruvboxPurple">0x92</span>,<span class="GruvboxPurple">0xea</span>) <span class="Comment">-- active bg</span>
+                  (<span class="GruvboxPurple">0xc0</span>,<span class="GruvboxPurple">0xa7</span>,<span class="GruvboxPurple">0x9a</span>) <span class="Comment">-- inactive fg</span>
+                  (<span class="GruvboxPurple">0x29</span>,<span class="GruvboxPurple">0x2d</span>,<span class="GruvboxPurple">0x3e</span>) <span class="Comment">-- active fg</span>
+
+<span class="Comment">-- gridSelect menu layout</span>
+mygridConfig <span class="Normal">::</span> p <span class="Normal">-&gt;</span> GSConfig Window
+mygridConfig colorizer <span class="Normal">=</span> (buildDefaultGSConfig myColorizer)
+    { gs_cellheight   <span class="Normal">=</span> <span class="GruvboxPurple">40</span>
+    , gs_cellwidth    <span class="Normal">=</span> <span class="GruvboxPurple">200</span>
+    , gs_cellpadding  <span class="Normal">=</span> <span class="GruvboxPurple">6</span>
+    , gs_originFractX <span class="Normal">=</span> <span class="GruvboxPurple">0.5</span>
+    , gs_originFractY <span class="Normal">=</span> <span class="GruvboxPurple">0.5</span>
+    , gs_font         <span class="Normal">=</span> myFont
+    }
+
+spawnSelected' <span class="Normal">::</span> [(String, String)] <span class="Normal">-&gt;</span> X ()
+spawnSelected' lst <span class="Normal">=</span> gridselect conf lst <span class="Normal">&gt;&gt;=</span> flip whenJust spawn
+    <span class="GruvboxAqua">where</span> conf <span class="Normal">=</span> def
+                   { gs_cellheight   <span class="Normal">=</span> <span class="GruvboxPurple">40</span>
+                   , gs_cellwidth    <span class="Normal">=</span> <span class="GruvboxPurple">200</span>
+                   , gs_cellpadding  <span class="Normal">=</span> <span class="GruvboxPurple">6</span>
+                   , gs_originFractX <span class="Normal">=</span> <span class="GruvboxPurple">0.5</span>
+                   , gs_originFractY <span class="Normal">=</span> <span class="GruvboxPurple">0.5</span>
+                   , gs_font         <span class="Normal">=</span> myFont
+                   }
+
+myApplications <span class="Normal">::</span> [(String, String, String)]
+myApplications <span class="Normal">=</span> [ (<span class="String">&quot;Record Screen&quot;</span>, <span class="String">&quot;/home/aleks/sc/record_gif.sh&quot;</span>, <span class="String">&quot;Record screen as gif for 6 sec&quot;</span>)
+                 , (<span class="String">&quot;Auto Clicker 1000&quot;</span>, <span class="String">&quot;/home/aleks/sc/autoclicker1000.sh&quot;</span>, <span class="String">&quot;Click 1000 times&quot;</span>)
+                 , (<span class="String">&quot;Auto Clicker 100&quot;</span>, <span class="String">&quot;/home/aleks/sc/autoclicker100.sh&quot;</span>, <span class="String">&quot;Click 100 times&quot;</span>)
+                 , (<span class="String">&quot;syf.sh Random Word&quot;</span>, <span class="String">&quot;/home/aleks/sc/random/syf.sh&quot;</span>, <span class="String">&quot;word generator/spammer&quot;</span>)
+                 , (<span class="String">&quot;Get Mouse Coords&quot;</span>, <span class="String">&quot;/home/aleks/sc/coordinator/coord.sh&quot;</span>, <span class="String">&quot;get coordinate to click&quot;</span>)
+                 , (<span class="String">&quot;rulonOne.sh One &quot;</span>, <span class="String">&quot;/home/aleks/sc/random/rulonOne.sh&quot;</span>, <span class="String">&quot;one word spammer&quot;</span>)
+                 , (<span class="String">&quot;rulon2fast.sh Fast&quot;</span>, <span class="String">&quot;/home/aleks/sc/random/rulon2fast.sh&quot;</span>, <span class="String">&quot;fast word spammer&quot;</span>)
+                 , (<span class="String">&quot;rulon2.sh 13 Words&quot;</span>, <span class="String">&quot;/home/aleks/sc/random/rulon2.sh&quot;</span>, <span class="String">&quot;13 word spammer&quot;</span>)
+                 ]
+
+myBookmarks <span class="Normal">::</span> [(String, String, String)]
+myBookmarks <span class="Normal">=</span> [ (<span class="String">&quot;Youtube.com&quot;</span>, myBrowser <span class="Normal">++</span> <span class="String">&quot;<a href="https://www.youtube.com">https://www.youtube.com</a>&quot;</span>, <span class="String">&quot;Youtube&quot;</span>)
+              , (<span class="String">&quot;My website&quot;</span>, myBrowser <span class="Normal">++</span> <span class="String">&quot;<a href="https://www.aleksander.xyz">https://www.aleksander.xyz</a>&quot;</span>, <span class="String">&quot;My website&quot;</span>)
+                , (<span class="String">&quot;walk.sh CSGO&quot;</span>, <span class="String">&quot;/home/aleks/sc/csgo/walk.sh&quot;</span>, <span class="String">&quot;walk csgo&quot;</span>)
+              ]
+
+myConfigs <span class="Normal">::</span> [(String, String, String)]
+myConfigs <span class="Normal">=</span> [ (<span class="String">&quot;bashrc&quot;</span>, myEditor <span class="Normal">++</span> <span class="String">&quot; ~/.bashrc&quot;</span>, <span class="String">&quot;the bourne again shell&quot;</span>)
+            , (<span class="String">&quot;xmonad.hs&quot;</span>, myEditor <span class="Normal">++</span> <span class="String">&quot; ~/.xmonad/xmonad.hs&quot;</span>, <span class="String">&quot;xmonad config&quot;</span>)
+            , (<span class="String">&quot;fishconfig&quot;</span>, myEditor <span class="Normal">++</span> <span class="String">&quot; ~/.config/fish/config.fish&quot;</span>, <span class="String">&quot;config for fish shell&quot;</span>)
+            ]
+
+myAppGrid <span class="Normal">::</span> [(String, String)]
+myAppGrid <span class="Normal">=</span> [ (a,b) <span class="Normal">|</span> (a,b,c) <span class="Normal">&lt;-</span> xs]
+  <span class="GruvboxAqua">where</span> xs <span class="Normal">=</span> myApplications
+
+myBookmarkGrid <span class="Normal">::</span> [(String, String)]
+myBookmarkGrid <span class="Normal">=</span> [ (a,b) <span class="Normal">|</span> (a,b,c) <span class="Normal">&lt;-</span> xs]
+  <span class="GruvboxAqua">where</span> xs <span class="Normal">=</span> myBookmarks
+
+myConfigGrid <span class="Normal">::</span> [(String, String)]
+myConfigGrid <span class="Normal">=</span> [ (a,b) <span class="Normal">|</span> (a,b,c) <span class="Normal">&lt;-</span> xs]
+  <span class="GruvboxAqua">where</span> xs <span class="Normal">=</span> myConfigs
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- TREE SELECT</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+
+treeselectAction <span class="Normal">::</span> TS.TSConfig (X ()) <span class="Normal">-&gt;</span> X ()
+treeselectAction a <span class="Normal">=</span> TS.treeselectAction a
+   [ Node (TS.TSNode <span class="String">&quot;applications&quot;</span> <span class="String">&quot;a list of programs I use often&quot;</span> (return ()))
+     [Node (TS.TSNode (TE.fst3 <span class="Normal">$</span> myApplications <span class="Normal">!!</span> n)
+                      (TE.thd3 <span class="Normal">$</span> myApplications <span class="Normal">!!</span> n)
+                      (spawn <span class="Normal">$</span> TE.snd3 <span class="Normal">$</span> myApplications <span class="Normal">!!</span> n)
+           ) [] <span class="Normal">|</span> n <span class="Normal">&lt;-</span> [<span class="GruvboxPurple">0</span><span class="Normal">..</span>(length myApplications <span class="Normal">-</span> <span class="GruvboxPurple">1</span>)]
+     ]
+   , Node (TS.TSNode <span class="String">&quot;bookmarks&quot;</span> <span class="String">&quot;a list of web bookmarks&quot;</span> (return ()))
+     [Node (TS.TSNode(TE.fst3 <span class="Normal">$</span> myBookmarks <span class="Normal">!!</span> n)
+                     (TE.thd3 <span class="Normal">$</span> myBookmarks <span class="Normal">!!</span> n)
+                     (spawn <span class="Normal">$</span> TE.snd3 <span class="Normal">$</span> myBookmarks <span class="Normal">!!</span> n)
+           ) [] <span class="Normal">|</span> n <span class="Normal">&lt;-</span> [<span class="GruvboxPurple">0</span><span class="Normal">..</span>(length myBookmarks <span class="Normal">-</span> <span class="GruvboxPurple">1</span>)]
+     ]
+   , Node (TS.TSNode <span class="String">&quot;config files&quot;</span> <span class="String">&quot;config files that edit often&quot;</span> (return ()))
+     [Node (TS.TSNode (TE.fst3 <span class="Normal">$</span> myConfigs <span class="Normal">!!</span> n)
+                      (TE.thd3 <span class="Normal">$</span> myConfigs <span class="Normal">!!</span> n)
+                      (spawn <span class="Normal">$</span> TE.snd3 <span class="Normal">$</span> myConfigs <span class="Normal">!!</span> n)
+           ) [] <span class="Normal">|</span> n <span class="Normal">&lt;-</span> [<span class="GruvboxPurple">0</span><span class="Normal">..</span>(length myConfigs <span class="Normal">-</span> <span class="GruvboxPurple">1</span>)]
+     ]
+   ]
+
+<span class="Comment">-- Configuration options for treeSelect</span>
+tsDefaultConfig <span class="Normal">::</span> TS.TSConfig a
+tsDefaultConfig <span class="Normal">=</span> TS.TSConfig { TS.ts_hidechildren <span class="Normal">=</span> True
+                              , TS.ts_background   <span class="Normal">=</span> <span class="GruvboxPurple">0xdd292d3e</span>
+                              , TS.ts_font         <span class="Normal">=</span> myFont
+                              , TS.ts_node         <span class="Normal">=</span> (<span class="GruvboxPurple">0xffd0d0d0</span>, <span class="GruvboxPurple">0xff202331</span>)
+                              , TS.ts_nodealt      <span class="Normal">=</span> (<span class="GruvboxPurple">0xffd0d0d0</span>, <span class="GruvboxPurple">0xff292d3e</span>)
+                              , TS.ts_highlight    <span class="Normal">=</span> (<span class="GruvboxPurple">0xffffffff</span>, <span class="GruvboxPurple">0xff755999</span>)
+                              , TS.ts_extra        <span class="Normal">=</span> <span class="GruvboxPurple">0xffd0d0d0</span>
+                              , TS.ts_node_width   <span class="Normal">=</span> <span class="GruvboxPurple">200</span>
+                              , TS.ts_node_height  <span class="Normal">=</span> <span class="GruvboxPurple">20</span>
+                              , TS.ts_originX      <span class="Normal">=</span> <span class="GruvboxPurple">0</span>
+                              , TS.ts_originY      <span class="Normal">=</span> <span class="GruvboxPurple">0</span>
+                              , TS.ts_indent       <span class="Normal">=</span> <span class="GruvboxPurple">80</span>
+                              , TS.ts_navigate     <span class="Normal">=</span> myTreeNavigation
+                              }
+
+myTreeNavigation <span class="Normal">=</span> M.fromList
+    [ ((<span class="GruvboxPurple">0</span>, xK_Escape),   TS.cancel)
+    , ((<span class="GruvboxPurple">0</span>, xK_Return),   TS.select)
+    , ((<span class="GruvboxPurple">0</span>, xK_space),    TS.select)
+    , ((<span class="GruvboxPurple">0</span>, xK_Up),       TS.movePrev)
+    , ((<span class="GruvboxPurple">0</span>, xK_Down),     TS.moveNext)
+    , ((<span class="GruvboxPurple">0</span>, xK_Left),     TS.moveParent)
+    , ((<span class="GruvboxPurple">0</span>, xK_Right),    TS.moveChild)
+    , ((<span class="GruvboxPurple">0</span>, xK_k),        TS.movePrev)
+    , ((<span class="GruvboxPurple">0</span>, xK_j),        TS.moveNext)
+    , ((<span class="GruvboxPurple">0</span>, xK_h),        TS.moveParent)
+    , ((<span class="GruvboxPurple">0</span>, xK_l),        TS.moveChild)
+    , ((<span class="GruvboxPurple">0</span>, xK_o),        TS.moveHistBack)
+    , ((<span class="GruvboxPurple">0</span>, xK_i),        TS.moveHistForward)
+    ]
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- XPROMPT SETTINGS</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+ntgnlConfig <span class="Normal">::</span> XPConfig
+ntgnlConfig <span class="Normal">=</span> def
+      { font                <span class="Normal">=</span> myFont
+      , bgColor             <span class="Normal">=</span> <span class="String">&quot;#1f1f1f&quot;</span>
+      , fgColor             <span class="Normal">=</span> <span class="String">&quot;#f8f8f8&quot;</span>
+      , bgHLight            <span class="Normal">=</span> <span class="String">&quot;#D4BE98&quot;</span>
+      , fgHLight            <span class="Normal">=</span> <span class="String">&quot;#1e1b19&quot;</span>
+      , borderColor         <span class="Normal">=</span> <span class="String">&quot;#6699df&quot;</span>
+      , promptBorderWidth   <span class="Normal">=</span> <span class="GruvboxPurple">1</span>
+      , promptKeymap        <span class="Normal">=</span> ntgnlKeymap
+      , position            <span class="Normal">=</span> Top
+<span class="Comment">--    , position            = CenteredAt { xpCenterY = 0.3, xpWidth = 0.3 }</span>
+      , height              <span class="Normal">=</span> <span class="GruvboxPurple">20</span>
+      , historySize         <span class="Normal">=</span> <span class="GruvboxPurple">256</span>
+      , historyFilter       <span class="Normal">=</span> id
+      , defaultText         <span class="Normal">=</span> []
+      , autoComplete        <span class="Normal">=</span> Just <span class="GruvboxPurple">100000</span>  <span class="Comment">-- set Just 100000 for .1 sec</span>
+      , showCompletionOnTab <span class="Normal">=</span> False
+      <span class="Comment">-- , searchPredicate     = isPrefixOf</span>
+      <span class="Comment">-- , searchPredicate     = fuzzyMatch</span>
+      , alwaysHighlight     <span class="Normal">=</span> True
+      , maxComplRows        <span class="Normal">=</span> Nothing      <span class="Comment">-- set to Just 5 for 5 rows</span>
+      }
+
+ntgnlConfig' <span class="Normal">::</span> XPConfig
+ntgnlConfig' <span class="Normal">=</span> ntgnlConfig
+      { autoComplete        <span class="Normal">=</span> Nothing
+      }
+
+promptList <span class="Normal">::</span> [(String, XPConfig <span class="Normal">-&gt;</span> X ())]
+promptList <span class="Normal">=</span> [ (<span class="String">&quot;m&quot;</span>, manPrompt)          <span class="Comment">-- manpages prompt</span>
+             , (<span class="String">&quot;p&quot;</span>, passPrompt)         <span class="Comment">-- get passwords (requires 'pass')</span>
+             , (<span class="String">&quot;g&quot;</span>, passGeneratePrompt) <span class="Comment">-- generate passwords (requires 'pass')</span>
+             , (<span class="String">&quot;r&quot;</span>, passRemovePrompt)   <span class="Comment">-- remove passwords (requires 'pass')</span>
+             , (<span class="String">&quot;s&quot;</span>, sshPrompt)          <span class="Comment">-- ssh prompt</span>
+             , (<span class="String">&quot;x&quot;</span>, xmonadPrompt)       <span class="Comment">-- xmonad prompt</span>
+             ]
+
+promptList' <span class="Normal">::</span> [(String, XPConfig <span class="Normal">-&gt;</span> String <span class="Normal">-&gt;</span> X (), String)]
+promptList' <span class="Normal">=</span> [ (<span class="String">&quot;c&quot;</span>, calcPrompt, <span class="String">&quot;qalc&quot;</span>)         <span class="Comment">-- requires qalculate-gtk</span>
+              ]
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- CUSTOM PROMPTS</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+calcPrompt <span class="Normal">::</span> XPConfig <span class="Normal">-&gt;</span> String <span class="Normal">-&gt;</span> X ()
+calcPrompt c ans <span class="Normal">=</span>
+    inputPrompt c (trim ans) <span class="Normal">?+</span> <span class="Normal">\</span>input <span class="Normal">-&gt;</span>
+        liftIO(runProcessWithInput <span class="String">&quot;qalc&quot;</span> [input] <span class="String">&quot;&quot;</span>) <span class="Normal">&gt;&gt;=</span> calcPrompt c
+    <span class="GruvboxAqua">where</span>
+        trim  <span class="Normal">=</span> f <span class="Normal">.</span> f
+            <span class="GruvboxAqua">where</span> f <span class="Normal">=</span> reverse <span class="Normal">.</span> dropWhile isSpace
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- XPROMPT KEYMAP (emacs-like key bindings for xprompts)</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+ntgnlKeymap <span class="Normal">::</span> M.Map (KeyMask,KeySym) (XP ())
+ntgnlKeymap <span class="Normal">=</span> M.fromList <span class="Normal">$</span>
+     map (first <span class="Normal">$</span> (,) controlMask)   <span class="Comment">-- control + &lt;key&gt;</span>
+     [ (xK_z, killBefore)            <span class="Comment">-- kill line backwards</span>
+     , (xK_k, killAfter)             <span class="Comment">-- kill line forwards</span>
+     , (xK_a, startOfLine)           <span class="Comment">-- move to the beginning of the line</span>
+     , (xK_e, endOfLine)             <span class="Comment">-- move to the end of the line</span>
+     , (xK_m, deleteString Next)     <span class="Comment">-- delete a character foward</span>
+     , (xK_b, moveCursor Prev)       <span class="Comment">-- move cursor forward</span>
+     , (xK_f, moveCursor Next)       <span class="Comment">-- move cursor backward</span>
+     , (xK_BackSpace, killWord Prev) <span class="Comment">-- kill the previous word</span>
+     , (xK_y, pasteString)           <span class="Comment">-- paste a string</span>
+     , (xK_g, quit)                  <span class="Comment">-- quit out of prompt</span>
+     , (xK_bracketleft, quit)
+     ]
+     <span class="Normal">++</span>
+     map (first <span class="Normal">$</span> (,) altMask)       <span class="Comment">-- meta key + &lt;key&gt;</span>
+     [ (xK_BackSpace, killWord Prev) <span class="Comment">-- kill the prev word</span>
+     , (xK_f, moveWord Next)         <span class="Comment">-- move a word forward</span>
+     , (xK_b, moveWord Prev)         <span class="Comment">-- move a word backward</span>
+     , (xK_d, killWord Next)         <span class="Comment">-- kill the next word</span>
+     , (xK_n, moveHistory W.focusUp')   <span class="Comment">-- move up thru history</span>
+     , (xK_p, moveHistory W.focusDown') <span class="Comment">-- move down thru history</span>
+     ]
+     <span class="Normal">++</span>
+     map (first <span class="Normal">$</span> (,) <span class="GruvboxPurple">0</span>) <span class="Comment">-- &lt;key&gt;</span>
+     [ (xK_Return, setSuccess True <span class="Normal">&gt;&gt;</span> setDone True)
+     , (xK_KP_Enter, setSuccess True <span class="Normal">&gt;&gt;</span> setDone True)
+     , (xK_BackSpace, deleteString Prev)
+     , (xK_Delete, deleteString Next)
+     , (xK_Left, moveCursor Prev)
+     , (xK_Right, moveCursor Next)
+     , (xK_Home, startOfLine)
+     , (xK_End, endOfLine)
+     , (xK_Down, moveHistory W.focusUp')
+     , (xK_Up, moveHistory W.focusDown')
+     , (xK_Escape, quit)
+     ]
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- SEARCH ENGINES</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+ebay, url <span class="Normal">::</span> S.SearchEngine
+
+ebay     <span class="Normal">=</span> S.searchEngine <span class="String">&quot;ebay&quot;</span> <span class="String">&quot;<a href="https://www.ebay.com/sch/i.html?_nkw=">https://www.ebay.com/sch/i.html?_nkw=</a>&quot;</span>
+url    <span class="Normal">=</span> S.searchEngine <span class="String">&quot;url&quot;</span> <span class="String">&quot;&quot;</span>
+
+searchList <span class="Normal">::</span> [(String, S.SearchEngine)]
+searchList <span class="Normal">=</span> [ (<span class="String">&quot;d&quot;</span>, S.duckduckgo)
+             , (<span class="String">&quot;e&quot;</span>, ebay)
+             , (<span class="String">&quot;g&quot;</span>, S.google)
+             , (<span class="String">&quot;i&quot;</span>, S.images)
+             , (<span class="String">&quot;s&quot;</span>, url)
+             , (<span class="String">&quot;b&quot;</span>, S.wayback)
+             , (<span class="String">&quot;u&quot;</span>, url)
+             , (<span class="String">&quot;w&quot;</span>, S.wikipedia)
+             , (<span class="String">&quot;y&quot;</span>, S.youtube)
+             , (<span class="String">&quot;z&quot;</span>, S.amazon)
+             ]
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- WORKSPACES</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+
+xmobarEscape <span class="Normal">::</span> String <span class="Normal">-&gt;</span> String
+xmobarEscape <span class="Normal">=</span> concatMap doubleLts
+  <span class="GruvboxAqua">where</span>
+        doubleLts <span class="GruvboxPurple">'&lt;'</span> <span class="Normal">=</span> <span class="String">&quot;&lt;&lt;&quot;</span>
+        doubleLts x   <span class="Normal">=</span> [x]
+
+myWorkspaces <span class="Normal">::</span> [String]
+myWorkspaces <span class="Normal">=</span> clickable <span class="Normal">.</span> (map xmobarEscape)
+               <span class="Comment">-- $ [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;]</span>
+               <span class="Normal">$</span> [<span class="String">&quot;1&quot;</span>, <span class="String">&quot;2&quot;</span>, <span class="String">&quot;3&quot;</span>, <span class="String">&quot;4&quot;</span>, <span class="String">&quot;dev&quot;</span>, <span class="String">&quot;sys&quot;</span>, <span class="String">&quot;mus&quot;</span>, <span class="String">&quot;vim&quot;</span>, <span class="String">&quot;gfx&quot;</span>]
+  <span class="GruvboxAqua">where</span>
+        clickable l <span class="Normal">=</span> [ <span class="String">&quot;&lt;action=xdotool key super+&quot;</span> <span class="Normal">++</span> show (n) <span class="Normal">++</span> <span class="String">&quot;&gt; &quot;</span> <span class="Normal">++</span> ws <span class="Normal">++</span> <span class="String">&quot; &lt;/action&gt;&quot;</span> <span class="Normal">|</span>
+                      (i,ws) <span class="Normal">&lt;-</span> zip [<span class="GruvboxPurple">1</span><span class="Normal">..</span><span class="GruvboxPurple">9</span>] l,
+                      <span class="GruvboxRed">let</span> n <span class="Normal">=</span> i ]
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- MANAGEHOOK</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+
+myManageHook <span class="Normal">::</span> XMonad.Query (Data.Monoid<span class="Normal">.</span>Endo WindowSet)
+myManageHook <span class="Normal">=</span> composeAll
+     [ className <span class="Normal">=?</span> <span class="String">&quot;Gimp&quot;</span>    <span class="Normal">--&gt;</span> doFloat
+     , className <span class="Normal">=?</span> <span class="String">&quot;Nautilus&quot;</span>    <span class="Normal">--&gt;</span> doFloat
+     , className <span class="Normal">=?</span> <span class="String">&quot;Nitrogen&quot;</span>    <span class="Normal">--&gt;</span> doFloat
+     , className <span class="Normal">=?</span> <span class="String">&quot;Pavucontrol&quot;</span>   <span class="Normal">--&gt;</span> doFloat
+     , className <span class="Normal">=?</span> <span class="String">&quot;mpv&quot;</span>   <span class="Normal">--&gt;</span> doFloat
+     , className <span class="Normal">=?</span> <span class="String">&quot;qutebrowser&quot;</span> <span class="Normal">--&gt;</span> doShift (myWorkspaces <span class="Normal">!!</span> <span class="GruvboxPurple">1</span>)
+     , className <span class="Normal">=?</span> <span class="String">&quot;discord&quot;</span> <span class="Normal">--&gt;</span> doShift (myWorkspaces <span class="Normal">!!</span> <span class="GruvboxPurple">3</span>)
+     , title <span class="Normal">=?</span> <span class="String">&quot;nmtui&quot;</span> <span class="Normal">--&gt;</span> doFloat
+     , title <span class="Normal">=?</span> <span class="String">&quot;ncmpcpp&quot;</span> <span class="Normal">--&gt;</span> doFloat
+     , title <span class="Normal">=?</span> <span class="String">&quot;ncmpcpp&quot;</span> <span class="Normal">--&gt;</span> doShift (myWorkspaces <span class="Normal">!!</span> <span class="GruvboxPurple">6</span>)
+     , title <span class="Normal">=?</span> <span class="String">&quot;Oracle VM VirtualBox Manager&quot;</span>     <span class="Normal">--&gt;</span> doFloat
+     ] <span class="Normal">&lt;+&gt;</span> namedScratchpadManageHook myScratchPads
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- LOGHOOK</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+myLogHook <span class="Normal">::</span> X ()
+myLogHook <span class="Normal">=</span> fadeInactiveLogHook fadeAmount
+    <span class="GruvboxAqua">where</span> fadeAmount <span class="Normal">=</span> <span class="GruvboxPurple">1.0</span>
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- LAYOUTS</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+tall     <span class="Normal">=</span> renamed [Replace <span class="String">&quot;tall&quot;</span>]
+           <span class="Normal">$</span> limitWindows <span class="GruvboxPurple">12</span>
+           <span class="Comment">-- $ mySpacing 8</span>
+           <span class="Normal">$</span> ResizableTall <span class="GruvboxPurple">1</span> (<span class="GruvboxPurple">3</span><span class="Normal">/</span><span class="GruvboxPurple">100</span>) (<span class="GruvboxPurple">1</span><span class="Normal">/</span><span class="GruvboxPurple">2</span>) []
+magnify  <span class="Normal">=</span> renamed [Replace <span class="String">&quot;magnify&quot;</span>]
+           <span class="Normal">$</span> magnifier
+           <span class="Normal">$</span> limitWindows <span class="GruvboxPurple">12</span>
+           <span class="Comment">-- $ mySpacing 8</span>
+           <span class="Normal">$</span> ResizableTall <span class="GruvboxPurple">1</span> (<span class="GruvboxPurple">3</span><span class="Normal">/</span><span class="GruvboxPurple">100</span>) (<span class="GruvboxPurple">1</span><span class="Normal">/</span><span class="GruvboxPurple">2</span>) []
+monocle  <span class="Normal">=</span> renamed [Replace <span class="String">&quot;monocle&quot;</span>]
+           <span class="Normal">$</span> limitWindows <span class="GruvboxPurple">20</span> Full
+floats   <span class="Normal">=</span> renamed [Replace <span class="String">&quot;floats&quot;</span>]
+           <span class="Normal">$</span> limitWindows <span class="GruvboxPurple">20</span> simplestFloat
+grid     <span class="Normal">=</span> renamed [Replace <span class="String">&quot;grid&quot;</span>]
+           <span class="Normal">$</span> limitWindows <span class="GruvboxPurple">12</span>
+           <span class="Comment">-- $ mySpacing 8</span>
+           <span class="Normal">$</span> mkToggle (single MIRROR)
+           <span class="Normal">$</span> Grid (<span class="GruvboxPurple">16</span><span class="Normal">/</span><span class="GruvboxPurple">10</span>)
+spirals  <span class="Normal">=</span> renamed [Replace <span class="String">&quot;spirals&quot;</span>]
+           <span class="Comment">-- $ mySpacing' 8</span>
+           <span class="Normal">$</span> spiral (<span class="GruvboxPurple">6</span><span class="Normal">/</span><span class="GruvboxPurple">7</span>)
+threeCol <span class="Normal">=</span> renamed [Replace <span class="String">&quot;threeCol&quot;</span>]
+           <span class="Normal">$</span> limitWindows <span class="GruvboxPurple">7</span>
+           <span class="Comment">-- $ mySpacing' 4</span>
+           <span class="Normal">$</span> ThreeCol <span class="GruvboxPurple">1</span> (<span class="GruvboxPurple">3</span><span class="Normal">/</span><span class="GruvboxPurple">100</span>) (<span class="GruvboxPurple">1</span><span class="Normal">/</span><span class="GruvboxPurple">2</span>)
+threeRow <span class="Normal">=</span> renamed [Replace <span class="String">&quot;threeRow&quot;</span>]
+           <span class="Normal">$</span> limitWindows <span class="GruvboxPurple">7</span>
+           <span class="Comment">-- $ mySpacing' 4</span>
+           <span class="Comment">-- Mirror takes a layout and rotates it by 90 degrees.</span>
+           <span class="Comment">-- So we are applying Mirror to the ThreeCol layout.</span>
+           <span class="Normal">$</span> Mirror
+           <span class="Normal">$</span> ThreeCol <span class="GruvboxPurple">1</span> (<span class="GruvboxPurple">3</span><span class="Normal">/</span><span class="GruvboxPurple">100</span>) (<span class="GruvboxPurple">1</span><span class="Normal">/</span><span class="GruvboxPurple">2</span>)
+tabs     <span class="Normal">=</span> renamed [Replace <span class="String">&quot;tabs&quot;</span>]
+           <span class="Comment">-- I cannot add spacing to this layout because it will</span>
+           <span class="Comment">-- add spacing between window and tabs which looks bad.</span>
+           <span class="Normal">$</span> tabbed shrinkText myTabConfig
+  <span class="GruvboxAqua">where</span>
+    myTabConfig <span class="Normal">=</span> def { fontName            <span class="Normal">=</span> <span class="String">&quot;xft:TerminessTTF Nerd Font:regular:pixelsize=11&quot;</span>
+                      , activeColor         <span class="Normal">=</span> <span class="String">&quot;#1f1f1f&quot;</span>
+                      , inactiveColor       <span class="Normal">=</span> <span class="String">&quot;#928374&quot;</span>
+                      , activeBorderColor   <span class="Normal">=</span> <span class="String">&quot;#75715e&quot;</span>
+                      , inactiveBorderColor <span class="Normal">=</span> <span class="String">&quot;#75715e&quot;</span>
+                      , activeTextColor     <span class="Normal">=</span> <span class="String">&quot;#ffffff&quot;</span>
+                      , inactiveTextColor   <span class="Normal">=</span> <span class="String">&quot;#f8f8f2&quot;</span>
+                      }
+
+myShowWNameTheme <span class="Normal">::</span> SWNConfig
+myShowWNameTheme <span class="Normal">=</span> def
+    { swn_font              <span class="Normal">=</span> <span class="String">&quot;xft:Sans:bold:size=60&quot;</span>
+    , swn_fade              <span class="Normal">=</span> <span class="GruvboxPurple">1.0</span>
+    , swn_bgcolor           <span class="Normal">=</span> <span class="String">&quot;#000000&quot;</span>
+    , swn_color             <span class="Normal">=</span> <span class="String">&quot;#FFFFFF&quot;</span>
+    }
+
+<span class="Comment">-- The layout hook</span>
+myLayoutHook <span class="Normal">=</span> avoidStruts <span class="Normal">$</span> mouseResize <span class="Normal">$</span> windowArrange <span class="Normal">$</span> T.toggleLayouts floats <span class="Normal">$</span>
+               mkToggle (NBFULL <span class="Normal">??</span> NOBORDERS <span class="Normal">??</span> EOT) myDefaultLayout
+             <span class="GruvboxAqua">where</span>
+               <span class="Comment">-- I've commented out the layouts I don't use.</span>
+               myDefaultLayout <span class="Normal">=</span>     tall
+                                 <span class="Normal">|||</span> magnify
+                                 <span class="Normal">|||</span> noBorders monocle
+                                 <span class="Normal">|||</span> floats
+                                 <span class="Normal">|||</span> grid
+                                 <span class="Normal">|||</span> noBorders tabs
+                                 <span class="Normal">|||</span> spirals
+                                 <span class="Comment">-- ||| threeCol</span>
+                                 <span class="Comment">-- ||| threeRow</span>
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- SCRATCHPADS</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+myScratchPads <span class="Normal">::</span> [NamedScratchpad]
+myScratchPads <span class="Normal">=</span> [ NS <span class="String">&quot;terminal&quot;</span> spawnTerm findTerm manageTerm
+                , NS <span class="String">&quot;mocp&quot;</span> spawnMocp findMocp manageMocp
+                ]
+  <span class="GruvboxAqua">where</span>
+    spawnTerm  <span class="Normal">=</span> myTerminal <span class="Normal">++</span> <span class="String">&quot; -n scratchpad&quot;</span>
+    findTerm   <span class="Normal">=</span> resource <span class="Normal">=?</span> <span class="String">&quot;scratchpad&quot;</span>
+    manageTerm <span class="Normal">=</span> customFloating <span class="Normal">$</span> W.RationalRect l t w h
+               <span class="GruvboxAqua">where</span>
+                 h <span class="Normal">=</span> <span class="GruvboxPurple">0.9</span>
+                 w <span class="Normal">=</span> <span class="GruvboxPurple">0.9</span>
+                 t <span class="Normal">=</span> <span class="GruvboxPurple">0.95</span> <span class="Normal">-</span>h
+                 l <span class="Normal">=</span> <span class="GruvboxPurple">0.95</span> <span class="Normal">-</span>w
+    spawnMocp  <span class="Normal">=</span> myTerminal <span class="Normal">++</span> <span class="String">&quot; -n mocp 'mocp'&quot;</span>
+    findMocp   <span class="Normal">=</span> resource <span class="Normal">=?</span> <span class="String">&quot;mocp&quot;</span>
+    manageMocp <span class="Normal">=</span> customFloating <span class="Normal">$</span> W.RationalRect l t w h
+               <span class="GruvboxAqua">where</span>
+                 h <span class="Normal">=</span> <span class="GruvboxPurple">0.9</span>
+                 w <span class="Normal">=</span> <span class="GruvboxPurple">0.9</span>
+                 t <span class="Normal">=</span> <span class="GruvboxPurple">0.95</span> <span class="Normal">-</span>h
+                 l <span class="Normal">=</span> <span class="GruvboxPurple">0.95</span> <span class="Normal">-</span>w
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- KEYBINDINGS</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+myKeys <span class="Normal">::</span> [(String, X ())]
+myKeys <span class="Normal">=</span>
+    <span class="Comment">-- Xmonad</span>
+        [ (<span class="String">&quot;M-C-r&quot;</span>, spawn <span class="String">&quot;xmonad --recompile&quot;</span>)      <span class="Comment">-- Recompiles xmonad</span>
+        , (<span class="String">&quot;M-S-r&quot;</span>, spawn <span class="String">&quot;xmonad --restart&quot;</span>)        <span class="Comment">-- Restarts xmonad</span>
+        , (<span class="String">&quot;M-S-l&quot;</span>, io exitSuccess)                  <span class="Comment">-- Quits xmonad</span>
+
+    <span class="Comment">-- Open my preferred terminal</span>
+        , (<span class="String">&quot;M-&lt;Return&gt;&quot;</span>, spawn myTerminal)
+
+    <span class="Comment">-- Run Prompt</span>
+        , (<span class="String">&quot;M-S-&lt;Return&gt;&quot;</span>, shellPrompt ntgnlConfig)   <span class="Comment">-- Shell Prompt</span>
+
+    <span class="Comment">-- Windows</span>
+        , (<span class="String">&quot;M-S-q&quot;</span>, kill1)                           <span class="Comment">-- Kill the currently focused client</span>
+        , (<span class="String">&quot;M-S-a&quot;</span>, killAll)                         <span class="Comment">-- Kill all windows on current workspace</span>
+
+    <span class="Comment">-- Floating windows</span>
+        , (<span class="String">&quot;M-f&quot;</span>, sendMessage (T.Toggle <span class="String">&quot;floats&quot;</span>))       <span class="Comment">-- Toggles my 'floats' layout</span>
+        , (<span class="String">&quot;M-t&quot;</span>, withFocused <span class="Normal">$</span> windows <span class="Normal">.</span> W.sink) <span class="Comment">-- Push floating window back to tile</span>
+        , (<span class="String">&quot;M-S-t&quot;</span>, sinkAll)                      <span class="Comment">-- Push ALL floating windows to tile</span>
+
+    <span class="Comment">-- Grid Select (CTRL-g followed by a key)</span>
+        , (<span class="String">&quot;C-g g&quot;</span>, spawnSelected' myAppGrid)                 <span class="Comment">-- grid select favorite apps</span>
+        , (<span class="String">&quot;C-g b&quot;</span>, spawnSelected' myBookmarkGrid)            <span class="Comment">-- grid select some bookmarks</span>
+        , (<span class="String">&quot;C-g c&quot;</span>, spawnSelected' myConfigGrid)              <span class="Comment">-- grid select useful config files</span>
+        , (<span class="String">&quot;C-g t&quot;</span>, goToSelected <span class="Normal">$</span> mygridConfig myColorizer)  <span class="Comment">-- goto selected window</span>
+        , (<span class="String">&quot;C-g m&quot;</span>, bringSelected <span class="Normal">$</span> mygridConfig myColorizer) <span class="Comment">-- bring selected window</span>
+
+    <span class="Comment">-- Tree Select/</span>
+        <span class="Comment">-- tree select actions menu</span>
+        , (<span class="String">&quot;C-t a&quot;</span>, treeselectAction tsDefaultConfig)
+
+    <span class="Comment">-- Windows navigation</span>
+        , (<span class="String">&quot;M-m&quot;</span>, windows W.focusMaster)     <span class="Comment">-- Move focus to the master window</span>
+        , (<span class="String">&quot;M-&lt;Right&gt;&quot;</span>, windows W.focusDown)       <span class="Comment">-- Move focus to the next window</span>
+        , (<span class="String">&quot;M-&lt;Left&gt;&quot;</span>, windows W.focusUp)         <span class="Comment">-- Move focus to the prev window</span>
+        <span class="Comment">--, (&quot;M-S-m&quot;, windows W.swapMaster)    -- Swap the focused window and the master window</span>
+        , (<span class="String">&quot;M-S-&lt;Right&gt;&quot;</span>, windows W.swapDown)      <span class="Comment">-- Swap focused window with next window</span>
+        , (<span class="String">&quot;M-S-&lt;Left&gt;&quot;</span>, windows W.swapUp)        <span class="Comment">-- Swap focused window with prev window</span>
+        , (<span class="String">&quot;M-&lt;Backspace&gt;&quot;</span>, promote)         <span class="Comment">-- Moves focused window to master, others maintain order</span>
+        , (<span class="String">&quot;M1-S-&lt;Tab&gt;&quot;</span>, rotSlavesDown)      <span class="Comment">-- Rotate all windows except master and keep focus in place</span>
+        , (<span class="String">&quot;M1-C-&lt;Tab&gt;&quot;</span>, rotAllDown)         <span class="Comment">-- Rotate all the windows in the current stack</span>
+        <span class="Comment">--, (&quot;M-S-s&quot;, windows copyToAll)</span>
+        , (<span class="String">&quot;M-C-s&quot;</span>, killAllOtherCopies)
+
+        <span class="Comment">-- Layouts</span>
+        , (<span class="String">&quot;M-&lt;Tab&gt;&quot;</span>, sendMessage NextLayout)                <span class="Comment">-- Switch to next layout</span>
+        , (<span class="String">&quot;M-C-M1-&lt;Up&gt;&quot;</span>, sendMessage Arrange)
+        , (<span class="String">&quot;M-C-M1-&lt;Down&gt;&quot;</span>, sendMessage DeArrange)
+        , (<span class="String">&quot;M-&lt;Space&gt;&quot;</span>, sendMessage (MT.Toggle NBFULL) <span class="Normal">&gt;&gt;</span> sendMessage ToggleStruts) <span class="Comment">-- Toggles noborder/full</span>
+        , (<span class="String">&quot;M-S-&lt;Space&gt;&quot;</span>, sendMessage ToggleStruts)         <span class="Comment">-- Toggles struts</span>
+        , (<span class="String">&quot;M-S-n&quot;</span>, sendMessage <span class="Normal">$</span> MT.Toggle NOBORDERS)      <span class="Comment">-- Toggles noborder</span>
+        , (<span class="String">&quot;M-&lt;KP_Multiply&gt;&quot;</span>, sendMessage (IncMasterN <span class="GruvboxPurple">1</span>))   <span class="Comment">-- Increase number of clients in master pane</span>
+        , (<span class="String">&quot;M-&lt;KP_Divide&gt;&quot;</span>, sendMessage (IncMasterN (<span class="Normal">-</span><span class="GruvboxPurple">1</span>)))  <span class="Comment">-- Decrease number of clients in master pane</span>
+        , (<span class="String">&quot;M-S-&lt;KP_Multiply&gt;&quot;</span>, increaseLimit)              <span class="Comment">-- Increase number of windows</span>
+        , (<span class="String">&quot;M-S-&lt;KP_Divide&gt;&quot;</span>, decreaseLimit)                <span class="Comment">-- Decrease number of windows</span>
+
+        , (<span class="String">&quot;M-h&quot;</span>, sendMessage Shrink)                       <span class="Comment">-- Shrink horiz window width</span>
+        , (<span class="String">&quot;M-l&quot;</span>, sendMessage Expand)                       <span class="Comment">-- Expand horiz window width</span>
+        , (<span class="String">&quot;M-C-j&quot;</span>, sendMessage MirrorShrink)               <span class="Comment">-- Shrink vert window width</span>
+        , (<span class="String">&quot;M-C-k&quot;</span>, sendMessage MirrorExpand)               <span class="Comment">-- Exoand vert window width</span>
+
+    <span class="Comment">-- Workspaces</span>
+        , (<span class="String">&quot;M-.&quot;</span>, nextScreen)  <span class="Comment">-- Switch focus to next monitor</span>
+        , (<span class="String">&quot;M-,&quot;</span>, prevScreen)  <span class="Comment">-- Switch focus to prev monitor</span>
+        , (<span class="String">&quot;M-S-&lt;KP_Add&gt;&quot;</span>, shiftTo Next nonNSP <span class="Normal">&gt;&gt;</span> moveTo Next nonNSP)       <span class="Comment">-- Shifts focused window to next ws</span>
+        , (<span class="String">&quot;M-S-&lt;KP_Subtract&gt;&quot;</span>, shiftTo Prev nonNSP <span class="Normal">&gt;&gt;</span> moveTo Prev nonNSP)  <span class="Comment">-- Shifts focused window to prev ws</span>
+
+    <span class="Comment">-- Scratchpads</span>
+        , (<span class="String">&quot;M-C-&lt;Return&gt;&quot;</span>, namedScratchpadAction myScratchPads <span class="String">&quot;terminal&quot;</span>)
+        , (<span class="String">&quot;M-C-c&quot;</span>, namedScratchpadAction myScratchPads <span class="String">&quot;mocp&quot;</span>)
+
+
+    <span class="Comment">--- My Applications (Super+Alt+Key)</span>
+        , (<span class="String">&quot;M-M1-r&quot;</span>, spawn (myTerminal <span class="Normal">++</span> <span class="String">&quot; -e ranger&quot;</span>))
+        , (<span class="String">&quot;M-M1-f&quot;</span>, spawn <span class="String">&quot;firefox&quot;</span>)
+        , (<span class="String">&quot;M-M1-v&quot;</span>, spawn (myTerminal <span class="Normal">++</span> <span class="String">&quot; -e vim&quot;</span>))
+        , (<span class="String">&quot;M-M1-k&quot;</span>, spawn <span class="String">&quot;/home/aleks/Programs/cool-retro-term/cool-retro-term&quot;</span>)
+        , (<span class="String">&quot;M-M1-n&quot;</span>, spawn <span class="String">&quot;nautilus&quot;</span>)
+        , (<span class="String">&quot;M-M1-x&quot;</span>, spawn <span class="String">&quot;/home/aleks/sc/coordinator/coordClick.sh&quot;</span>)
+        , (<span class="String">&quot;M-M1-t&quot;</span>, spawn (myTerminal <span class="Normal">++</span> <span class="String">&quot; -e nmtui&quot;</span>))
+        , (<span class="String">&quot;M-M1-m&quot;</span>, spawn (myTerminal <span class="Normal">++</span> <span class="String">&quot; -e ncmpcpp&quot;</span>))
+        , (<span class="String">&quot;M-M1-d&quot;</span>, spawn (myTerminal <span class="Normal">++</span> <span class="String">&quot; -e nnn&quot;</span>))
+        , (<span class="String">&quot;M-M1-q&quot;</span>, spawn (myBrowser))
+
+
+    <span class="Comment">-- Multimedia Keys</span>
+        , (<span class="String">&quot;&lt;XF86AudioPlay&gt;&quot;</span>, spawn <span class="String">&quot;cmus toggle&quot;</span>)
+        , (<span class="String">&quot;&lt;XF86AudioPrev&gt;&quot;</span>, spawn <span class="String">&quot;cmus prev&quot;</span>)
+        , (<span class="String">&quot;&lt;XF86AudioNext&gt;&quot;</span>, spawn <span class="String">&quot;cmus next&quot;</span>)
+        , (<span class="String">&quot;&lt;XF86AudioMute&gt;&quot;</span>,   spawn <span class="String">&quot;pactl set-sink-mute @DEFAULT_SINK@ toggle&quot;</span>)
+        , (<span class="String">&quot;&lt;XF86AudioLowerVolume&gt;&quot;</span>, spawn <span class="String">&quot;pactl set-sink-volume @DEFAULT_SINK@ -5%&quot;</span>)
+        , (<span class="String">&quot;&lt;XF86AudioRaiseVolume&gt;&quot;</span>, spawn <span class="String">&quot;pactl set-sink-volume @DEFAULT_SINK@ +5%&quot;</span>)
+        , (<span class="String">&quot;&lt;XF86HomePage&gt;&quot;</span>, spawn <span class="String">&quot;firefox&quot;</span>)
+        , (<span class="String">&quot;&lt;XF86Search&gt;&quot;</span>, safeSpawn <span class="String">&quot;firefox&quot;</span> [<span class="String">&quot;<a href="https://www.duckduckgo.com/">https://www.duckduckgo.com/</a>&quot;</span>])
+        , (<span class="String">&quot;&lt;XF86Mail&gt;&quot;</span>, runOrRaise <span class="String">&quot;thunderbird&quot;</span> (resource <span class="Normal">=?</span> <span class="String">&quot;thunderbird&quot;</span>))
+        , (<span class="String">&quot;&lt;XF86Calculator&gt;&quot;</span>, runOrRaise <span class="String">&quot;gcalctool&quot;</span> (resource <span class="Normal">=?</span> <span class="String">&quot;gcalctool&quot;</span>))
+        , (<span class="String">&quot;&lt;XF86Eject&gt;&quot;</span>, spawn <span class="String">&quot;toggleeject&quot;</span>)
+        , (<span class="String">&quot;&lt;Print&gt;&quot;</span>, spawn <span class="String">&quot;gnome-screenshot -a&quot;</span>)
+        ]
+        <span class="Comment">-- Appending search engine prompts to keybindings list.</span>
+        <span class="Normal">++</span> [(<span class="String">&quot;M-s &quot;</span> <span class="Normal">++</span> k, S.promptSearch ntgnlConfig' f) <span class="Normal">|</span> (k,f) <span class="Normal">&lt;-</span> searchList ]
+        <span class="Normal">++</span> [(<span class="String">&quot;M-S-s &quot;</span> <span class="Normal">++</span> k, S.selectSearch f) <span class="Normal">|</span> (k,f) <span class="Normal">&lt;-</span> searchList ]
+        <span class="Normal">++</span> [(<span class="String">&quot;M-p &quot;</span> <span class="Normal">++</span> k, f ntgnlConfig') <span class="Normal">|</span> (k,f) <span class="Normal">&lt;-</span> promptList ]
+        <span class="Normal">++</span> [(<span class="String">&quot;M-p &quot;</span> <span class="Normal">++</span> k, f ntgnlConfig' g) <span class="Normal">|</span> (k,f,g) <span class="Normal">&lt;-</span> promptList' ]
+          <span class="GruvboxAqua">where</span> nonNSP          <span class="Normal">=</span> WSIs (return (<span class="Normal">\</span>ws <span class="Normal">-&gt;</span> W.tag ws <span class="Normal">/=</span> <span class="String">&quot;nsp&quot;</span>))
+                nonEmptyNonNSP  <span class="Normal">=</span> WSIs (return (<span class="Normal">\</span>ws <span class="Normal">-&gt;</span> isJust (W.stack ws) <span class="Normal">&amp;&amp;</span> W.tag ws <span class="Normal">/=</span> <span class="String">&quot;nsp&quot;</span>))
+
+<span class="Comment">------------------------------------------------------------------------</span>
+<span class="Comment">-- MAIN</span>
+<span class="Comment">------------------------------------------------------------------------</span>
+main <span class="Normal">::</span> IO ()
+main <span class="Normal">=</span> <span class="GruvboxRed">do</span>
+    xmproc0 <span class="Normal">&lt;-</span> spawnPipe <span class="String">&quot;xmobar -x 0 ~/.config/xmobar/xmobarrc0&quot;</span>
+    xmonad <span class="Normal">$</span> ewmh def
+        { manageHook <span class="Normal">=</span> ( isFullscreen <span class="Normal">--&gt;</span> doFullFloat ) <span class="Normal">&lt;+&gt;</span> myManageHook <span class="Normal">&lt;+&gt;</span> manageDocks
+        , handleEventHook    <span class="Normal">=</span> serverModeEventHookCmd
+                               <span class="Normal">&lt;+&gt;</span> serverModeEventHook
+                               <span class="Normal">&lt;+&gt;</span> serverModeEventHookF <span class="String">&quot;XMONAD_PRINT&quot;</span> (io <span class="Normal">.</span> putStrLn)
+                               <span class="Normal">&lt;+&gt;</span> docksEventHook
+        , modMask            <span class="Normal">=</span> myModMask
+        , terminal           <span class="Normal">=</span> myTerminal
+        , startupHook        <span class="Normal">=</span> myStartupHook
+        , layoutHook         <span class="Normal">=</span> myLayoutHook
+        , workspaces         <span class="Normal">=</span> myWorkspaces
+        , borderWidth        <span class="Normal">=</span> myBorderWidth
+        , normalBorderColor  <span class="Normal">=</span> myNormColor
+        , focusedBorderColor <span class="Normal">=</span> myFocusColor
+        , logHook <span class="Normal">=</span> workspaceHistoryHook <span class="Normal">&lt;+&gt;</span> myLogHook <span class="Normal">&lt;+&gt;</span> dynamicLogWithPP xmobarPP
+                        { ppOutput <span class="Normal">=</span> <span class="Normal">\</span>x <span class="Normal">-&gt;</span> hPutStrLn xmproc0 x
+                        , ppCurrent <span class="Normal">=</span> xmobarColor <span class="String">&quot;#A9B665&quot;</span> <span class="String">&quot;&quot;</span> <span class="Normal">.</span> wrap <span class="String">&quot;[&quot;</span> <span class="String">&quot;]&quot;</span> <span class="Comment">-- Current workspace in xmobar</span>
+                        , ppVisible <span class="Normal">=</span> xmobarColor <span class="String">&quot;#A9B665&quot;</span> <span class="String">&quot;&quot;</span>                <span class="Comment">-- Visible but not current workspace</span>
+                        , ppHidden <span class="Normal">=</span> xmobarColor <span class="String">&quot;#7DAEA3&quot;</span> <span class="String">&quot;&quot;</span> <span class="Normal">.</span> wrap <span class="String">&quot;*&quot;</span> <span class="String">&quot;&quot;</span>   <span class="Comment">-- Hidden workspaces in xmobar</span>
+                        , ppHiddenNoWindows <span class="Normal">=</span> xmobarColor <span class="String">&quot;#D4BE98&quot;</span> <span class="String">&quot;&quot;</span>        <span class="Comment">-- Hidden workspaces (no windows)</span>
+                        , ppTitle <span class="Normal">=</span> xmobarColor <span class="String">&quot;#b3afc2&quot;</span> <span class="String">&quot;&quot;</span> <span class="Normal">.</span> shorten <span class="GruvboxPurple">60</span>     <span class="Comment">-- Title of active window in xmobar</span>
+                        , ppSep <span class="Normal">=</span>  <span class="String">&quot;&lt;fc=#666666&gt; &lt;fn=2&gt;|&lt;/fn&gt; &lt;/fc&gt;&quot;</span>                     <span class="Comment">-- Separators in xmobar</span>
+                        , ppUrgent <span class="Normal">=</span> xmobarColor <span class="String">&quot;#C45500&quot;</span> <span class="String">&quot;&quot;</span> <span class="Normal">.</span> wrap <span class="String">&quot;!&quot;</span> <span class="String">&quot;!&quot;</span>  <span class="Comment">-- Urgent workspace</span>
+                        , ppExtras  <span class="Normal">=</span> [windowCount]                           <span class="Comment">-- # of windows current workspace</span>
+                        , ppOrder  <span class="Normal">=</span> <span class="Normal">\</span>(ws<span class="Normal">:</span>l<span class="Normal">:</span>t<span class="Normal">:</span>ex) <span class="Normal">-&gt;</span> [ws,l]<span class="Normal">++</span>ex<span class="Normal">++</span>[t]
+                        }
+        } <span class="Normal">`additionalKeysP`</span> myKeys
+
+</pre>
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

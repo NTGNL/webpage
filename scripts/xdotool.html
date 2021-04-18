@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="syntax" content="sh">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.GruvboxOrange { color: #ff8700; }
+.Comment { color: #8a8a8a; }
+.GruvboxPurple { color: #d787af; }
+.GruvboxRed { color: #d75f5f; }
+.GruvboxBlue { color: #87afaf; }
+.Normal { color: #ffd7af; background-color: #262626; padding-bottom: 1px; }
+.String { color: #afaf00; }
+.GruvboxAqua { color: #87af87; }
+-->
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+    <title>Aleks's Website</title>
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+    <h3>Xdotool Scripts</h3>
+    <h4>Scripts for xdotool to automate tasks</h4>
+    <p>Here is a collection of some bash scripts that I sometimes use and
+    configure which use the xdotool CLI program. These scripts can type words,
+    move the mouse to specified coordinates, click, paste etc..</p>
+
+    <h4>Autoclicker</h4>
+
+<pre id='vimCodeElement'>
+<span class="Comment">#!/bin/sh</span>
+
+xdotool click <span class="GruvboxOrange">--repeat</span> <span class="GruvboxPurple">100</span> <span class="GruvboxOrange">--delay</span> <span class="GruvboxPurple">5</span> <span class="GruvboxPurple">1</span>
+
+</pre>
+
+
+<h4>Auto Typer</h4>
+<p>Generates a random string of words from a file and pastes it into a selected field</p>
+
+<pre id='vimCodeElement'>
+<span class="Comment">#!/bin/bash</span>
+
+<span class="GruvboxRed">sleep</span> <span class="GruvboxPurple">0</span>.<span class="GruvboxPurple">5</span>
+
+<span class="GruvboxRed">for ((</span><span class="GruvboxRed"> i </span><span class="GruvboxRed">=</span><span class="GruvboxRed"> </span><span class="String">0</span><span class="GruvboxRed">; i </span><span class="GruvboxRed">&lt;</span><span class="GruvboxRed"> 13; i++ </span><span class="GruvboxRed">))</span>; <span class="GruvboxRed">do</span>
+
+    <span class="GruvboxRed">rm</span> buffer2.txt
+    <span class="GruvboxBlue">rand</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">shuf </span><span class="GruvboxOrange">-i</span><span class="GruvboxOrange"> 2-5 </span><span class="GruvboxOrange">-n</span><span class="GruvboxOrange">1</span><span class="GruvboxAqua">)</span>
+    <span class="GruvboxRed">for ((</span><span class="GruvboxRed"> n </span><span class="GruvboxRed">=</span><span class="GruvboxRed"> </span><span class="String">0</span><span class="GruvboxRed">; n </span><span class="GruvboxRed">&lt;</span><span class="GruvboxRed"> $rand; n++ </span><span class="GruvboxRed">))</span><span class="Normal">;</span> <span class="GruvboxRed">do</span>
+        <span class="GruvboxBlue">z</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">shuf </span><span class="GruvboxOrange">-n</span><span class="GruvboxOrange"> </span><span class="GruvboxPurple">2</span><span class="GruvboxOrange"> wordlist.txt</span><span class="GruvboxAqua">)</span>
+        <span class="GruvboxRed">echo</span><span class="String"> </span><span class="GruvboxAqua">$z</span><span class="String">  </span><span class="Normal">|</span> tr <span class="Normal">&quot;</span><span class="String"> </span><span class="Normal">&quot;</span> <span class="Normal">&quot;</span><span class="GruvboxOrange">\n</span><span class="Normal">&quot;</span> <span class="GruvboxRed">&gt;</span> buffer1.txt
+        <span class="GruvboxBlue">z2</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">shuf </span><span class="GruvboxOrange">-n</span><span class="GruvboxOrange"> </span><span class="GruvboxPurple">1</span><span class="GruvboxOrange"> buffer1.txt</span><span class="GruvboxAqua">)</span>
+        <span class="GruvboxRed">echo</span><span class="String"> -n </span><span class="GruvboxAqua">$z2</span><span class="String"> </span><span class="Normal">&quot;&quot;</span><span class="String"> </span><span class="GruvboxRed">&gt;&gt;</span> buffer2.txt
+    <span class="GruvboxRed">done</span>
+
+    <span class="GruvboxBlue">z3</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">cat buffer2.txt</span><span class="GruvboxAqua">)</span>
+
+    <span class="GruvboxRed">sleep</span> <span class="GruvboxPurple">0</span>.<span class="GruvboxPurple">8</span>
+    xdotool <span class="GruvboxRed">type</span> <span class="Normal">&quot;</span><span class="GruvboxAqua">$z3</span><span class="Normal">&quot;</span>
+    xdotool key KP_Enter
+
+<span class="GruvboxRed">done</span>
+
+
+</pre>
+<h4>Coordinate Save</h4>
+<p>Saves the X and Y axis of the current mouse position into a file</p>
+
+<pre id='vimCodeElement'>
+<span class="Comment">#!/bin/bash</span>
+
+<span class="GruvboxBlue">coords</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">xdotool getmouselocation</span><span class="GruvboxAqua">)</span>
+<span class="GruvboxBlue">xaxis</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxRed">echo</span><span class="String"> </span><span class="GruvboxAqua">$coords</span><span class="String"> </span><span class="Normal">|</span><span class="GruvboxOrange"> awk </span><span class="Normal">'</span><span class="String">{print $1}</span><span class="Normal">'</span><span class="GruvboxOrange"> </span><span class="Normal">|</span><span class="GruvboxOrange"> </span><span class="GruvboxRed">sed</span><span class="GruvboxOrange"> </span><span class="Normal">'</span><span class="String">s/^..//</span><span class="Normal">'</span><span class="GruvboxAqua">)</span>
+<span class="GruvboxBlue">yaxis</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxRed">echo</span><span class="String"> </span><span class="GruvboxAqua">$coords</span><span class="String"> </span><span class="Normal">|</span><span class="GruvboxOrange"> awk </span><span class="Normal">'</span><span class="String">{print $2}</span><span class="Normal">'</span><span class="GruvboxOrange"> </span><span class="Normal">|</span><span class="GruvboxOrange"> </span><span class="GruvboxRed">sed</span><span class="GruvboxOrange"> </span><span class="Normal">'</span><span class="String">s/^..//</span><span class="Normal">'</span><span class="GruvboxAqua">)</span>
+<span class="GruvboxRed">echo</span><span class="String"> </span><span class="GruvboxAqua">$xaxis</span><span class="String"> </span><span class="GruvboxAqua">$yaxis</span><span class="String"> </span><span class="Normal">&gt;</span> ~/sc/coordinator/COORDS.txt
+
+
+</pre>
+
+
+<h4>Coordinate Click</h4>
+<p>Clicks on the saved coordinate from the previous script</p>
+
+<pre id='vimCodeElement'>
+<span class="Comment">#!/bin/bash</span>
+
+<span class="GruvboxBlue">xyaxis</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">cat ~/sc/coordinator/COORDS.txt</span><span class="GruvboxAqua">)</span>
+xdotool mousemove <span class="GruvboxAqua">$xyaxis</span>
+xdotool click <span class="GruvboxOrange">--delay</span> <span class="GruvboxPurple">5</span> <span class="GruvboxPurple">1</span>
+
+
+</pre>
+
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

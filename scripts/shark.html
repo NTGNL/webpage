@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/Programs/discord-cli/shark.sh.html</title>
+<meta name="syntax" content="bash">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.GruvboxOrange { color: #ff8700; }
+.GruvboxRed { color: #d75f5f; }
+.Error { color: #262626; background-color: #d75f5f; font-weight: bold; }
+.Normal { color: #ffd7af; background-color: #262626; padding-bottom: 1px; }
+.GruvboxPurple { color: #d787af; }
+.GruvboxBlue { color: #87afaf; }
+.Comment { color: #8a8a8a; }
+.String { color: #afaf00; }
+.GruvboxAqua { color: #87af87; }
+-->
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+    <title>Aleks's Website</title>
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+    <h2>Shark</h2>
+    <p>Automated poster for discord-cli (discord-cli dependancy required for script).
+    This script creates a random string of words from a wordlist file and sends the message through to
+    discord-cli to a given channel and user token.</p>
+
+
+<pre id='vimCodeElement'>
+<span class="Comment">#!/bin/bash</span>
+
+<span class="GruvboxRed">while </span><span class="GruvboxRed">getopts</span><span class="GruvboxRed"> u:c:m: option</span>
+
+<span class="GruvboxRed">    </span><span class="GruvboxRed">do</span>
+    <span class="GruvboxRed">case</span> <span class="Normal">&quot;</span><span class="GruvboxAqua">${</span><span class="GruvboxAqua">option</span><span class="GruvboxAqua">}</span><span class="Normal">&quot;</span>
+    <span class="GruvboxRed">in</span>
+
+        u<span class="GruvboxRed">)</span> <span class="GruvboxBlue">USER</span>=<span class="GruvboxAqua">${</span><span class="GruvboxAqua">OPTARG</span><span class="GruvboxAqua">}</span><span class="GruvboxRed">;;</span>
+        c<span class="GruvboxRed">)</span> <span class="GruvboxBlue">CHANNEL</span>=<span class="GruvboxAqua">${</span><span class="GruvboxAqua">OPTARG</span><span class="GruvboxAqua">}</span><span class="GruvboxRed">;;</span>
+        m<span class="GruvboxRed">)</span> <span class="GruvboxBlue">MENTION</span>=<span class="GruvboxAqua">${</span><span class="GruvboxAqua">OPTARG</span><span class="GruvboxAqua">}</span><span class="GruvboxRed">;;</span>
+        *<span class="GruvboxRed">)</span> <span class="GruvboxRed">echo</span><span class="String"> </span><span class="Normal">&quot;</span><span class="String">invalid argument</span><span class="Normal">&quot;</span><span class="GruvboxRed">;;</span>
+
+    <span class="GruvboxRed">esac</span>
+    <span class="GruvboxRed">done</span>
+
+<span class="GruvboxBlue">user</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxRed">sed</span><span class="GruvboxOrange"> </span><span class="Normal">&quot;</span><span class="GruvboxAqua">${</span><span class="GruvboxAqua">USER</span><span class="GruvboxAqua">}</span><span class="String">q;d</span><span class="Normal">&quot;</span><span class="GruvboxOrange"> users.txt</span><span class="GruvboxAqua">)</span>
+mkfifo <span class="Error">in</span> out
+
+<span class="GruvboxRed">echo</span><span class="String"> </span><span class="Normal">&quot;</span><span class="String">connecting..</span><span class="Normal">&quot;</span>
+python3 main.py <span class="GruvboxOrange">-t</span><span class="Normal">=</span><span class="GruvboxAqua">$user</span> <span class="GruvboxOrange">-c</span><span class="Normal">=</span><span class="GruvboxAqua">$CHANNEL</span> <span class="Normal">&lt;</span><span class="Error">in</span> <span class="Normal">&gt;</span>out &amp;
+
+<span class="GruvboxRed">echo</span><span class="String"> </span><span class="Normal">&quot;</span><span class="String">all systems go.. just tell me when</span><span class="Normal">&quot;</span>
+<span class="GruvboxRed">read</span> a
+
+<span class="GruvboxBlue">filename</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">shuf </span><span class="GruvboxOrange">-i</span><span class="GruvboxOrange"> 1000-1000000 </span><span class="GruvboxOrange">-n</span><span class="GruvboxOrange">1</span><span class="GruvboxAqua">)</span>
+<span class="GruvboxBlue">filename</span>=<span class="Normal">&quot;</span><span class="GruvboxAqua">${</span><span class="GruvboxAqua">filename</span><span class="GruvboxAqua">}</span><span class="String">.txt</span><span class="Normal">&quot;</span>
+<span class="GruvboxBlue">filename2</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">shuf </span><span class="GruvboxOrange">-i</span><span class="GruvboxOrange"> 1000-1000000 </span><span class="GruvboxOrange">-n</span><span class="GruvboxOrange">1</span><span class="GruvboxAqua">)</span>
+<span class="GruvboxBlue">filename2</span>=<span class="Normal">&quot;</span><span class="GruvboxAqua">${</span><span class="GruvboxAqua">filename2</span><span class="GruvboxAqua">}</span><span class="String">.txt</span><span class="Normal">&quot;</span>
+
+<span class="GruvboxRed">for ((</span><span class="GruvboxRed"> i </span><span class="GruvboxRed">=</span><span class="GruvboxRed"> </span><span class="String">0</span><span class="GruvboxRed">; i </span><span class="GruvboxRed">&lt;</span><span class="GruvboxRed"> 1000; i++ </span><span class="GruvboxRed">))</span>; <span class="GruvboxRed">do</span>
+
+    <span class="GruvboxRed">rm</span> buffers/<span class="GruvboxAqua">$filename</span>
+    <span class="GruvboxBlue">rand</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">shuf </span><span class="GruvboxOrange">-i</span><span class="GruvboxOrange"> 3-6 </span><span class="GruvboxOrange">-n</span><span class="GruvboxOrange">1</span><span class="GruvboxAqua">)</span>
+    <span class="GruvboxRed">for ((</span><span class="GruvboxRed"> n </span><span class="GruvboxRed">=</span><span class="GruvboxRed"> </span><span class="String">0</span><span class="GruvboxRed">; n </span><span class="GruvboxRed">&lt;</span><span class="GruvboxRed"> $rand; n++ </span><span class="GruvboxRed">))</span><span class="Normal">;</span> <span class="GruvboxRed">do</span>
+
+        <span class="GruvboxBlue">z</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">shuf </span><span class="GruvboxOrange">-n</span><span class="GruvboxOrange"> </span><span class="GruvboxPurple">2</span><span class="GruvboxOrange"> wordlist.txt</span><span class="GruvboxAqua">)</span>
+        <span class="GruvboxRed">echo</span><span class="String"> </span><span class="GruvboxAqua">$z</span><span class="String">  </span><span class="Normal">|</span> tr <span class="Normal">&quot;</span><span class="String"> </span><span class="Normal">&quot;</span> <span class="Normal">&quot;</span><span class="GruvboxOrange">\n</span><span class="Normal">&quot;</span> <span class="GruvboxRed">&gt;</span> buffers/<span class="GruvboxAqua">$filename2</span>
+        <span class="GruvboxBlue">z2</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">shuf </span><span class="GruvboxOrange">-n</span><span class="GruvboxOrange"> </span><span class="GruvboxPurple">1</span><span class="GruvboxOrange"> buffers/</span><span class="GruvboxAqua">$filename2</span><span class="GruvboxAqua">)</span>
+        <span class="GruvboxRed">echo</span><span class="String"> -n </span><span class="GruvboxAqua">$z2</span><span class="String"> </span><span class="Normal">&quot;&quot;</span><span class="String"> </span><span class="GruvboxRed">&gt;&gt;</span> buffers/<span class="GruvboxAqua">$filename</span>
+
+    <span class="GruvboxRed">done</span>
+
+    <span class="GruvboxBlue">z3</span>=<span class="GruvboxAqua">$(</span><span class="GruvboxOrange">cat buffers/</span><span class="GruvboxAqua">$filename</span><span class="GruvboxAqua">)</span>
+    <span class="GruvboxRed">exec</span> <span class="GruvboxOrange">{</span>infd<span class="GruvboxOrange">}</span><span class="GruvboxRed">&gt;</span><span class="Error">in</span> <span class="GruvboxOrange">{</span>outfd<span class="GruvboxOrange">}</span><span class="GruvboxRed">&lt;</span>out
+    <span class="Comment">#echo &quot;$MENTION $z3&quot; &gt;&amp;$infd</span>
+    <span class="GruvboxRed">read</span> <span class="GruvboxRed">-r</span> reply <span class="GruvboxRed">&lt;</span><span class="Normal">&amp;</span><span class="GruvboxAqua">$outfd</span>
+<span class="GruvboxRed">done</span>
+</pre>
+
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/Documents/Programming/colortest.sh.html</title>
+<meta name="syntax" content="bash">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.GruvboxOrange { color: #ff8700; }
+.GruvboxRed { color: #d75f5f; }
+.Normal { color: #ffd7af; background-color: #262626; padding-bottom: 1px; }
+.GruvboxBlue { color: #87afaf; }
+.Comment { color: #8a8a8a; }
+.String { color: #afaf00; }
+.GruvboxAqua { color: #87af87; }
+-->
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+    <title>Aleks's Website</title>
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+    <h2>Color test</h2>
+    <p>Simple script to test terminal colors</p>
+    <br>
+
+<pre id='vimCodeElement'>
+<span class="Comment">#!/bin/bash</span>
+
+<span class="GruvboxBlue">T</span>=<span class="Normal">'</span><span class="String">gYw</span><span class="Normal">'</span>
+
+<span class="GruvboxRed">echo</span><span class="String"> -e </span><span class="Normal">&quot;</span><span class="GruvboxOrange">\n</span><span class="String">                 40m     41m     42m     43m\</span>
+<span class="String">     44m     45m     46m     47m</span><span class="Normal">&quot;</span>;
+<span class="GruvboxRed">for</span> FGs <span class="GruvboxRed">in</span> <span class="Normal">'</span><span class="String">    m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">   1m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">  30m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">1;30m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">  31m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">1;31m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">  32m</span><span class="Normal">'</span> <span class="Normal">\</span>
+           <span class="Normal">'</span><span class="String">1;32m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">  33m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">1;33m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">  34m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">1;34m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">  35m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">1;35m</span><span class="Normal">'</span> <span class="Normal">\</span>
+           <span class="Normal">'</span><span class="String">  36m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">1;36m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">  37m</span><span class="Normal">'</span> <span class="Normal">'</span><span class="String">1;37m</span><span class="Normal">'</span>;
+  <span class="GruvboxRed">do</span> <span class="GruvboxBlue">FG</span>=<span class="GruvboxAqua">${</span><span class="GruvboxAqua">FGs</span><span class="Normal">//</span> <span class="Normal">/</span><span class="GruvboxAqua">}</span>
+  <span class="GruvboxRed">echo</span><span class="String"> -en </span><span class="Normal">&quot;</span><span class="String"> </span><span class="GruvboxAqua">$FGs</span><span class="String"> </span><span class="GruvboxOrange">\033</span><span class="String">[</span><span class="GruvboxAqua">$FG</span><span class="String">  </span><span class="GruvboxAqua">$T</span><span class="String">  </span><span class="Normal">&quot;</span>
+  <span class="GruvboxRed">for</span> BG <span class="GruvboxRed">in</span> 40m 41m 42m 43m 44m 45m 46m 47m<span class="Normal">;</span>
+    <span class="GruvboxRed">do</span> <span class="GruvboxRed">echo</span><span class="String"> -en </span><span class="Normal">&quot;</span><span class="GruvboxAqua">$EINS</span><span class="String"> </span><span class="GruvboxOrange">\033</span><span class="String">[</span><span class="GruvboxAqua">$FG</span><span class="GruvboxOrange">\033</span><span class="String">[</span><span class="GruvboxAqua">$BG</span><span class="String">  </span><span class="GruvboxAqua">$T</span><span class="String">  </span><span class="GruvboxOrange">\033</span><span class="String">[0m</span><span class="Normal">&quot;</span><span class="Normal">;</span>
+  <span class="GruvboxRed">done</span>
+  <span class="GruvboxRed">echo</span><span class="Normal">;</span>
+<span class="GruvboxRed">done</span>
+<span class="GruvboxRed">echo</span>
+</pre>
+
+
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

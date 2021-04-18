@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.GruvboxFg3 { color: #a8a8a8; }
+.GruvboxOrange { color: #ff8700; }
+.GruvboxYellow { color: #ffaf00; }
+.GruvboxBlue { color: #87afaf; }
+.GruvboxBg2 { color: #4e4e4e; }
+.GruvboxFg1 { color: #ffd7af; }
+.GruvboxGray { color: #8a8a8a; }
+-->
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+    <title>Aleks's Website</title>
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+
+    <h2>Linux Tools & CLI</h2>
+    <h3>A list of my linux programs, cheat sheets and tools</h3>
+    <p>On this page you can find a list and an introduction to most of the software that I use on my Linux system.
+    It includes text, picture and video editors, file managers, command line tools,
+    and many other. I also added some guides and cheat sheets (for myself mostly when i forget things) for linux tools and programs.</p>
+
+<pre id='vimCodeElement'>
+<span class="GruvboxOrange">   *-----------------------------------------------------*</span>
+<span class="GruvboxOrange">   | Costly tools don't produce better designs.          |</span>
+<span class="GruvboxOrange">   |                                                     |</span>
+<span class="GruvboxOrange">   | Beware of vendor hype, industry dogma, and the aura |</span>
+<span class="GruvboxOrange">   | of the price tag. Judge tools on their merits.      |</span>
+<span class="GruvboxOrange">   *-----------------------------------------------------*</span>
+<span class="GruvboxOrange">          o</span>
+<span class="GruvboxOrange">           o   ^__^</span>
+<span class="GruvboxOrange">            o  (oo)\_______</span>
+<span class="GruvboxOrange">               (__)\       )\/\</span>
+<span class="GruvboxOrange">                   ||----w |</span>
+<span class="GruvboxOrange">                   ||     ||</span>
+</pre>
+
+    <h3>Programs: </h3>
+    <h4>VIM </h4>
+    <p>Vim  is  a text editor that is upwards compatible to Vi.  It can be used to edit all kinds of plain text.  It
+       is especially useful for editing programs.
+
+       There are a lot of enhancements above Vi: multi level undo, multi windows and buffers,  syntax  highlighting,
+       command line editing, filename completion, on-line help, visual selection, etc..</p>
+    <blockquote>ESC = normal mode
+    <br>Control v = select block
+    <br>V = select line
+    <br>c when selected to replace ESC to commit
+    <br>gg = go to top
+    <br>G = go to bottom
+    <br>r = undo
+    <br>R = replace
+    <br>Control R = redo
+    <br>
+    <br>:%s/[symbol to be replaced ]/[symbol to fill]/g eg. :s%/aa/bb/g
+    <br>:%s/aaa/\ /g = replace with space
+    <br>:norm I [text]= add to beginning
+    <br>:norm A [text]= add to end
+    <br>vap = select all paragraph
+    <br>? = search
+    <br>/ = search
+    <br>{} = move through paragraphs
+    <br>F6 = SpellChecker
+    <br>ZZ = Quit saving changes
+    <br>ZQ = quit witout saving
+    <br>n = next search
+    <br>:read ![command] = output command
+    <br>6dd = delete 6 lines down
+    <br>o = insert next line
+    <br>,r = line numbers relative mode
+    <br>space = fold code lines
+    <br>,s = toggle syntax highlight
+    <br><F5> = toggle undo tree
+    <br>:later 10m = redo 10m
+    <br>:earlier 10m = undo 10m
+    <br>:u 2 = undo branch 2
+    <br>
+    <br>numpad 00 = insert mode and or replace
+    <br>numpad 1 = end of line
+    <br>numpad 7 = start of line
+    <br>
+    <br>split [file]= split window
+    <br>vsplit = vertically
+    <br>badd = addbuffer
+    <br>bdel = delete buffer
+    <br>vip = select whole paragraph
+    <br>dip = cut/delete whole paragraph
+    <br>VColor = for hex color
+    <br>set nonu = turn off numberline</p>
+    </blockquote>
+    <p>multiple cursors</p>
+    <blockquote>
+/ = search word and press Return to select
+<br>Ctrl + n = to cycle next
+<br>c = replace
+<br>Ctrl + c = go back to one line
+<br>
+<br>
+<br>start: <C-n> start multicursor and add a virtual cursor + selection on the match
+<br>next: <C-n> add a new virtual cursor + selection on the next match
+<br>skip: <C-x> skip the next match
+<br>prev: <C-p> remove current virtual cursor + selection and go back on previous
+<br>select all: <A-n> start muticursor and directly select all matches
+<br></br>You can now change the virtual cursors + selection with visual mode commands.
+For instance: c, s, I, A work without any issues.
+<br>You could also go to normal mode by pressing v and use normal commands there.
+    </blockquote>
+    <br>
+<img src="../pictures/vim.png" style="width:800px; margin-left:auto; margin-right:auto;">
+    <h4>tmux</h4>
+    <p>terminal multiplexer: it enables a number of terminals to be created, accessed, and controlled from a
+     single screen.  tmux may be detached from a screen and continue running in the background, then later reattached. </p>
+    <blockquote>
+    ^a c = new window
+    <br>^a , = rename window
+    <br>^a w = list windows
+    <br>^a % = split window vert
+    <br>^a : = command eg (split-window)
+    <br>^a " = split windows hor
+    <br>^a o = switch window
+    <br>^a t = time
+</blockquote>
+    <h4>qutebrowser</h4>
+    <p>qutebrowser is a keyboard-focused browser with a minimal GUI. It’s based on Python and Qt5 and is free
+       software, licensed under the GPL.
+
+       It was inspired by other browsers/addons like dwb and Vimperator/Pentadactyl.</p>
+    <h4>docker</h4>
+    <p> Docker is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels. docker is a client for interacting with the docker daemon through the CLI.</p>
+    <h4>baobab</h4>
+    <p>baobab is able to scan either specific folders (local and remote) or devices, in order to give the user a
+       tree representation including each directory size or percentage in the branch. It also auto-detects any
+       mounted/unmounted device. A graphical representation is also provided for any selected folder</p>
+    <h4>fzf</h4>
+    <p>fzf is a general-purpose command-line fuzzy finder.</p>
+    <blockquote>
+    <br>ctrl+r = command history
+    <br>ctrl+t = autocomplete
+    <br>Tab = select multiple
+    <br>ctrl+t .png$ = all png files etc
+    <br>
+    <br>Files [PATH]	Files (similar to :FZF)
+    <br>GFiles [OPTS]	Git files (git ls-files)
+    <br>GFiles?	Git files (git status)
+    <br>Buffers	Open buffers
+    <br>Colors	Color schemes
+    <br>Ag [PATTERN]	ag search result (ALT-A to select all, ALT-D to deselect all)
+    <br>Rg [PATTERN]	rg search result (ALT-A to select all, ALT-D to deselect all)
+    <br>Lines [QUERY]	Lines in loaded buffers
+    <br>BLines [QUERY]	Lines in the current buffer
+    <br>Tags [QUERY]	Tags in the project (ctags -R)
+    <br>BTags [QUERY]	Tags in the current buffer
+    <br>Marks	Marks
+    <br>Windows	Windows
+    <br>Locate PATTERN	locate command output
+    <br>History	v:oldfiles and open buffers
+    <br>History:	Command history
+    <br>History/	Search history
+    <br>Snippets	Snippets (UltiSnips)
+    <br>Commits	Git commits (requires fugitive.vim)
+    <br>BCommits	Git commits for the current buffer
+    <br>Commands	Commands
+    <br>Maps	Normal mode mappings
+    <br>Helptags	Help tags 1
+    <br>Filetypes	File types
+    </blockquote>
+<img src="../pictures/fzf.png" style="width:450px; margin-left:auto; margin-right:auto;">
+    <h4>git</h4>
+    <p>Git is a fast, scalable, distributed revision control system with an unusually rich command set that provides
+       both high-level operations and full access to internals.</p>
+    <h4>ranger</h4>
+    <p>ranger is a console file manager with VI key bindings</p>
+    <blockquote>
+        cw = change name
+        <br>A = rename
+        <br>space = hightligh
+        <br>yy = copy
+        <br>pp = paste
+        <br>dd = cut
+        <br>dD = delete
+        <br>: = run command
+        <br>z = toggle
+        <br>C-h = toggle hidden
+        <br>V = create file
+        <br>Z = zip
+        <br>X = extract
+        <br>S = open terminal in current directory
+
+    </blockquote>
+    <br></br>
+<img src="../pictures/ranger.png" style="width:800px; margin-left:auto; margin-right:auto;">
+    <h4>nmap</h4>
+    <p>Nmap (“Network Mapper”) is an open source tool for network exploration and security auditing. It was designed
+       to rapidly scan large networks, although it works fine against single hosts. Nmap uses raw IP packets in
+       novel ways to determine what hosts are available on the network, what services (application name and version)
+       those hosts are offering, what operating systems (and OS versions) they are running, what type of packet
+       filters/firewalls are in use, and dozens of other characteristics. While Nmap is commonly used for security
+       audits, many systems and network administrators find it useful for routine tasks such as network inventory,
+       managing service upgrade schedules, and monitoring host or service uptime.</p>
+    <blockquote>
+    nmap -sL 192.168.0.0/24 - HOST NAMES
+    <br>nmap 192.168.0.0/24 - DEFAULT PORT SCAN
+    <br>nmap -sP 192.168.0.0/24 - PING SCAN SIMPLE
+    <br>nmap -sS -sU -PN 192.168.0.164 - LONG INTENSE UDP TCP SCAN
+    <br>nmap -sS -sU -PN -p 1-65535 192.168.0.164 - LONG TCP UDP SCAN ALL PORTS
+    <br>nmap -T4 -A 192.168.0.0/24 - AGGRESSIVE SCAN
+    <br>nmap -Pn -p80 --script ip-geolocation-* - FIND GEOLOCATION
+    </blockquote>
+    <h4>ncmpcpp</h4>
+    <p>ncmpcpp is an ncurses client for MPD (Music Player Daemon), inspired by ncmpc.</p>
+    <blockquote>
+    Different views
+    <br>
+    <br>Partial list of views within ncmpcpp:
+    <br>
+    <br>1 - Current playlist
+    <br>2 - Filesystem browser
+    <br>3 - DB search
+    <br>4 - Library
+    <br>5 - Playlist editor
+    <br>6 - Tag editor (very powerful!)
+    <br>7 - Output selector
+    <br>8 - Music visualizer
+    <br>= - Clock
+    <br>F1 - Help
+    <br>
+    <br>Other UI keys
+    <br>
+    <br>q - Quit
+    <br>f - Seek forward
+    <br>b - Seek backward
+    <br>\ - Switch between classic and alternative views
+    <br># - Display bitrate of file
+    <br>i - Show song info
+    <br>I - Show artist info (saved in $XDG_CONFIG_HOME/ncmpcpp/config/artists/ARTIST.txt)
+    <br>L - Shuffle between available lyric databases
+    <br>l - Retrieve song lyrics for current song Show/hide lyrics
+    <br>p - Play/Pause
+    <br>+ - Increase volume 2%
+    <br>- - Decrease volume 2%
+    </blockquote>
+<img src="../pictures/ncmpcpp.png" style="width:800px; margin-left:auto; margin-right:auto;">
+    <h4>tshark</h4>
+    <p>TShark is a network protocol analyzer.  It lets you capture packet data from a live network, or read packets
+       from a previously saved capture file, either printing a decoded form of those packets to the standard output
+       or writing the packets to a file.  TShark's native capture file format is pcapng format, which is also the
+       format used by wireshark and various other tools.
+</p>
+<p>Without any options set, TShark will work much like tcpdump.  It will use the pcap library to capture traffic
+       from the first available network interface and displays a summary line on the standard output for each
+       received packet.</p>
+    <h4>mutt</h4>
+    <p>Mutt is a small but very powerful text based program for reading and sending electronic mail under unix operating systems, including support for color terminals, MIME, OpenPGP, and a threaded sorting mode.</p>
+    <h4>nautilus</h4>
+    <p> nautilus is a file manager, designed for the GNOME 3 desktop.</p>
+<img src="../pictures/nautilus.png" style="width:800px; margin-left:auto; margin-right:auto;">
+    <h4>compton</h4>
+<p>compton is a compositor based on Dana Jansens' version of xcompmgr (which itself was written by Keith
+       Packard). It includes some improvements over the original xcompmgr, like window frame opacity and inactive
+       window transparency.</p>
+    <h4>kdenlive</h4>
+    <p>Kdenlive is a free and open-source video editing software based on the MLT Framework</p>
+<li class="link"><a href="../pictures/kden.png">full picture</a>
+    <br>
+<img src="../pictures/kden.png" style="width:800px; margin-left:auto; margin-right:auto;">
+    <h4>gimp</h4>
+    <p>GIMP  is the GNU Image Manipulation Program. It is used to edit and manipulate images. It can load and save a
+       variety of image formats and can be used to convert between formats.
+       <br></br>
+       GIMP can also be used as a paint program. It features a set of drawing and painting tools such  as  airbrush,
+       clone, pencil, and paint brush. Painting and drawing tools can be applied to an image with a variety of paint
+       modes.  It also offers an extensive array of selection tools like rectangle, ellipse,  fuzzy  select,  bezier
+       select, intelligent scissors, and select by color.</p>
+<img src="../pictures/gimp.png" style="width:800px; margin-left:auto; margin-right:auto;">
+    <h4>nitrogen</h4>
+    <p>In  normal working mode, provides an interface which displays all pictures in the given DIRECTORY.  From this
+       interface, it is possible to set the X11 root pixmap either temporarily or set and store the picture, drawing
+       mode,  and  X display for restoration later.</p>
+    <h4>neofetch</h4>
+    <p>Neofetch  is  a  CLI system information tool written in BASH. Neofetch displays information about your system
+       next to an image, your OS logo, or any ASCII file of your choice</p>
+
+    <br>
+<img src="../pictures/neofetch.png" style="width:500px; margin-left:auto; margin-right:auto;">
+    <h4>urxvt</h4>
+    <p>rxvt-unicode, is a colour vt102 terminal emulator intended as an xterm replacement for users
+       who do not require features such as Tektronix 4014 emulation and toolkit-style configurability. As a result,
+       rxvt-unicode uses much less swap space. A significant advantage on a machine serving many X sessions.</p>
+<img src="../pictures/urxvt.png" style="width:800px; margin-left:auto; margin-right:auto;">
+    <h4>minicom</h4>
+    <p>minicom  is  a  communication  program  which somewhat resembles the shareware program TELIX but is free with
+       source code and runs under most Unices.  Features include dialing directory  with  auto-redial,  support  for
+       UUCP-style  lock  files  on serial devices, a separate script language interpreter, capture to file, multiple
+       users with individual configurations, and more.</p>
+    <blockquote>Serial connect<br></br>minicom -b 115200 -o -D /dev/ttyUSB0</blockquote>
+    <h4>fish</h4>
+    <p>fish is a command-line shell written mainly with interactive use in mind.</p>
+    <h4>photorec</h4>
+    <p> PhotoRec  is file data recovery software designed to recover lost files including video, documents and ar‐
+       chives from Hard Disks and CDRom and lost pictures (Photo Recovery)  from  digital  camera  memory.  PhotoRec
+       ignores  the  filesystem and goes after the underlying data, so it'll work even if your media's filesystem is
+       severely damaged or formatted. PhotoRec is safe to use, it will never attempt to write to the drive or memory
+       support you are about to recover lost data from.</p>
+    <h4>stacer</h4>
+    <p>Stacer is an open source system optimizer and application monitor that helps users to manage entire system with different aspects, its an all in one system utility.</p>
+    <h4>xdotool</h4>
+    <p>xdotool lets you programmatically (or manually) simulate keyboard input and mouse activity, move and resize
+       windows, etc. It does this using X11's XTEST extension and other Xlib functions.</p>
+    <h4>ffmpeg</h4>
+    <p>ffmpeg is a very fast video and audio converter that can also grab from a live audio/video source. It can
+       also convert between arbitrary sample rates and resize video on the fly with a high quality polyphase filter.
+<br></br>
+       ffmpeg reads from an arbitrary number of input "files" (which can be regular files, pipes, network streams,
+       grabbing devices, etc.), specified by the "-i" option, and writes to an arbitrary number of output "files",
+       which are specified by a plain output url. Anything found on the command line which cannot be interpreted as
+       an option is considered to be an output url.
+<br></br>
+       Each input or output url can, in principle, contain any number of streams of different types
+       (video/audio/subtitle/attachment/data). The allowed number and/or types of streams may be limited by the
+       container format. Selecting which streams from which inputs will go into which output is either done
+       automatically or with the "-map" option.
+<br></br>
+       To refer to input files in options, you must use their indices (0-based). E.g.  the first input file is 0,
+       the second is 1, etc. Similarly, streams within a file are referred to by their indices. E.g. "2:3" refers to
+       the fourth stream in the third input file.
+<br></br>
+       As a general rule, options are applied to the next specified file. Therefore, order is important, and you can
+       have the same option on the command line multiple times. Each occurrence is then applied to the next input or
+       output file.  Exceptions from this rule are the global options (e.g. verbosity level), which should be
+       specified first.</p>
+    <blockquote>
+        Convert .webm to .mp4
+<br></br>
+#!/bin/bash
+<br>ls *webm | tee songlist.txt
+<br>songs=$(wc -l < songlist.txt)
+<br>echo $songs
+<br>
+<br>for (( i = 1; i < $songs; i++ )); do
+<br>song=$(sed "${i}q;d" songlist.txt)
+<br>echo $song
+<br>ffmpeg -fflags +genpts -i "$song".webm -r 24 "$song".mp4
+<br>done
+<br></blockquote>
+    <h4>qalc</h4>
+    <p>Qalc  is  a small and simple to use calculator but with much power and versatility underneath. Features
+       include customizable functions, units, arbitrary precision using a one-line fault-tolerant expression  entry.
+       qalc is the command line version of Qalculate.</p>
+    <h4>htop</h4>
+    <p>Htop is a free (GPL) ncurses-based process viewer for Linux.
+
+       It  is similar to top, but allows you to scroll vertically and horizontally, so you can see all the processes
+       running on the system, along with their full command lines, as well  as  viewing  them  as  a  process  tree,
+       selecting multiple processes and acting on them all at once.</p>
+    <h4>lshw</h4>
+    <p>lshw is a small tool to extract detailed information on the hardware configuration of  the  machine.  It  can
+       report  exact  memory  configuration, firmware version, mainboard configuration, CPU version and speed, cache
+       configuration, bus speed, etc.</p>
+    <h4>scrot</h4>
+    <p>scrot  is  a  screen  capture  utility  using the imlib2 library to acquire and save images.  scrot has a few
+       options, detailed below. Specify [file] as the filename to save the screenshot to.  If [file] is  not  speci‐
+       fied, a date-stamped file will be dropped in the current directory.</p>
+    <h4>xmonad + xmobar</h4>
+    <p>xmonad  is a minimalist tiling window manager for X, written in Haskell.  Windows are managed using automatic
+       layout algorithms, which can be dynamically reconfigured.  At any time windows are arranged so as to maximize
+       the use of screen real estate.  All features of the window manager are accessible purely from the keyboard: a
+       mouse is entirely optional.  xmonad is configured in Haskell, and custom layout algorithms may be implemented
+       by  the  user in config files.  A principle of xmonad is predictability: the user should know in advance pre‐
+       cisely the window arrangement that will result from any action.
+<br></br>
+       By default, xmonad provides three layout algorithms: tall, wide and fullscreen.  In tall or wide  mode,  win‐
+       dows are tiled and arranged to prevent overlap and maximize screen use.  Sets of windows are grouped together
+       on virtual screens, and each screen retains its own layout, which may be reconfigured dynamically.   Multiple
+       physical monitors are supported via Xinerama, allowing simultaneous display of a number of screens.
+<br></br>
+       By utilizing the expressivity of a modern functional language with a rich static type system, xmonad provides
+       a complete, featureful window manager in less than 1200 lines of code, with an emphasis  on  correctness  and
+       robustness.   Internal  properties of the window manager are checked using a combination of static guarantees
+       provided by the type system, and type-based automated testing.  A benefit of this is that the code is  simple
+       to understand, and easy to modify.
+       <br></br>
+       xmobar  is  a  minimalistic,  text  based,  status bar.  It was originally designed and implemented by Andrea
+       Rossato to work with xmonad, but it's actually usable with any window-manager.
+<li class="link"><a href="../pictures/screen1.png">full picture</a>
+    <br>
+<img src="../pictures/screen1.png" style="width:800px; margin-left:auto; margin-right:auto;">
+    </p>
+    <h4>imagemagic</h4>
+    <p>Use ImageMagick® to create, edit, compose, or convert digital images. It can read and write images in a variety of formats (over 200) including PNG, JPEG, GIF, WebP, HEIC, SVG, PDF, DPX, EXR and TIFF. ImageMagick can resize, flip, mirror, rotate, distort, shear and transform images, adjust image colors, apply various special effects, or draw text, lines, polygons, ellipses and Bézier curves.
+<br></br>
+ImageMagick utilizes multiple computational threads to increase performance and can read, process, or write mega-, giga-, or tera-pixel image sizes.</p>
+    <h4>nmtui</h4>
+    <p> nmtui is a curses‐based TUI application for interacting with NetworkManager. When starting nmtui, the user is
+       prompted to choose the activity to perform unless it was specified as the first argument.</p>
+    <h4>grep awk sed</h4>
+    <li>grep  searches  for  PATTERN  in  each  FILE.  A FILE of “-” stands for standard input.  If no FILE is given,
+       recursive searches examine the working directory, and nonrecursive searches read standard input.  By default,
+       grep prints the matching lines</li>
+    <br>
+<li>Gawk  is  the GNU Project's implementation of the AWK programming language.  It conforms to the definition of
+       the language in the POSIX 1003.1 Standard.  This version in turn is based on the description in The AWK  Pro‐
+       gramming  Language,  by  Aho,  Kernighan, and Weinberger.  Gawk provides the additional features found in the
+       current version of Brian Kernighan's awk and a number of GNU-specific extensions.</li>
+</br>
+<li>Sed  is a stream editor.  A stream editor is used to perform basic text transformations on an input stream (a
+       file or input from a pipeline).  While in some ways similar to an editor which permits scripted  edits  (such
+       as  ed),  sed works by making only one pass over the input(s), and is consequently more efficient.  But it is
+       sed's ability to filter text in a pipeline which particularly distinguishes it from other types of editors.
+
+</li>
+    <h4>nnn</h4>
+    <p>nnn (Noice is Not Noice) is a performance-optimized, feature-packed fork of the noice terminal file browser
+     with seamless desktop integration, simplified navigation, navigate-as-you-type mode, bookmarks, disk usage ana‐
+     lyzer mode, comprehensive file details and much more. It remains a simple and efficient file browser that stays
+     out of your way.
+<br></br>
+     nnn supports both vi-like and emacs-like key bindings in the default configuration. The default key bindings
+     are listed below.</p>
+    <blockquote>
+            [Up], k, ^P                      Move to previous entry
+            <br>[Down], j, ^N                    Move to next entry
+            <br>[PgUp], ^U                       Scroll up half a page
+            <br>[PgDn], ^D                       Scroll down half a page
+            <br>[Home], g, ^, ^A                 Move to the first entry
+            <br>[End], G, $, ^E                  Move to the last entry
+            <br>[Right], [Enter], l, ^M          Open file or enter directory
+            <br>[Left], [Backspace], h, ^H       Back up one directory level
+            <br>^O                               Open with a custom application
+            <br>[Insert]                         Toggle navigate-as-you-type mode
+            <br>~                                Change to the HOME directory
+            <br>&                                Change to initial directory
+            <br>-                                Change to the last visited directory
+            <br>/                                Change filter (more information below)
+            <br>^/                               Search directory in desktop search tool
+            <br>.                                Toggle hide .dot files
+            <br>^B                               Show bookmark key prompt
+            <br>b                                Pin current directory
+            <br>^V                               Visit pinned directory
+            <br>c                                Show change directory prompt
+            <br>d                                Toggle detail view
+            <br>D                                Show current file details screen
+            <br>m                                Show brief media info
+            <br>M                                Show full media info
+            <br>n                                Create a new file or directory
+            <br>^R                               Rename selected entry
+            <br>R                                Rename directory entries
+            <br>s                                Toggle sort by file size
+            <br>S, ^J                            Toggle disk usage analyzer mode
+            <br>t                                Toggle sort by time modified
+            <br>!                                Spawn SHELL in PWD (fallback sh)
+            <br>e                                Open current entry in EDITOR (fallback vi)
+            <br>o                                Open directory in NNN_DE_FILE_MANAGER
+            <br>p                                Open current entry in PAGER (fallback less)
+            <br>F                                List files in archive
+            <br>^F                               Extract archive in current directory
+            <br>^K                               Invoke file path copier
+            <br>^Y                               Toggle multiple file path copy mode
+            <br>^T                               Toggle path quote
+            <br>^L                               Force a redraw, clear rename or filter prompt
+            <br>?                                Toggle help and settings screen
+            <br>Q, ^G                            Quit and change directory
+            <br>q, ^X                            Quit
+<blockquote>
+<img src="../pictures/nnn.png" style="width:450px; margin-left:auto; margin-right:auto;">
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

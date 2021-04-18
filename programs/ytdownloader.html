@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+    <title>Aleks's Website</title>
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+
+    <h3>Youtube channel downloader</h2>
+    <h4>downloads all videos from a specified youtube channel</h3>
+    <p>multiple files required</p>
+
+<h4>Downloader</h4>
+<div style="background: #eeeedd; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #8B008B; font-weight: bold">import</span> <span style="color: #008b45; text-decoration: underline">urllib</span>
+<span style="color: #8B008B; font-weight: bold">import</span> <span style="color: #008b45; text-decoration: underline">json</span>
+
+
+<span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">get_all_video_in_channel</span>(channel_id):
+    api_key = <span style="color: #CD5555">&#39;[API KEY HERE]&#39;</span>
+
+    base_video_url = <span style="color: #CD5555">&#39;https://www.youtube.com/watch?v=&#39;</span>
+    base_search_url = <span style="color: #CD5555">&#39;https://www.googleapis.com/youtube/v3/search?&#39;</span>
+
+    first_url = base_search_url+<span style="color: #CD5555">&#39;key={}&amp;channelId={}&amp;part=snippet,id&amp;order=date&amp;maxResults=25&#39;</span>.format(api_key, channel_id)
+
+    video_links = []
+    url = first_url
+    <span style="color: #8B008B; font-weight: bold">while</span> <span style="color: #658b00">True</span>:
+        inp = urllib.urlopen(url)
+        resp = json.load(inp)
+
+        <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> resp[<span style="color: #CD5555">&#39;items&#39;</span>]:
+            <span style="color: #8B008B; font-weight: bold">if</span> i[<span style="color: #CD5555">&#39;id&#39;</span>][<span style="color: #CD5555">&#39;kind&#39;</span>] == <span style="color: #CD5555">&quot;youtube#video&quot;</span>:
+                video_links.append(base_video_url + i[<span style="color: #CD5555">&#39;id&#39;</span>][<span style="color: #CD5555">&#39;videoId&#39;</span>])
+
+        <span style="color: #8B008B; font-weight: bold">try</span>:
+            next_page_token = resp[<span style="color: #CD5555">&#39;nextPageToken&#39;</span>]
+            url = first_url + <span style="color: #CD5555">&#39;&amp;pageToken={}&#39;</span>.format(next_page_token)
+        <span style="color: #8B008B; font-weight: bold">except</span>:
+            <span style="color: #8B008B; font-weight: bold">break</span>
+    <span style="color: #8B008B; font-weight: bold">return</span> video_links
+<span style="color: #8B008B; font-weight: bold">print</span> (get_all_video_in_channel(<span style="color: #CD5555">&#39;CHANNEL-NUMBER&#39;</span>))
+</pre></div>
+<br><h4>Get video names and save to file</h4>
+<div style="background: #eeeedd; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #8B008B; font-weight: bold">import</span> <span style="color: #008b45; text-decoration: underline">lxml</span>
+<span style="color: #8B008B; font-weight: bold">import</span> <span style="color: #008b45; text-decoration: underline">urllib</span>
+<span style="color: #8B008B; font-weight: bold">from</span> <span style="color: #008b45; text-decoration: underline">lxml</span> <span style="color: #8B008B; font-weight: bold">import</span> etree
+
+<span style="color: #8B008B; font-weight: bold">with</span> <span style="color: #658b00">open</span>(<span style="color: #CD5555">&quot;videos.txt&quot;</span>) <span style="color: #8B008B; font-weight: bold">as</span> file_in:
+    lines = []
+    <span style="color: #8B008B; font-weight: bold">for</span> line <span style="color: #8B008B">in</span> file_in:
+        youtube = etree.HTML(urllib.urlopen(line).read())
+        video_title = youtube.xpath(<span style="color: #CD5555">&quot;//span[@id=&#39;eow-title&#39;]/@title&quot;</span>)
+        <span style="color: #8B008B; font-weight: bold">with</span> <span style="color: #658b00">open</span>(<span style="color: #CD5555">&quot;tut.txt&quot;</span>, <span style="color: #CD5555">&quot;a&quot;</span>) <span style="color: #8B008B; font-weight: bold">as</span> myfile:
+            myfile.write(<span style="color: #CD5555">&#39;&#39;</span>.join(video_title))
+</pre></div>
+<br>
+<h4>Video converter shell script</h4>
+<div style="background: #eeeedd; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #228B22">#!/bin/bash</span>
+ls * | tee videolist.txt
+<span style="color: #00688B">videos</span>=<span style="color: #8B008B; font-weight: bold">$(</span>wc -l &lt; videolist.txt<span style="color: #8B008B; font-weight: bold">)</span>
+<span style="color: #658b00">echo</span> <span style="color: #00688B">$videos</span>
+
+<span style="color: #8B008B; font-weight: bold">for</span> (( <span style="color: #00688B">i</span> = 1; i &lt; <span style="color: #00688B">$videos</span>; i++ )); <span style="color: #8B008B; font-weight: bold">do</span>
+<span style="color: #8B008B; font-weight: bold">    </span><span style="color: #00688B">video</span>=<span style="color: #8B008B; font-weight: bold">$(</span>sed <span style="color: #CD5555">&quot;${i}q;d&quot;</span> videolist.txt<span style="color: #8B008B; font-weight: bold">)</span>
+    <span style="color: #658b00">echo</span> <span style="color: #00688B">$video</span>
+<span style="color: #228B22">#    ffmpeg -i &quot;$video&quot; -vcodec copy -acodec copy &quot;$video&quot;.mkv</span>
+<span style="color: #228B22">#    ffmpeg -ss 00:00:00 -i &quot;$video&quot; -to 00:00:01 -c copy second`ls second* | wc -l`.mkv</span>
+     ffmpeg -i <span style="color: #CD5555">&quot;$video&quot;</span> -c:a libopus -c:v copy singlet<span style="color: #CD5555">`</span>ls singlet* | wc -l<span style="color: #CD5555">`</span>.mkv
+<span style="color: #228B22">#    ffmpeg -i &quot;$video&quot; -ss 00:00:20 -to 00:00:21 -c copy output`ls output* | wc -l`.mkv</span>
+<span style="color: #8B008B; font-weight: bold">done</span>
+</pre></div>
+<br>
+<h4>Extract first second from each video shell script</h4>
+<div style="background: #eeeedd; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #228B22">#!/bin/bash</span>
+
+<span style="color: #00688B">videos</span>=<span style="color: #8B008B; font-weight: bold">$(</span>wc -l &lt; videolist.txt<span style="color: #8B008B; font-weight: bold">)</span>
+<span style="color: #658b00">echo</span> <span style="color: #00688B">$videos</span>
+
+<span style="color: #8B008B; font-weight: bold">for</span> (( <span style="color: #00688B">i</span> = 1; i &lt; <span style="color: #00688B">$videos</span>; i++ )); <span style="color: #8B008B; font-weight: bold">do</span>
+<span style="color: #8B008B; font-weight: bold">    </span><span style="color: #00688B">video</span>=<span style="color: #8B008B; font-weight: bold">$(</span>sed <span style="color: #CD5555">&quot;${i}q;d&quot;</span> pliki.txt<span style="color: #8B008B; font-weight: bold">)</span>
+    <span style="color: #658b00">echo</span> <span style="color: #00688B">$video</span>
+    ffmpeg -ss 00:00:00 -i <span style="color: #CD5555">&quot;$video&quot;</span> -to 00:00:01 -c copy second<span style="color: #CD5555">`</span>ls second* | wc -l<span style="color: #CD5555">`</span>.mkv
+  <span style="color: #228B22">#  ffmpeg -i &quot;$video&quot; -ss 00:00:20 -to 00:00:21 -c:v copy -c:a copy output`ls output* | wc -l`.mkv</span>
+<span style="color: #8B008B; font-weight: bold">done</span>
+</pre></div>
+
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>

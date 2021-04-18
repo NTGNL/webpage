@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/sc/Circle/circleGen.hs.html</title>
+<meta name="syntax" content="haskell">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #262626; }
+body { font-family: monospace; color: #ffd7af; background-color: #262626; }
+* { font-size: 1em; }
+.GruvboxOrange { color: #ff8700; }
+.GruvboxRed { color: #d75f5f; }
+.GruvboxYellow { color: #ffaf00; }
+.Normal { color: #ffd7af; background-color: #262626; padding-bottom: 1px; }
+.GruvboxPurple { color: #d787af; }
+.String { color: #afaf00; }
+.GruvboxAqua { color: #87af87; }
+-->
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../blogstyle.css">
+</head>
+
+<body>
+    <h1>Aleks's Website</h1>
+
+    <hr>
+
+    <ul class="head">
+      <li class="head">
+	<a class="head" href="../index.html"><img src="../icons/prompt.png" height="16px" width="16px"> Home</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../linux/linux_index.html"><img src="../icons/linux2.png" height="16px" width="16px"> Linux</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../pictures/pic_index.html"><img src="../icons/picture.png" height="16px" width="16px"> Pictures</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://github.com/NTGNL"><img src="../icons/git.png" height="16px" width="16px"> GitHub</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../dev/dev_index.html"><img src="../icons/wrench.png" height="16px" width="16px"> Dev</a>
+      </li>
+      <li class="head">
+        <a class="head" href="../sys/sys_index.html"><img src="../icons/server.png" height="16px" width="16px"> Sys</a>
+      </li>
+      <li class="head">
+        <a class="head" href="https://searx.aleksander.xyz"><img src="../icons/search.png" height="16px" width="16px"> Searx</a>
+      </li>
+    </ul>
+    <h2>Circle generator</h2>
+    <p>A circle graphing and generating program written in Haskell and C</p>
+    <br>
+    <p>Haskell</p>
+
+
+<pre id='vimCodeElement'>
+<span class="GruvboxAqua">import</span> Graphics.UI.GLUT
+
+myPoints <span class="Normal">::</span> [(GLfloat,GLfloat,GLfloat)]
+myPoints <span class="Normal">=</span> [ (sin (<span class="GruvboxPurple">2</span><span class="Normal">*</span>pi<span class="Normal">*</span>k<span class="Normal">/</span><span class="GruvboxPurple">200</span>), cos (<span class="GruvboxPurple">2</span><span class="Normal">*</span>pi<span class="Normal">*</span>k<span class="Normal">/</span><span class="GruvboxPurple">200</span>), <span class="GruvboxPurple">0</span>) <span class="Normal">|</span> k <span class="Normal">&lt;-</span> [<span class="GruvboxPurple">1</span><span class="Normal">..</span><span class="GruvboxPurple">200</span>] ]
+
+main <span class="Normal">::</span> IO ()
+main <span class="Normal">=</span> <span class="GruvboxRed">do</span>
+  (_progName, _args) <span class="Normal">&lt;-</span> getArgsAndInitialize
+  _window <span class="Normal">&lt;-</span> createWindow <span class="String">&quot;circle&quot;</span>
+  displayCallback <span class="Normal">$=</span> display
+  mainLoop
+
+display <span class="Normal">::</span> DisplayCallback
+display <span class="Normal">=</span> <span class="GruvboxRed">do</span>
+  clear [ColorBuffer]
+  renderPrimitive Points <span class="Normal">$</span>
+     mapM_ (<span class="Normal">\</span>(x, y, z) <span class="Normal">-&gt;</span> vertex <span class="Normal">$</span> Vertex3 x y z) myPoints
+  flush
+</pre>
+
+<p>C</p>
+
+
+<pre id='vimCodeElement'>
+<span class="GruvboxAqua">#include </span><span class="String">&lt;stdio.h&gt;</span>
+<span class="GruvboxAqua">#include </span><span class="String">&lt;math.h&gt;</span>
+
+<span class="GruvboxYellow">int</span> main() {
+    <span class="GruvboxYellow">int</span> i, j, k;
+    <span class="GruvboxYellow">int</span> a = <span class="GruvboxPurple">0</span>, b = <span class="GruvboxPurple">0</span>, r = <span class="GruvboxPurple">7</span>;
+    <span class="GruvboxYellow">int</span> x, y;
+
+        <span class="GruvboxRed">for</span> (i = <span class="GruvboxPurple">0</span>; i &lt; <span class="GruvboxPurple">21</span>; i++) {
+            y = -(i - <span class="GruvboxPurple">10</span>);
+
+            <span class="GruvboxRed">if</span> (y == <span class="GruvboxPurple">0</span>) {
+                <span class="GruvboxRed">for</span> (j = <span class="GruvboxPurple">0</span>; j &lt; <span class="GruvboxPurple">21</span>; j++) {
+                    x = j - <span class="GruvboxPurple">10</span>;
+
+                    <span class="GruvboxRed">if</span> (r * r == pow(x - a, <span class="GruvboxPurple">2</span>) + pow(y - b, <span class="GruvboxPurple">2</span>)) {
+                        printf(<span class="String">&quot;*&quot;</span>);
+                    }
+                    <span class="GruvboxRed">else</span> <span class="GruvboxRed">if</span> (x == <span class="GruvboxPurple">0</span>) {
+                        printf(<span class="String">&quot;|&quot;</span>);
+                    }
+                    <span class="GruvboxRed">else</span> {
+                        printf(<span class="String">&quot;-&quot;</span>);
+                    }
+                }
+            }
+            <span class="GruvboxRed">else</span> {
+                <span class="GruvboxRed">for</span> (k = <span class="GruvboxPurple">0</span>; k &lt; <span class="GruvboxPurple">21</span>; k++) {
+                    x = k - <span class="GruvboxPurple">10</span>;
+
+                    <span class="GruvboxRed">if</span> (r * r == pow(x - a, <span class="GruvboxPurple">2</span>) + pow(y - b, <span class="GruvboxPurple">2</span>)) {
+                        printf(<span class="String">&quot;*&quot;</span>);
+                    }
+                    <span class="GruvboxRed">else</span> <span class="GruvboxRed">if</span> (x == <span class="GruvboxPurple">0</span>) {
+                        printf(<span class="String">&quot;|&quot;</span>);
+                    }
+                    <span class="GruvboxRed">else</span> {
+                        printf(<span class="String">&quot; &quot;</span>);
+                    }
+                }
+            }
+            printf(<span class="String">&quot;</span><span class="GruvboxOrange">\n</span><span class="String">&quot;</span>);
+        }
+
+}
+</pre>
+   <h2>Contact</h2>
+    <li>Email: aleks@aleksander.xyz</li>
+
+</body>
+</html>
