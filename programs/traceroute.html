@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/prog/tracemap/traceroute.hs.html</title>
+<meta name="Generator" content="Vim/8.0">
+<meta name="plugin-version" content="vim7.4_v2">
+<meta name="syntax" content="haskell">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="gruvbox">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #ffd7af; background-color: #000000; }
+body { font-family: monospace; color: #ffd7af; background-color: #000000; }
+* { font-size: 1em; }
+.GruvboxOrange { color: #ff8700; }
+.Normal { color: #ffd7af; }
+.Comment { color: #8a8a8a; }
+.GruvboxRed { color: #d75f5f; }
+.GruvboxPurple { color: #d787af; }
+.String { color: #afaf00; }
+.GruvboxAqua { color: #87af87; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="GruvboxAqua">import</span> Control.Monad
+<span class="GruvboxAqua">import</span> Data.Bits(complement)
+<span class="GruvboxAqua">import</span> Data.ByteString(unpack,pack)
+<span class="GruvboxAqua">import</span> Data.List
+<span class="GruvboxAqua">import</span> Data.Monoid
+<span class="GruvboxAqua">import</span> Data.Time
+<span class="GruvboxAqua">import</span> Data.Word
+<span class="GruvboxAqua">import</span> Network.BSD(getProtocolNumber)
+<span class="GruvboxAqua">import</span> Network.Socket <span class="GruvboxAqua">hiding</span> (send, sendTo, recv, recvFrom)
+<span class="GruvboxAqua">import</span> Network.Socket.ByteString
+<span class="GruvboxAqua">import</span> System.Environment
+<span class="GruvboxAqua">import</span> System.Process
+<span class="GruvboxAqua">import</span> System.Timeout
+<span class="GruvboxAqua">import</span> Text.Printf
+
+
+sec <span class="Normal">=</span> (<span class="Normal">*</span>) <span class="GruvboxPurple">1000000</span>
+
+main <span class="Normal">=</span> withSocketsDo <span class="Normal">$</span>
+    <span class="GruvboxRed">do</span>
+        s <span class="Normal">&lt;-</span> fmap head getArgs
+        addrinfos <span class="Normal">&lt;-</span> getAddrInfo Nothing (Just s) (Just <span class="String">&quot;0&quot;</span>)
+        <span class="GruvboxRed">let</span> serveraddr <span class="Normal">=</span> head addrinfos
+        <span class="GruvboxRed">let</span> targetAddress <span class="Normal">=</span> addrAddress serveraddr
+        printf <span class="String">&quot;Haskell traceroute to target Adress: %s</span><span class="GruvboxOrange">\n</span><span class="String">&quot;</span> <span class="Normal">$</span> show targetAddress
+        proto <span class="Normal">&lt;-</span> getProtocolNumber <span class="String">&quot;icmp&quot;</span>
+        sock <span class="Normal">&lt;-</span> socket AF_INET Raw proto
+        setSocketOption sock ReuseAddr <span class="GruvboxPurple">1</span>
+        myAddress <span class="Normal">&lt;-</span> getAddrInfo (Just (defaultHints {addrFlags <span class="Normal">=</span> [AI_PASSIVE]})) Nothing (Just <span class="String">&quot;3000&quot;</span>)
+        bind sock (addrAddress <span class="Normal">.</span> head <span class="Normal">$</span> myAddress)
+        try_ttl sock <span class="GruvboxPurple">1</span> targetAddress
+        close sock
+    <span class="GruvboxAqua">where</span>
+        try_ttl sock ttl addr <span class="Normal">=</span> <span class="GruvboxRed">do</span>
+                                setSocketOption sock TimeToLive ttl
+                                <span class="GruvboxRed">let</span> checksum <span class="Normal">=</span> fromIntegral <span class="Normal">.</span> complement <span class="Normal">$</span> ((  fromIntegral (<span class="GruvboxPurple">14322</span> <span class="Normal">+</span> ttl) ) <span class="Normal">::</span> Word16) <span class="Comment">-- no carry ... unless ttl is way too large</span>
+                                <span class="GruvboxRed">let</span> msga <span class="Normal">=</span> pack <span class="Normal">$</span>  [<span class="GruvboxPurple">8</span>,<span class="GruvboxPurple">0</span>,fromIntegral <span class="Normal">$</span> div checksum <span class="GruvboxPurple">256</span>,fromIntegral <span class="Normal">$</span> mod checksum <span class="GruvboxPurple">256</span>,<span class="GruvboxPurple">47</span>,<span class="GruvboxPurple">242</span>,fromIntegral <span class="Normal">$</span> div ttl <span class="GruvboxPurple">256</span>, fromIntegral <span class="Normal">$</span> mod ttl <span class="GruvboxPurple">256</span>] <span class="Comment">-- id is hardcoded</span>
+                                info <span class="Normal">&lt;-</span>  replicateM <span class="GruvboxPurple">3</span> <span class="Normal">$</span> measure msga sock addr <span class="Comment">-- try 3 times</span>
+                                <span class="GruvboxRed">let</span> ans <span class="Normal">=</span> msum <span class="Normal">$</span> map (<span class="Normal">\</span>(_,a,_)<span class="Normal">-&gt;</span>a) info
+                                <span class="GruvboxRed">case</span> ans <span class="GruvboxRed">of</span>
+                                    Just (msg,foundAddress) <span class="Normal">-&gt;</span>    <span class="GruvboxRed">do</span>
+                                                                        <span class="GruvboxRed">let</span> (t<span class="Normal">:</span>c<span class="Normal">:</span>_) <span class="Normal">=</span> map toInteger <span class="Normal">$</span> drop <span class="GruvboxPurple">20</span> <span class="Normal">$</span>  unpack <span class="Normal">$</span> msg <span class="Comment">-- should also look at id</span>
+                                                                        <span class="GruvboxRed">let</span> time <span class="Normal">=</span> intercalate <span class="String">&quot;  &quot;</span> <span class="Normal">$</span> map prepare_time info
+                                                                        printf <span class="String">&quot;#%i  %s  %s</span><span class="GruvboxOrange">\n</span><span class="String">&quot;</span> ttl (takeWhile (<span class="Normal">/=</span><span class="GruvboxPurple">':'</span>) <span class="Normal">$</span> show foundAddress) time
+                                                                        <span class="GruvboxRed">case</span> (t,c) <span class="GruvboxRed">of</span>
+                                                                            (<span class="GruvboxPurple">11</span>,<span class="GruvboxPurple">0</span>) <span class="Normal">-&gt;</span> try_ttl sock (succ ttl) addr <span class="Comment">-- Type: 11 (Time-to-live exceeded)</span>
+                                                                            (<span class="GruvboxPurple">3</span>,<span class="GruvboxPurple">0</span>) <span class="Normal">-&gt;</span> printf <span class="String">&quot;Destination network unreachable!</span><span class="GruvboxOrange">\n</span><span class="String">&quot;</span>
+                                                                            (<span class="GruvboxPurple">3</span>,<span class="GruvboxPurple">1</span>) <span class="Normal">-&gt;</span> printf <span class="String">&quot;Destination host unreachable!</span><span class="GruvboxOrange">\n</span><span class="String">&quot;</span>
+                                                                            _ <span class="Normal">-&gt;</span> return ()
+                                    _ <span class="Normal">-&gt;</span> printf <span class="String">&quot;Timeout!</span><span class="GruvboxOrange">\n</span><span class="String">&quot;</span>
+        measure msga sock addr    <span class="Normal">=</span>         <span class="GruvboxRed">do</span>
+                                    sendTo sock msga addr
+                                    start <span class="Normal">&lt;-</span> getCurrentTime
+                                    ans <span class="Normal">&lt;-</span> timeout (sec <span class="GruvboxPurple">2</span>) <span class="Normal">$</span> recvFrom sock <span class="GruvboxPurple">1024</span> <span class="Comment">-- timeout after 2 seconds</span>
+                                    stop <span class="Normal">&lt;-</span> getCurrentTime
+                                    return (start,ans,stop)
+        prepare_time (start,Just _,stop) <span class="Normal">=</span> (<span class="Normal">++</span><span class="String">&quot;ms&quot;</span>) <span class="Normal">.</span> init <span class="Normal">.</span> show <span class="Normal">$</span> diffUTCTime stop start <span class="Normal">*</span> <span class="GruvboxPurple">1000</span>
+        prepare_time _ <span class="Normal">=</span> <span class="String">&quot;*&quot;</span>
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->
